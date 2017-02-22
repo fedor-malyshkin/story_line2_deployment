@@ -1,0 +1,49 @@
+version: '2'
+services:
+  mongodb:
+    domainname: story-line.ru
+    hostname: db
+    build: ./mongodb
+    ports:
+     - "${mongodb_host_port ?: 27017}:${mongodb_cont_port ?: 27017}"
+    volumes:
+     - ${data_dir}/mongodb:/data/db
+     - ${logs_dir}/mongodb:/data/logs
+  zookeeper:
+    domainname: story-line.ru
+    hostname: zoo
+    build: ./zookeeper
+    ports:
+     - "${zookeeper_host_port ?: 2181}:${zookeeper_cont_port ?: 2181}"
+    volumes:
+     - ${data_dir}/zookeeper:/data/db
+     - ${logs_dir}/zookeeper:/data/logs
+  elasticsearch:
+    domainname: story-line.ru
+    hostname: elastic
+    build: ./elasticsearch
+    ports:
+     - "${elasticsearch_host_port ?: 9200}:${elasticsearch_cont_port ?: 9200}"
+    volumes:
+     - ${logs_dir}/elasticsearch:/data/logs
+     - ${data_dir}/elasticsearch:/data/db
+ # server_storm:
+ #   domainname: story-line.ru
+ #    hostname: storm
+ #    build: ./server_storm
+ #    depends_on:
+ #        - zookeeper
+ #        - elasticsearch
+ #        - mongodb
+ #    links:
+ #        - zookeeper
+ #        - elasticsearch
+ #        - mongodb
+ #    ports:
+ #     - "${server_storm_ui_host_port ?: 8080}:${server_storm_ui_cont_port ?: 8080}"
+ #     - "${server_storm_logviewer_host_port ?: 8000}:${server_storm_logviewer_cont_port ?: 8000}"
+ #     - "${server_storm_nimbus_host_port ?: 6627}:${server_storm_nimbus_cont_port ?: 6627}"
+ #     - "${server_storm_monit_host_port ?: 2812}:${server_storm_monit_cont_port ?: 2812}"
+ #    volumes:
+ #     - ${logs_dir}/server_storm:/data/logs
+ #     - ${data_dir}/server_storm:/data/db

@@ -1,0 +1,4 @@
+---
+storyline_base:
+    oracle_java:
+        version: "8u92"

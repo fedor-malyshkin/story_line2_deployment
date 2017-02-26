@@ -1,28 +1,23 @@
 # Format: FROM    repository[:version]
-FROM       openjdk:8-jdk
+FROM ubuntu:16.04
 # Format: MAINTAINER Name <email@addr.ess>
 MAINTAINER Fedor Malyshkin <fedor.malyshkin@yandex.ru>
 
-WORKDIR /elasticsearch
+# this path used by start.sh in ENTRYPOINT
+WORKDIR /provision
 # Installation:
-RUN apt-get update && apt-get install -y wget puppet htop
-# Prepare by Puppet
-COPY elasticsearch.pp .
-RUN puppet apply elasticsearch.pp
+COPY *.sh ./
+ADD ${type} ${type}/
+ADD puppet_config puppet_config/
+ADD modules modules/
 
-USER 'elastic'
-WORKDIR /elasticsearch
-RUN wget -nv --tries=3 https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${elasticsearch_version}.tar.gz \
-&& tar x --gunzip -f elasticsearch-${elasticsearch_version}.tar.gz && cd elasticsearch-${elasticsearch_version}
-
-# Prepare by Script
-COPY elasticsearch.yml elasticsearch-${elasticsearch_version}/config
-COPY logging.yml elasticsearch-${elasticsearch_version}/config
-
+RUN mkdir /data && mkdir /data/db && mkdir /data/logs
 VOLUME ['/data/db']
 VOLUME ['/data/logs']
 
 # Expose port  from the container to the host
 EXPOSE 9200
+EXPOSE 3000
 
-ENTRYPOINT ["elasticsearch-${elasticsearch_version}/bin/elasticsearch"]
+# make provision and start ....
+ENTRYPOINT ["/provision/start.sh", "${type}"]

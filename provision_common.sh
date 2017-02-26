@@ -3,18 +3,22 @@
 PUPPET_BIN='/opt/puppetlabs/bin/puppet'
 
 # Ставим необходимые пакеты для старта
-apt-get update &&  apt-get -y install git mc htop apt-transport-https nano wget lsb-release
+apt-get update &&  apt-get -y install git mc htop apt-transport-https nano wget lsb-release apt-utils
+
 
 # Первоначально осуществляем установку `puppet-agent`
-rm *.deb.* *.deb # possible trash
-wget https://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb && dpkg -i puppetlabs-release-pc1-xenial.deb
-apt-get update && apt-get -y install puppet-agent
+if [ ! -d /etc/puppetlabs ]; then
+  	rm *.deb.* *.deb # possible trash
+	wget https://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb && dpkg -i puppetlabs-release-pc1-xenial.deb
+	apt-get update && apt-get -y install puppet-agent
+fi
 
 # Определяем тип `environment`
 /opt/puppetlabs/bin/puppet config set environment $PUPPET_ENV
 if [ ! -d /etc/puppetlabs/code/environments/$PUPPET_ENV ]; then
   cp -r /etc/puppetlabs/code/environments/production /etc/puppetlabs/code/environments/$PUPPET_ENV
 fi
+
 
 # Install puppet modules
 $PUPPET_BIN module install puppetlabs-ntp
@@ -39,4 +43,7 @@ cp -r modules/*  /etc/puppetlabs/code/environments/$PUPPET_ENV/modules
 
 # copy site.pp
 cp $PUPPET_ENV/site.pp /etc/puppetlabs/code/environments/$PUPPET_ENV/manifests/site.pp
+
+echo "hostname:"
+hostname
 $PUPPET_BIN apply /etc/puppetlabs/code/environments/$PUPPET_ENV/manifests/site.pp

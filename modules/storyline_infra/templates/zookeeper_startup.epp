@@ -1,14 +1,14 @@
 #!/bin/sh
 
 ### BEGIN INIT INFO
-# Provides:          elasticsearch
+# Provides:          zookeeper
 # Required-Start:    $remote_fs
 # Required-Stop:     $remote_fs
 # Should-Start:      $all
 # Should-Stop:       $all
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: index engine
+# Short-Description: orchestration tool
 # Description:
 ### END INIT INFO
 
@@ -16,14 +16,15 @@ set -e
 
 . /lib/lsb/init-functions
 
-DAEMON="<%= $storyline_infra::elasticsearch::dir_bin -%>/bin/elasticsearch"
+DAEMON="<%= $storyline_infra::zookeeper::dir_bin -%>/bin/zkServer.sh"
 #CONFIG=/etc/monit/monitrc
-NAME="elasticsearch"
-DESC="index engine"
+DIR="<%= $storyline_infra::zookeeper::dir_logs -%>"
+NAME="zookeeper"
+DESC="orchestration tool"
 #PID="/run/$NAME.pid"
-PID="<%= $storyline_infra::elasticsearch::pid_file -%>"
-OPTS="-d -p $PID"
-USER="elasticsearch"
+PID="<%= $storyline_infra::zookeeper::pid_file -%>"
+OPTS="start"
+USER="zookeeper"
 
 # Check if DAEMON binary exist
 [ -f $DAEMON ] || exit 0
@@ -35,7 +36,7 @@ USER="elasticsearch"
 case "$1" in
   start)
     log_daemon_msg "Starting $DESC" "$NAME"
-    if start-stop-daemon -u $USER -c $USER --start  --quiet --oknodo --pidfile $PID --exec $DAEMON -- $OPTS 1>/dev/null
+    if start-stop-daemon  -d $DIR -u $USER -c $USER --start  --quiet --oknodo --pidfile $PID --exec $DAEMON -- $OPTS 1>/dev/null
     then
       log_end_msg 0
     else
@@ -44,7 +45,7 @@ case "$1" in
     ;;
   stop)
     log_daemon_msg "Stopping $DESC" "$NAME"
-    if start-stop-daemon -u $USER -c $USER  --retry TERM/5/KILL/5 --oknodo --stop --quiet --pidfile $PID 1>/dev/null
+    if start-stop-daemon -d $DIR  -u $USER -c $USER  --retry TERM/5/KILL/5 --oknodo --stop --quiet --pidfile $PID 1>/dev/null
     then
       log_end_msg 0
     else
@@ -53,7 +54,7 @@ case "$1" in
     ;;
   reload)
     log_daemon_msg "Reloading $DESC configuration" "$NAME"
-    if start-stop-daemon -u $USER -c $USER  --stop --signal HUP --quiet --oknodo --pidfile $PID --exec $DAEMON -- $OPTS 1>/dev/null
+    if start-stop-daemon  -d $DIR -u $USER -c $USER  --stop --signal HUP --quiet --oknodo --pidfile $PID --exec $DAEMON -- $OPTS 1>/dev/null
     then
       log_end_msg 0
     else
@@ -62,8 +63,8 @@ case "$1" in
     ;;
   restart|force-reload)
     log_daemon_msg "Restarting $DESC" "$NAME"
-    start-stop-daemon -u $USER -c $USER  --retry TERM/5/KILL/5 --oknodo  --stop --quiet --pidfile $PID 1>/dev/null
-    if start-stop-daemon -u $USER -c $USER  --start --quiet --oknodo  --pidfile $PID --exec $DAEMON -- $OPTS 1>/dev/null
+    start-stop-daemon -d $DIR -u $USER -c $USER  --retry TERM/5/KILL/5 --oknodo  --stop --quiet --pidfile $PID 1>/dev/null
+    if start-stop-daemon -d $DIR  -u $USER -c $USER  --start --quiet --oknodo  --pidfile $PID --exec $DAEMON -- $OPTS 1>/dev/null
     then
       log_end_msg 0
     else

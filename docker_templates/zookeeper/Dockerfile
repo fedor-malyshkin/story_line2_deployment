@@ -1,28 +1,23 @@
 # Format: FROM    repository[:version]
-FROM       openjdk:8-jdk
+FROM ubuntu:16.04
 # Format: MAINTAINER Name <email@addr.ess>
 MAINTAINER Fedor Malyshkin <fedor.malyshkin@yandex.ru>
 
-WORKDIR /zookeeper
+# this path used by start.sh in ENTRYPOINT
+WORKDIR /provision
 # Installation:
-RUN apt-get update && apt-get install -y wget puppet htop
-# Prepare by Puppet
-COPY zookeeper.pp .
-RUN puppet apply zookeeper.pp
+COPY *.sh ./
+ADD ${type} ${type}/
+ADD puppet_config puppet_config/
+ADD modules modules/
 
-USER zoo
-WORKDIR /zookeeper
-RUN wget -nv --tries=3 http://apache-mirror.rbc.ru/pub/apache/zookeeper/zookeeper-${zookeeper_version}/zookeeper-${zookeeper_version}.tar.gz \
-&& tar x --gunzip -f zookeeper-${zookeeper_version}.tar.gz && cd zookeeper-${zookeeper_version}
-
-# Prepare by Script
-COPY zoo.cfg zookeeper-${zookeeper_version}/conf
-COPY log4j.properties zookeeper-${zookeeper_version}/conf
-
+RUN mkdir /data && mkdir /data/db && mkdir /data/logs
 VOLUME ['/data/db']
 VOLUME ['/data/logs']
 
-# Expose port 2181 from the container to the host
+# Expose port  from the container to the host
 EXPOSE 2181
-#
-ENTRYPOINT ["zookeeper-${zookeeper_version}/bin/zkServer.sh", "start-foreground"]
+EXPOSE 3001
+
+# make provision and start ....
+ENTRYPOINT ["/provision/start.sh", "${type}"]

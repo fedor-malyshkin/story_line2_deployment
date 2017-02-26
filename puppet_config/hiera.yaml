@@ -1,4 +1,5 @@
 ---
+:merge_behavior: deeper
 :backends:
   - yaml
 :hierarchy:

@@ -1,0 +1,3 @@
+tickTime=2000
+dataDir=<%= $storyline_infra::zookeeper::dir_data %>
+clientPort=<%= $storyline_infra::zookeeper::port %>

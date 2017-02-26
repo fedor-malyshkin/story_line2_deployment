@@ -1,11 +1,11 @@
 # Define some default values that can be overridden by system properties
 zookeeper.root.logger=INFO, ROLLINGFILE
 zookeeper.console.threshold=INFO
-zookeeper.log.dir=/data/logs
+zookeeper.log.dir=<%= $storyline_infra::zookeeper::dir_logs %>
 zookeeper.log.file=zookeeper.log
 zookeeper.log.threshold=INFO
-zookeeper.tracelog.dir=/data/logs
-zookeeper.tracelog.file=/data/logs/zookeeper_trace.log
+zookeeper.tracelog.dir=<%= $storyline_infra::zookeeper::dir_logs %>
+zookeeper.tracelog.file=<%= $storyline_infra::zookeeper::dir_logs %>/zookeeper_trace.log
 
 #
 # ZooKeeper Logging Configuration
@@ -13,7 +13,7 @@ zookeeper.tracelog.file=/data/logs/zookeeper_trace.log
 # Format is "<default threshold> (, <appender>)+
 
 # DEFAULT: console appender only
-log4j.rootLogger=\${zookeeper.root.logger}
+log4j.rootLogger=${zookeeper.root.logger}
 
 # Example with rolling log file
 #log4j.rootLogger=DEBUG, CONSOLE, ROLLINGFILE
@@ -25,7 +25,7 @@ log4j.rootLogger=\${zookeeper.root.logger}
 # Log INFO level and above messages to the console
 #
 log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender
-log4j.appender.CONSOLE.Threshold=\${zookeeper.console.threshold}
+log4j.appender.CONSOLE.Threshold=${zookeeper.console.threshold}
 log4j.appender.CONSOLE.layout=org.apache.log4j.PatternLayout
 log4j.appender.CONSOLE.layout.ConversionPattern=%d{ISO8601} [myid:%X{myid}] - %-5p [%t:%C{1}@%L] - %m%n
 
@@ -33,8 +33,8 @@ log4j.appender.CONSOLE.layout.ConversionPattern=%d{ISO8601} [myid:%X{myid}] - %-
 # Add ROLLINGFILE to rootLogger to get log file output
 #    Log DEBUG level and above messages to a log file
 log4j.appender.ROLLINGFILE=org.apache.log4j.RollingFileAppender
-log4j.appender.ROLLINGFILE.Threshold=\${zookeeper.log.threshold}
-log4j.appender.ROLLINGFILE.File=\${zookeeper.log.dir}/\${zookeeper.log.file}
+log4j.appender.ROLLINGFILE.Threshold=${zookeeper.log.threshold}
+log4j.appender.ROLLINGFILE.File=${zookeeper.log.dir}/${zookeeper.log.file}
 
 # Max log file size of 10MB
 log4j.appender.ROLLINGFILE.MaxFileSize=10MB
@@ -50,7 +50,7 @@ log4j.appender.ROLLINGFILE.layout.ConversionPattern=%d{ISO8601} [myid:%X{myid}] 
 #    Log DEBUG level and above messages to a log file
 log4j.appender.TRACEFILE=org.apache.log4j.FileAppender
 log4j.appender.TRACEFILE.Threshold=TRACE
-log4j.appender.TRACEFILE.File=\${zookeeper.tracelog.dir}/\${zookeeper.tracelog.file}
+log4j.appender.TRACEFILE.File=${zookeeper.tracelog.dir}/${zookeeper.tracelog.file}
 
 log4j.appender.TRACEFILE.layout=org.apache.log4j.PatternLayout
 ### Notice we are including log4j's NDC here (%x)

@@ -2,6 +2,3 @@
 crawler: "current"
 server_storm: "current"
 server_web: "current"
-elasticsearch: "5.0"
-mongodb: "5.0"
-zookeeper: "5.0"

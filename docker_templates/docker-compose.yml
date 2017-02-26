@@ -1,35 +1,37 @@
 version: '2'
 services:
-  mongodb:
-    domainname: story-line.ru
-    hostname: db
-    build: ./mongodb
-    ports:
-     - "${mongodb_host_port ?: 27017}:27017"
-    volumes:
-     - ${data_dir}/mongodb:/data/db
-     - ${logs_dir}/mongodb:/data/logs
+  # mongodb:
+  #   domainname: story-line.ru
+  #   hostname: mongodb
+  #   build: ./mongodb
+  #   ports:
+  #    - "${mongodb_host_port ?: 27017}:27017"
+  #   volumes:
+  #    - ${data_dir}:/data/db
+  #    - ${logs_dir}:/data/logs
   zookeeper:
     domainname: story-line.ru
-    hostname: zoo
+    hostname: zookeeper
     build: ./zookeeper
     ports:
      - "${zookeeper_host_port ?: 2181}:2181"
+     - "3001:3001"     
     volumes:
-     - ${data_dir}/zookeeper:/data/db
-     - ${logs_dir}/zookeeper:/data/logs
+     - ${data_dir}:/data/db
+     - ${logs_dir}:/data/logs
   elasticsearch:
     domainname: story-line.ru
-    hostname: elastic
+    hostname: elasticsearch
     build: ./elasticsearch
     ports:
      - "${elasticsearch_host_port ?: 9200}:9200"
+     - "${elasticsearch_monit_host_port ?: 3000}:3000"
     volumes:
-     - ${logs_dir}/elasticsearch:/data/logs
-     - ${data_dir}/elasticsearch:/data/db
+     - ${logs_dir}:/data/logs
+     - ${data_dir}:/data/db
  # server_storm:
  #   domainname: story-line.ru
- #    hostname: storm
+ #    hostname: server_storm
  #    build: ./server_storm
  #    depends_on:
  #        - zookeeper
@@ -40,10 +42,10 @@ services:
  #        - elasticsearch
  #        - mongodb
  #    ports:
- #     - "${server_storm_ui_host_port ?: 8080}:${server_storm_ui_cont_port ?: 8080}"
- #     - "${server_storm_logviewer_host_port ?: 8000}:${server_storm_logviewer_cont_port ?: 8000}"
- #     - "${server_storm_nimbus_host_port ?: 6627}:${server_storm_nimbus_cont_port ?: 6627}"
- #     - "${server_storm_monit_host_port ?: 2812}:${server_storm_monit_cont_port ?: 2812}"
+ #     - "${server_storm_ui_host_port ?: 8080}:8080"
+ #     - "${server_storm_logviewer_host_port ?: 8000}:8000"
+ #     - "${server_storm_nimbus_host_port ?: 6627}:6627"
+ #     - "${server_storm_monit_host_port ?: 2812}:2812"
  #    volumes:
- #     - ${logs_dir}/server_storm:/data/logs
- #     - ${data_dir}/server_storm:/data/db
+ #     - ${logs_dir}:/data/logs
+ #     - ${data_dir}:/data/db

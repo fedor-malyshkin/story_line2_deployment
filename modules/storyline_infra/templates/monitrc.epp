@@ -1,0 +1,21 @@
+# Основноей файл настройки для службы 'monit'
+
+#  Run Monit as a daemon once per n seconds
+set daemon 15
+
+set logfile /var/log/monit.log
+
+set httpd port <%= $params['monit']['port'] %>
+    allow admin:monit      # require user 'admin' with password 'monit'
+
+<% if $params['monit']['enabled_elasticsearch'] == true { %>
+# check elasticsearch
+CHECK PROCESS elasticsearch  with pidfile <%= $params['elasticsearch']['pid_file'] %>
+	start program = "<%= $params['elasticsearch']['init_script'] %>   start"
+<% } %>
+
+<% if $params['monit']['enabled_zookeeper'] == true { %>
+# check zookeeper
+CHECK PROCESS zookeeper  with pidfile <%= $params['zookeeper']['pid_file'] %>
+	start program = "<%= $params['zookeeper']['init_script'] %>   start"
+<% } %>

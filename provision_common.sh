@@ -22,6 +22,7 @@ $PUPPET_BIN module install aco-oracle_java
 $PUPPET_BIN module install puppetlabs-firewall
 $PUPPET_BIN module install saz-ssh
 $PUPPET_BIN module install puppetlabs-apt
+$PUPPET_BIN module install puppet-archive
 
 # git clone "development" project and go in it
 

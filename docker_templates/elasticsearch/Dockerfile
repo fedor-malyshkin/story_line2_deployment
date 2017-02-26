@@ -22,8 +22,7 @@ COPY logging.yml elasticsearch-${elasticsearch_version}/config
 VOLUME ['/data/db']
 VOLUME ['/data/logs']
 
-# Expose port ${elasticsearch_cont_port ?: 9200} from the container to the host
-EXPOSE ${elasticsearch_cont_port ?: 9200}
-
+# Expose port  from the container to the host
+EXPOSE 9200
 
 ENTRYPOINT ["elasticsearch-${elasticsearch_version}/bin/elasticsearch"]

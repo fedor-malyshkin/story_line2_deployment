@@ -18,8 +18,8 @@ WORKDIR /mongodb
 VOLUME ['/data/db']
 VOLUME ['/data/logs']
 
-# Expose port ${mongodb_cont_port} from the container to the host
-EXPOSE ${mongodb_cont_port ?: 27017}
+# Expose port from the container to the host
+EXPOSE 27017
 
 # Set usr/bin/mongod as the dockerized entry-point application
-ENTRYPOINT ["/usr/bin/mongod", "--port", "${mongodb_cont_port ?: 27017}", "--logpath=/data/logs/mongodb.log"]
+ENTRYPOINT ["/usr/bin/mongod", "--port", "27017", "--logpath=/data/logs/mongodb.log"]

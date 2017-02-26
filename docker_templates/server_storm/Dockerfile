@@ -24,10 +24,10 @@ COPY run_*.sh apache-storm-${server_storm_version}/bin/
 COPY monitrc /etc/
 
 # for ports look - http://storm.apache.org/releases/1.0.2/SECURITY.html
-EXPOSE ${server_storm_ui_cont_port ?: 8080}
-EXPOSE ${server_storm_logviewer_cont_port ?: 8000}
-EXPOSE ${server_storm_nimbus_cont_port ?: 6627}
-EXPOSE ${server_storm_monit_cont_port ?: 2812}
+EXPOSE 8080 # ui_cont_port: "8080"
+EXPOSE 8000 # logviewer_port: "8000"
+EXPOSE 6627 # nimbus_port: "6627"
+EXPOSE 3003 # monit_port: "3003"
 
 #ENTRYPOINT ["/bin/bash"]
 ENTRYPOINT ["apache-storm-${server_storm_version}/bin/run_services.sh"]

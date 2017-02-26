@@ -22,8 +22,7 @@ COPY log4j.properties zookeeper-${zookeeper_version}/conf
 VOLUME ['/data/db']
 VOLUME ['/data/logs']
 
-# Expose port ${zookeeper_cont_port ?: 2181} from the container to the host
-EXPOSE ${zookeeper_cont_port ?: 2181}
-
+# Expose port 2181 from the container to the host
+EXPOSE 2181
 #
 ENTRYPOINT ["zookeeper-${zookeeper_version}/bin/zkServer.sh", "start-foreground"]

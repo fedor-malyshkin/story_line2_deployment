@@ -1,4 +1,30 @@
 ---
 storyline_base:
-    oracle_java:
-        version: "8u92"
+  oracle_java:
+    version: "8u92"
+storyline_infra:
+  mongodb:
+      port: "27017"
+      monit_port: "3000"
+storyline_infra:
+  zookeeper:
+      port: "2181"
+      version: "3.4.8"
+      monit_port: "3001"
+storyline_infra:
+  elasticsearch:
+      port: "9200"
+      version: "5.2.1"
+      monit_port: "3002"
+      dir_bin:  '/elasticsearch'
+      dir_data:  '/data/db/elasticsearch'
+      dir_logs:  '/data/logs/elasticsearch'
+      download_url_prefix: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-"
+      download_url_suffix: ".zip"
+storyline_componenets:
+  server_storm:
+      version: "1.0.2"
+      ui_cont_port: "8080"
+      nimbus_port: "6627"
+      logviewer_port: "8000"
+      monit_port: "3003"

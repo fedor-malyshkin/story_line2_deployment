@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PUPPET_ENV='teststand'
+PUPPET_ENV='development'
 PUPPET_BIN='/opt/puppetlabs/bin/puppet'
 
 # # Ставим необходимые пакеты для старта

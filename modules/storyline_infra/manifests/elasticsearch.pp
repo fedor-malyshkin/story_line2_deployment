@@ -7,9 +7,7 @@ class storyline_infra::elasticsearch (
 	String $dir_logs = '/data/logs/elasticsearch',
 	String $cluster_name = 'elastic_storyline',
 	Boolean $enabled_startup = false,
-	String $version = '5.1.1',
-	String $download_url_prefix = 'https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-',
-	String $download_url_suffix = '.zip') {
+	String $version = '5.1.1',) {
 
 	$service_status = $enabled_startup ? {
 	  true  => 'running',
@@ -20,28 +18,34 @@ class storyline_infra::elasticsearch (
 		ensure => "present",
 		managehome => true,
 	}
+	exec { "elasticsearch-mkdir":
+		command => "/bin/mkdir -p /data/db && /bin/mkdir -p /data/logs",
+		cwd => "/",
+	} ->
 	# working dir
 	file { $dir_logs:
 		ensure => "directory",
 		recurse => "true",
 		owner => "elasticsearch",
 		group=> "elasticsearch",
-	}
+		require => Exec['elasticsearch-mkdir'],
+	} ->
 	file { $dir_data:
 		ensure => "directory",
 		recurse => "true",
 		owner => "elasticsearch",
 		group=> "elasticsearch",
+		require => Exec['elasticsearch-mkdir'],
 	}
-	archive { "archive":
-		path=> "/provision/elasticsearch${download_url_suffix}",
-  		source=>"${download_url_prefix}${version}${download_url_suffix}",
+	archive { "elasticsearch-archive":
+		path=> "/provision/elasticsearch-${version}.zip",
+  		source=>"https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${version}.zip",
   		extract       => true,
-  		extract_path  => '/',
+  		extract_path  => "/provision",
   		cleanup       => true,
 	}->
-	exec { "move_to_no_version_dir":
-		command => "/bin/mv /elasticsearch-${version} ${dir_bin}",
+	exec { "elasticsearch-move_to_no_version_dir":
+		command => "/bin/mv /provision/elasticsearch-${version} ${dir_bin}",
 		creates => $dir_bin,
 		cwd => "/",
 		onlyif => "/usr/bin/test ! -d $dir_bin",

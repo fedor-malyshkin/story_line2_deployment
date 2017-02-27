@@ -5,6 +5,11 @@ storyline_base:
 storyline_infra:
   mongodb:
       port: "27017"
+      pid_file: '/data/logs/mongodb/mongodb.pid'
+      init_script: '/etc/init.d/mongodb'
+      dir_bin:  '/mongodb'
+      dir_data:  '/data/db/mongodb'
+      dir_logs:  '/data/logs/mongodb'
   zookeeper:
       port: "2181"
       version: "3.4.9"

@@ -1,21 +1,22 @@
 version: '2'
 services:
-  # mongodb:
-  #   domainname: story-line.ru
-  #   hostname: mongodb
-  #   build: ./mongodb
-  #   ports:
-  #    - "${mongodb_host_port ?: 27017}:27017"
-  #   volumes:
-  #    - ${data_dir}:/data/db
-  #    - ${logs_dir}:/data/logs
+  mongodb:
+    domainname: story-line.ru
+    hostname: mongodb
+    build: ./mongodb
+    ports:
+     - "${mongodb_host_port ?: 27017}:27017"
+     - "3002:3002"
+    volumes:
+     - ${data_dir}:/data/db
+     - ${logs_dir}:/data/logs
   zookeeper:
     domainname: story-line.ru
     hostname: zookeeper
     build: ./zookeeper
     ports:
      - "${zookeeper_host_port ?: 2181}:2181"
-     - "3001:3001"     
+     - "3001:3001"
     volumes:
      - ${data_dir}:/data/db
      - ${logs_dir}:/data/logs

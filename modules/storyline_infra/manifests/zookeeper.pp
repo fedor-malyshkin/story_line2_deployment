@@ -75,7 +75,7 @@ class storyline_infra::zookeeper (
 	file { $init_script:
 		replace => true,
 		content => epp('storyline_infra/zookeeper_startup.epp'),
-		mode=>"ug=rwx,o=rx",
+		mode=>"ug=rwx,o=r",
 		notify => Service['zookeeper'],
 	}->
 	service { 'zookeeper':

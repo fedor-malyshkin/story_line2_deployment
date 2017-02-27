@@ -1,25 +1,24 @@
 # Format: FROM    repository[:version]
-FROM       ubuntu:xenial
+FROM ubuntu:16.04
 # Format: MAINTAINER Name <email@addr.ess>
 MAINTAINER Fedor Malyshkin <fedor.malyshkin@yandex.ru>
 
-WORKDIR /mongodb
+# this path used by start.sh in ENTRYPOINT
+WORKDIR /provision
 # Installation:
-# Update apt-get sources AND install MongoDB
-RUN apt-get update && apt-get install -y mongodb puppet htop
+COPY *.sh ./
+ADD ${type} ${type}/
+ADD puppet_config puppet_config/
+ADD modules modules/
 
-# Prepare by Puppet
-COPY mongodb.pp .
-RUN puppet apply mongodb.pp
-
-USER mongo
-WORKDIR /mongodb
-
+RUN mkdir /data && mkdir /data/db && mkdir /data/logs
 VOLUME ['/data/db']
 VOLUME ['/data/logs']
 
-# Expose port from the container to the host
-EXPOSE 27017
+# Expose port  from the container to the host
+EXPOSE 9200
+EXPOSE 3002
 
-# Set usr/bin/mongod as the dockerized entry-point application
-ENTRYPOINT ["/usr/bin/mongod", "--port", "27017", "--logpath=/data/logs/mongodb.log"]
+
+# make provision and start ....
+ENTRYPOINT ["/provision/start.sh", "${type}"]

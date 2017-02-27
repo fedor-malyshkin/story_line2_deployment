@@ -19,3 +19,10 @@ CHECK PROCESS elasticsearch  with pidfile <%= $params['elasticsearch']['pid_file
 CHECK PROCESS zookeeper  with pidfile <%= $params['zookeeper']['pid_file'] %>
 	start program = "<%= $params['zookeeper']['init_script'] %>   start"
 <% } %>
+
+
+<% if $params['monit']['enabled_mongodb'] == true { %>
+# check mongodb
+CHECK PROCESS mongodb  with pidfile <%= $params['mongodb']['pid_file'] %>
+	start program = "<%= $params['mongodb']['init_script'] %>   start"
+<% } %>

@@ -70,7 +70,7 @@ class storyline_infra::elasticsearch (
 	file { $init_script:
 		replace => true,
 		content => epp('storyline_infra/elasticsearch_startup.epp'),
-		mode=>"ug=rwx,o=rx",
+		mode=>"ug=rwx,o=r",
 		notify => Service['elasticsearch'],
 	}->
 	service { 'elasticsearch':

@@ -1,4 +1,5 @@
 ---
-crawler: "current"
-server_storm: "current"
-server_web: "current"
+# presented - for test/development only - use artifact from ""/provision/artifacts" directory
+crawler: "presented"
+server_storm: "presented"
+server_web: "presented"

@@ -1,13 +1,16 @@
-class storyline_infra::elasticsearch (
-	String $port = '9200',
-	String $pid_file = '/data/logs/elasticsearch/elasticsearch.pid',
-	String $init_script = '/etc/init.d/elasticsearch',
-	String $dir_bin = '/elasticsearch',
-	String $dir_data = '/data/db/elasticsearch',
-	String $dir_logs = '/data/logs/elasticsearch',
-	String $cluster_name = 'elastic_storyline',
-	Boolean $enabled_startup = false,
-	String $version = '5.1.1',) {
+class storyline_infra::elasticsearch () {
+
+	$params = lookup({"name" => "storyline_infra.elasticsearch",
+	    "merge" => {"strategy" => "deep"}})
+	$port = $params['port']
+	$pid_file = $params['pid_file']
+	$init_script = $params['init_script']
+	$dir_bin = $params['dir_bin']
+	$dir_data = $params['dir_data']
+	$dir_logs = $params['dir_logs']
+	$cluster_name = $params['cluster_name']
+	$enabled_startup = $params['enabled_startup']
+	$version = $params['version']
 
 	$service_status = $enabled_startup ? {
 	  true  => 'running',
@@ -21,6 +24,7 @@ class storyline_infra::elasticsearch (
 	exec { "elasticsearch-mkdir":
 		command => "/bin/mkdir -p /data/db && /bin/mkdir -p /data/logs",
 		cwd => "/",
+		unless => '/usr/bin/test -d /data/db -a -d /data/logs',
 	} ->
 	# working dir
 	file { $dir_logs:

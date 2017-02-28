@@ -1,8 +1,5 @@
 ---
 storyline_infra:
-  mongodb:
-      enabled_startup: false
   monit:
       port: "3002"
       enabled_mongodb: true
-      enabled_startup: false

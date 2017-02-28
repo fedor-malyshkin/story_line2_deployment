@@ -15,7 +15,7 @@ class storyline_infra::jenkins {
   		},
 	} ->
 	package { 'jenkins':
-		ensure => 'present',
+		ensure => 'installed',
 	} ->
 	service { 'jenkins':
   		ensure => 'running',

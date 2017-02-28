@@ -1,12 +1,15 @@
-class storyline_infra::zookeeper (
-	String $port = '2181',
-	String $pid_file = '/data/db/zookeeper/zookeeper_server.pid',
-	String $init_script = '/etc/init.d/zookeeper',
-	String $dir_bin = '/zookeeper',
-	String $dir_data = '/data/db/zookeeper',
-	String $dir_logs = '/data/logs/zookeeper',
-	Boolean $enabled_startup = false,
-	String $version = '3.4.8',) {
+class storyline_infra::zookeeper () {
+
+	$params = lookup({"name" => "storyline_infra.zookeeper",
+	    "merge" => {"strategy" => "deep"}})
+	$port = $params['port']
+	$pid_file = $params['pid_file']
+	$init_script = $params['init_script']
+	$dir_bin = $params['dir_bin']
+	$dir_data = $params['dir_data']
+	$dir_logs = $params['dir_logs']
+	$enabled_startup = $params['enabled_startup']
+	$version = $params['version']
 
 	$service_status = $enabled_startup ? {
 	  true  => 'running',
@@ -20,6 +23,8 @@ class storyline_infra::zookeeper (
 	exec { "zookeeper-mkdir":
 		command => "/bin/mkdir -p /data/db && /bin/mkdir -p /data/logs",
 		cwd => "/",
+		# exec will run unless the command has an exit code of 0
+		unless => '/usr/bin/test -d /data/db -a -d /data/logs',
 	} ->
 	# working dir
 	file { $dir_logs:

@@ -1,10 +1,7 @@
 ---
 storyline_infra:
-  zookeeper:
-      enabled_startup: false
   monit:
       port: "8080"
       enabled_zookeeper: true
       enabled_mongodb: true
       enabled_elasticsearch: true
-      enabled_startup: false

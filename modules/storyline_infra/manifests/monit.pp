@@ -1,10 +1,12 @@
-class storyline_infra::monit (
-	Boolean $enabled_startup = false
-	) {
+class storyline_infra::monit () {
 
-	$template_params =lookup({"name" => "storyline_infra", 
+	$template_params = lookup({"name" => "storyline_infra",
         "merge" => {"strategy" => "deep"}})
 
+	$params = lookup({"name" => "storyline_infra.monit",
+	    "merge" => {"strategy" => "deep"}})
+	$enabled_startup = $params['enabled_startup']
+	$version = $params['version']
 	$service_status = $enabled_startup ? {
 	  true  => 'running',
 	  false => 'stopped',
@@ -14,7 +16,7 @@ class storyline_infra::monit (
 		ensure => 'absent',
 	}
 	package { 'monit':
-		ensure => 'present',
+		ensure => $version,
 	} ->
 	file { '/etc/monit/monitrc':
 		ensure => 'file',

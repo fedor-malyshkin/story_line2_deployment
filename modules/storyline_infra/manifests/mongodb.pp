@@ -1,10 +1,14 @@
-class storyline_infra::mongodb (
-	String $port = '27017',
-	String $pid_file = '/data/logs/mongodb/mongodb.pid',
-	String $init_script = '/etc/init.d/mongodb',
-	String $dir_data = '/data/db/mongodb',
-	String $dir_logs = '/data/logs/mongodb',
-	Boolean $enabled_startup = false,) {
+class storyline_infra::mongodb () {
+
+	$params = lookup({"name" => "storyline_infra.mongodb",
+	    "merge" => {"strategy" => "deep"}})
+	$port = $params['port']
+	$pid_file = $params['pid_file']
+	$init_script = $params['init_script']
+	$dir_data = $params['dir_data']
+	$dir_logs = $params['dir_logs']
+	$enabled_startup = $params['enabled_startup']
+	$version = $params['version']
 
 	$service_status = $enabled_startup ? {
 	  true  => 'running',
@@ -18,6 +22,7 @@ class storyline_infra::mongodb (
 	exec { "mongodb-mkdir":
 		command => "/bin/mkdir -p /data/db && /bin/mkdir -p /data/logs",
 		cwd => "/",
+		unless => '/usr/bin/test -d /data/db -a -d /data/logs',
 	} ->
 	# working dir
 	file { $dir_logs:
@@ -35,7 +40,7 @@ class storyline_infra::mongodb (
 		require => Exec['mongodb-mkdir'],
 	}
 	package {  'mongodb':
-		ensure => 'present',
+		ensure => $version,
 	} ->
 	file { "/etc/mongod.conf":
 		replace => true,

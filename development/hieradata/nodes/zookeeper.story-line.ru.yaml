@@ -1,8 +1,5 @@
 ---
 storyline_infra:
-  zookeeper:
-      enabled_startup: false
   monit:
       port: "3001"
       enabled_zookeeper: true
-      enabled_startup: false

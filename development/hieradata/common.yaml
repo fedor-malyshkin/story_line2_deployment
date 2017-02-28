@@ -24,7 +24,7 @@ storyline_infra:
   elasticsearch:
       port: "9200"
       # version: "5.2.2"
-      version: "5.1.1" 
+      version: "5.1.1"
       pid_file: '/data/logs/elasticsearch/elasticsearch.pid'
       init_script: '/etc/init.d/elasticsearch'
       dir_bin:  '/elasticsearch'
@@ -35,10 +35,13 @@ storyline_infra:
   monit:
       version: "1:5.16-2"
       enabled_startup: false
-storyline_componenets:
-  server_storm:
-      version: "1.0.2"
+  storm:
+      version: "1.0.3"
       ui_port: "8080"
       nimbus_port: "6627"
       logviewer_port: "8000"
       enabled_startup: false
+storyline_componenets:
+  nexus_repo_url: "http://192.168.1.99:8082/nexus/content/repositories/releases/"
+  server_storm:
+  crawler:

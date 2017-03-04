@@ -39,7 +39,8 @@ else
 	if [ $LOCAL_REV = $REMOTE_REV ]; then
 	 exit 0
 	fi
-	 git pull -q
+	 git fetch --all --tags --prune
+	 git checkout -f tags/latest
 fi
 
 # replace puppet configs

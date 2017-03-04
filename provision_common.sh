@@ -26,12 +26,20 @@ $PUPPET_BIN module install saz-ssh
 $PUPPET_BIN module install puppetlabs-apt
 $PUPPET_BIN module install puppet-archive
 
-# git clone "deployment" project and go in it only if POVISION_NO_GIT_CLONE set to "true"
-if ${POVISION_NO_GIT_CLONE:-"false"} = "true"
+# git pull "deployment" project and go in it only if POVISION_NO_GIT_CLONE set to "true"
+if [ ${POVISION_NO_GIT_CLONE:-"false"} = "true" ];
 then
 	echo "do nothing"
 else
-	git clone git@github.com:fedor-malyshkin/story_line2_deployment.git .
+	LOCAL_REV=""
+	if [ -f local_latest.sha1 ]; then
+	  LOCAL_REV=`cat local_latest.sha1`
+	fi
+	REMOTE_REV=`git ls-remote --tags | grep "latest" | awk '{print $1}'`
+	if [ $LOCAL_REV = $REMOTE_REV ]; then
+	 exit 0
+	fi
+	 git pull -q
 fi
 
 # replace puppet configs
@@ -51,3 +59,5 @@ cp $PUPPET_ENV/site.pp /etc/puppetlabs/code/environments/$PUPPET_ENV/manifests/s
 #echo "hostname:"
 #hostname
 $PUPPET_BIN apply /etc/puppetlabs/code/environments/$PUPPET_ENV/manifests/site.pp
+
+echo $REMOTE_REV > local_latest.sha1

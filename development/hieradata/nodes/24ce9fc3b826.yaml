@@ -5,3 +5,4 @@ storyline_infra:
       enabled_zookeeper: true
       enabled_mongodb: true
       enabled_elasticsearch: true
+      enabled_crawler: true

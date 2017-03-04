@@ -1,0 +1,2 @@
+#!/bin/sh
+java -jar <%= $storyline_components::crawler::jar_file %> server <%= $storyline_components::crawler::dir_bin -%>/crawler.yaml

@@ -41,7 +41,17 @@ storyline_infra:
       nimbus_port: "6627"
       logviewer_port: "8000"
       enabled_startup: false
-storyline_componenets:
-  nexus_repo_url: "http://192.168.1.99:8082/nexus/content/repositories/releases/"
+storyline_components:
+  nexus_repo_url: "http://192.168.1.99:8082/nexus"
   server_storm:
   crawler:
+      admin_port: "8080"
+      pid_file: '/data/logs/crawler/crawler.pid'
+      init_script: '/etc/init.d/crawler'
+      dir_data:  '/data/db/crawler'
+      dir_bin:  '/crawler'
+      dir_logs:  '/data/logs/crawler'
+      dir_scripts: "%{storyline_components::crawler::dir_data}/scripts"
+      dir_sites_db: "%{storyline_components::crawler::dir_data}/sites_db"
+      mongodb_connection_url: "mongodb://localhost:%{storyline_infra::mongodb::port}/"
+      enabled_startup: false

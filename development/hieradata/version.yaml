@@ -1,6 +1,6 @@
 ---
 # presented - for test/development only - use artifact from ""/provision/artifacts" directory
-storyline_componenets:
+storyline_components:
   crawler:
     version: "presented"
   server_storm:

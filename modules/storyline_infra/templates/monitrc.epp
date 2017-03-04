@@ -1,28 +1,36 @@
 # Основноей файл настройки для службы 'monit'
 
+<%# Accept 2 parameters with similar structure: 'params_infra' and 'params_comp' %>
+
 #  Run Monit as a daemon once per n seconds
 set daemon 15
 
 set logfile /var/log/monit.log
 
-set httpd port <%= $params['monit']['port'] %>
+set httpd port <%= $params_infra['monit']['port'] %>
     allow admin:monit      # require user 'admin' with password 'monit'
 
-<% if $params['monit']['enabled_elasticsearch'] == true { %>
+<% if $params_infra['monit']['enabled_elasticsearch'] == true { %>
 # check elasticsearch
-CHECK PROCESS elasticsearch  with pidfile <%= $params['elasticsearch']['pid_file'] %>
-	start program = "<%= $params['elasticsearch']['init_script'] %>   start"
+CHECK PROCESS elasticsearch  with pidfile <%= $params_infra['elasticsearch']['pid_file'] %>
+	start program = "<%= $params_infra['elasticsearch']['init_script'] %>   start"
 <% } %>
 
-<% if $params['monit']['enabled_zookeeper'] == true { %>
+<% if $params_infra['monit']['enabled_zookeeper'] == true { %>
 # check zookeeper
-CHECK PROCESS zookeeper  with pidfile <%= $params['zookeeper']['pid_file'] %>
-	start program = "<%= $params['zookeeper']['init_script'] %>   start"
+CHECK PROCESS zookeeper  with pidfile <%= $params_infra['zookeeper']['pid_file'] %>
+	start program = "<%= $params_infra['zookeeper']['init_script'] %>   start"
 <% } %>
 
-
-<% if $params['monit']['enabled_mongodb'] == true { %>
+<% if $params_infra['monit']['enabled_mongodb'] == true { %>
 # check mongodb
-CHECK PROCESS mongodb  with pidfile <%= $params['mongodb']['pid_file'] %>
-	start program = "<%= $params['mongodb']['init_script'] %>   start"
+CHECK PROCESS mongodb  with pidfile <%= $params_infra['mongodb']['pid_file'] %>
+	start program = "<%= $params_infra['mongodb']['init_script'] %>   start"
+<% } %>
+
+# Project component
+<% if $params_infra['monit']['enabled_crawler'] == true { %>
+# check mongodb
+CHECK PROCESS mongodb  with pidfile <%= $params_comp['crawler']['pid_file'] %>
+	start program = "<%= $params_comp['crawler']['init_script'] %>   start"
 <% } %>

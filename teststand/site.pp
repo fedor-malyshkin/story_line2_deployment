@@ -3,6 +3,7 @@ node default {
 	include storyline_base::srv_oper
 	include storyline_base::ssh
 	include storyline_infra::jenkins
+	include storyline_base::oracle_java	
 #	include storyline_infra::elasticsearch
 
 

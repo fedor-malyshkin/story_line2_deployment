@@ -57,10 +57,12 @@
 	    Hostname github.com
 	    user git
 		IdentitiesOnly yes
-	    IdentityFile /home/<deploy-user-name>/.ssh/id_rsa.<reponame>
+	    IdentityFile ~<deploy-user-name>/.ssh/id_rsa.<reponame>
 	```
 	2. `chmod 600 ~/.ssh/config` !!!
 	2. `git clone git@github.com:fedor-malyshkin/story_line2_deployment.git .`
+	2. Добавляем host key (и проверяем работоспособность) под учткой пользователя: `ssh -T git@github.com`
+	(в случае работы через удалённую консоль -- делаем аводобавление `ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts`)
 	2. читаем [ссылку 1](https://help.github.com/articles/connecting-to-github-with-ssh/)
 	2. читаем [ссылку 2](https://developer.github.com/guides/managing-deploy-keys/#managing-deploy-keys)
 

@@ -50,18 +50,18 @@
 - предварительно (всё в будущей рабочей директории):
 	2. `apt-get update && apt-get -y install git`
 	2. генерируем ключ (лучше побольше) `ssh-keygen -t rsa -b 4096 -C "your_github_email_account@example.com"`
-	2. Внедряем публичную часть созданного ключа в GITHUB (собственно копируем и вставляем в Repository->Settings->Deploy Keys, дав ключу вменяемое название, - к примеру имя CI системы и хоста на котором она работает)
+	2. Внедряем публичную часть созданного ключа в GITHUB (собственно копируем и вставляем в REPO Repository->Settings->Deploy Keys, дав ключу вменяемое название, - к примеру имя CI системы и хоста на котором она работает)
 	2. внести соответствующие правки в /home/deploy-user-name/.ssh/config:
 	```
-	Host github.com
+	Host REPO_NAME.github.com
 	    Hostname github.com
 	    user git
 		IdentitiesOnly yes
-	    IdentityFile ~<deploy-user-name>/.ssh/id_rsa.<reponame>
+	    IdentityFile ~/.ssh/id_rsa.<reponame>
 	```
 	2. `chmod 600 ~/.ssh/config` !!!
-	2. `git clone git@github.com:fedor-malyshkin/story_line2_deployment.git .`
-	2. Добавляем host key (и проверяем работоспособность) под учткой пользователя: `ssh -T git@github.com`
+	2. `git clone REPO_NAME.github.com:fedor-malyshkin/story_line2_deployment.git .`
+	2. Добавляем host key (и проверяем работоспособность) под учткой пользователя: `ssh -T REPO_NAME.github.com`
 	(в случае работы через удалённую консоль -- делаем аводобавление `ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts`)
 	2. читаем [ссылку 1](https://help.github.com/articles/connecting-to-github-with-ssh/)
 	2. читаем [ссылку 2](https://developer.github.com/guides/managing-deploy-keys/#managing-deploy-keys)

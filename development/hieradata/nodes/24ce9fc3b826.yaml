@@ -2,7 +2,4 @@
 storyline_infra:
   monit:
       port: "8080"
-      enabled_zookeeper: true
-      enabled_mongodb: true
-      enabled_elasticsearch: true
-      enabled_crawler: true
+      enabled_influxdb: true

@@ -28,9 +28,9 @@ supervisor.slots.ports:
     - 6702
     - 6703
 
-ui.port: ${server_storm_ui_cont_port}
-logviewer.port: ${server_storm_logviewer_cont_port}
-nimbus.thrift.port: ${server_storm_nimbus_cont_port}
+ui.port: server_storm_ui_cont_port
+logviewer.port: server_storm_logviewer_cont_port
+nimbus.thrift.port: server_storm_nimbus_cont_port
 #
 nimbus.seeds: ["localhost"]
 #

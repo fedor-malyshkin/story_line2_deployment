@@ -22,6 +22,12 @@ CHECK PROCESS zookeeper  with pidfile <%= $params_infra['zookeeper']['pid_file']
 	start program = "<%= $params_infra['zookeeper']['init_script'] %>   start"
 <% } %>
 
+<% if $params_infra['monit']['enabled_influxdb'] == true { %>
+# check influxdb
+CHECK PROCESS influxdb  with pidfile <%= $params_infra['influxdb']['pid_file'] %>
+	start program = "<%= $params_infra['influxdb']['init_script'] %>   start"
+<% } %>
+
 <% if $params_infra['monit']['enabled_mongodb'] == true { %>
 # check mongodb
 CHECK PROCESS mongodb  with pidfile <%= $params_infra['mongodb']['pid_file'] %>

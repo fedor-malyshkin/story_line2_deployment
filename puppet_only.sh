@@ -29,7 +29,7 @@ PUPPET_BIN='/opt/puppetlabs/bin/puppet'
 cp puppet_config/hiera.yaml  /etc/puppetlabs/puppet/
 
 # replace hiera db
-rm /etc/puppetlabs/code/environments/$PUPPET_ENV/hieradata/*
+rm -r /etc/puppetlabs/code/environments/$PUPPET_ENV/hieradata/*
 cp -r $PUPPET_ENV/hieradata/*  /etc/puppetlabs/code/environments/$PUPPET_ENV/hieradata
 
 # replace storyline_* modules

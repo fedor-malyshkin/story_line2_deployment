@@ -3,6 +3,15 @@ storyline_base:
   oracle_java:
     version: "8u92"
 storyline_infra:
+  collectd:
+    server_port: "25826"
+    server_address: "localhost"
+    pid_file: '/data/logs/collectd/collectd.pid'
+    init_script: '/etc/init.d/collectd'
+    dir_data:  '/data/db/collectd'
+    dir_logs:  '/data/logs/collectd'
+    version: "1.2.0-1"
+    enabled_startup: false
   influxdb:
     port_http: "8086"
     port_rpc: "8088"
@@ -10,7 +19,15 @@ storyline_infra:
     init_script: '/etc/init.d/influxdb'
     dir_data:  '/data/db/influxdb'
     dir_logs:  '/data/logs/influxdb'
-    version: "1.2"
+    version: "1.2.0-1"
+    enabled_startup: false
+  grafana:
+    port: "8080"
+    pid_file: '/data/logs/grafana/grafana.pid'
+    init_script: '/etc/init.d/grafana'
+    dir_data:  '/data/db/grafana'
+    dir_logs:  '/data/logs/grafana'
+    version: "4.1.2"
     enabled_startup: false
   mongodb:
       port: "27017"

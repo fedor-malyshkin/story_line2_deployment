@@ -1,30 +1,31 @@
 #!/bin/sh
 
 ### BEGIN INIT INFO
-# Provides:          influxdb
+# Provides:          grafana
 # Required-Start:    $remote_fs
 # Required-Stop:     $remote_fs
 # Should-Start:      $all
 # Should-Stop:       $all
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: time series database
+# Short-Description: Grafana Server
 # Description:
 ### END INIT INFO
 
 set -e
-
 . /lib/lsb/init-functions
 
-DAEMON="/usr/bin/influxd"
-#CONFIG=/etc/monit/monitrc
-DIR="<%= $storyline_infra::influxdb::dir_logs -%>"
-NAME="influxdb"
-DESC="time series database"
+DAEMON="/usr/sbin/grafana-server"
+DIR="<%= $storyline_infra::grafana::dir_logs -%>"
+NAME="grafana"
+DESC="Grafana Server"
+DATA_DIR="<%= $storyline_infra::grafana::dir_data -%>"
+PLUGINS_DIR=/var/lib/grafana/plugins
+LOG_DIR="<%= $storyline_infra::grafana::dir_logs -%>"
 #PID="/run/$NAME.pid"
-PID="<%= $storyline_infra::influxdb::pid_file -%>"
-OPTS="-config /etc/influxdb/influxdb.conf -pidfile $PID"
-USER="influxdb"
+PID="<%= $storyline_infra::grafana::pid_file -%>"
+OPTS="-homepath=/usr/share/grafana -pidfile=${PID} -config=/etc/grafana/grafana.ini cfg:default.paths.data=${DATA_DIR} cfg:default.paths.logs=${LOG_DIR} cfg:default.paths.plugins=${PLUGINS_DIR}"
+USER="grafana"
 
 # Check if DAEMON binary exist
 [ -f $DAEMON ] || exit 0
@@ -36,7 +37,7 @@ USER="influxdb"
 case "$1" in
   start)
     log_daemon_msg "Starting $DESC" "$NAME"
-    if start-stop-daemon -b  --no-close -u $USER -c $USER --start  --quiet --oknodo --pidfile $PID --exec $DAEMON -- $OPTS  >> <%= $storyline_infra::influxdb::dir_logs -%>/influxdb.log  2>&1
+    if start-stop-daemon -b  -u $USER -c $USER --start  --quiet --oknodo --pidfile $PID --exec $DAEMON -- $OPTS
     then
       log_end_msg 0
     else
@@ -64,7 +65,7 @@ case "$1" in
   restart|force-reload)
     log_daemon_msg "Restarting $DESC" "$NAME"
     start-stop-daemon -u $USER -c $USER  --retry TERM/5/KILL/5 --oknodo  --stop --quiet --pidfile $PID
-    if start-stop-daemon  -b --no-close  -u $USER -c $USER  --start --quiet --oknodo  --pidfile $PID --exec $DAEMON -- $OPTS   >> <%= $storyline_infra::influxdb::dir_logs -%>/influxdb.log  2>&1
+    if start-stop-daemon  -b  -u $USER -c $USER  --start --quiet --oknodo  --pidfile $PID --exec $DAEMON -- $OPTS
     then
       log_end_msg 0
     else

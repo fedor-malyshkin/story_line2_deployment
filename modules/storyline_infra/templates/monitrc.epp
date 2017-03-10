@@ -34,6 +34,19 @@ CHECK PROCESS mongodb  with pidfile <%= $params_infra['mongodb']['pid_file'] %>
 	start program = "<%= $params_infra['mongodb']['init_script'] %>   start"
 <% } %>
 
+<% if $params_infra['monit']['enabled_grafana'] == true { %>
+# check grafana
+CHECK PROCESS grafana  with pidfile <%= $params_infra['grafana']['pid_file'] %>
+	start program = "<%= $params_infra['grafana']['init_script'] %>   start"
+<% } %>
+
+<% if $params_infra['monit']['enabled_collectd'] == true { %>
+# check collectd
+CHECK PROCESS collectd  with pidfile <%= $params_infra['collectd']['pid_file'] %>
+	start program = "<%= $params_infra['collectd']['init_script'] %> start"
+<% } %>
+
+
 # Project component
 <% if $params_infra['monit']['enabled_crawler'] == true { %>
 # check mongodb

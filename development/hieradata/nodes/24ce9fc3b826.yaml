@@ -3,3 +3,5 @@ storyline_infra:
   monit:
       port: "8080"
       enabled_influxdb: true
+      enabled_grafana: true
+      enabled_collectd: true      

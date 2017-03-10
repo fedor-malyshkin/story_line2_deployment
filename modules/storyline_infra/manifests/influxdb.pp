@@ -42,30 +42,24 @@ class storyline_infra::influxdb () {
 		group=> "influxdb",
 		require => Exec['influxdb-mkdir'],
 	}
-# see by "gpg --verify keyfile"
-		apt::key { 'influxdb-key':
-			id => '05CE15085FC09D18E99EFB22684A14CF2582E0C5',
-			source  => 'https://repos.influxdata.com/influxdb.key',
-		} ->
-		# echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
-		apt::source { 'influxdb-repo':
-	  		comment  => 'influxdb repo',
-	  		location => "https://repos.influxdata.com/${downcase($dist_name)}",
-			release => "${facts['os']['distro']['codename']}",
-	  		repos    => 'stable',
-	  		include  => {
-	    		'deb' => true,
-	  		},
-		} ->
-		package { 'influxdb':
-			ensure => 'installed',
-		} ->
-
-
-	# package {  'influxdb':
-	# 	ensure => $version,
-	# } ->
-
+	# see by "gpg --verify keyfile"
+	apt::key { 'influxdb-key':
+		id => '05CE15085FC09D18E99EFB22684A14CF2582E0C5',
+		source  => 'https://repos.influxdata.com/influxdb.key',
+	} ->
+	# echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
+	apt::source { 'influxdb-repo':
+		comment  => 'influxdb repo',
+		location => "https://repos.influxdata.com/${downcase($dist_name)}",
+		release => "${facts['os']['distro']['codename']}",
+		repos    => 'stable',
+		include  => {
+	   		'deb' => true,
+		},
+	} ->
+	package {  'influxdb':
+	 	ensure => $version,
+	} ->
 	file { "/etc/influxdb/influxdb.conf":
 		replace => true,
 		content => epp('storyline_infra/influxdb.epp'),

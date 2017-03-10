@@ -13,8 +13,10 @@ node "zookeeper"  {
 }
 
 node "24ce9fc3b826"  {
-	include storyline_base::ntp	
+	include storyline_base::ntp
+	include storyline_infra::collectd
 	include storyline_infra::influxdb
+	include storyline_infra::grafana
 	include storyline_infra::monit
 
 }

@@ -17,7 +17,9 @@ VOLUME ['/data/logs']
 
 # Expose port  from the container to the host
 EXPOSE 9200
-EXPOSE 3002
+# monit
+EXPOSE 3000
+
 
 
 # make provision and start ....

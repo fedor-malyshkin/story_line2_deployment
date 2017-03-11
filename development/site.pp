@@ -18,5 +18,4 @@ node "24ce9fc3b826"  {
 	include storyline_infra::influxdb
 	include storyline_infra::grafana
 	include storyline_infra::monit
-
 }

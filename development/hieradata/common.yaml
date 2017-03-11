@@ -58,6 +58,7 @@ storyline_infra:
       cluster_name: 'elastic_storyline'
       enabled_startup: false
   monit:
+      port: "8080" # maybe overwritten
       version: "1:5.16-2"
       enabled_startup: false
   storm:
@@ -67,7 +68,7 @@ storyline_infra:
       logviewer_port: "8000"
       enabled_startup: false
 storyline_components:
-  nexus_repo_url: "http://192.168.1.99:8082/nexus"
+  nexus_repo_url: "http://repo.nlp-project.ru:8082/nexus"
   server_storm:
   crawler:
       admin_port: "8080"
@@ -78,5 +79,5 @@ storyline_components:
       dir_logs:  '/data/logs/crawler'
       dir_scripts: "%{storyline_components::crawler::dir_data}/scripts"
       dir_sites_db: "%{storyline_components::crawler::dir_data}/sites_db"
-      mongodb_connection_url: "mongodb://localhost:%{storyline_infra::mongodb::port}/"
+      mongodb_connection_url: "mongodb://mongodb:%{storyline_infra::mongodb::port}/"
       enabled_startup: false

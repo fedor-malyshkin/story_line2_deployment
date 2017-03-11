@@ -1,7 +1,11 @@
 class storyline_components::crawler () {
 
-	$params = lookup({"name" => "storyline_components.crawler",
+	$a_lot_of_params = lookup({"name" => "storyline_components",
 	    "merge" => {"strategy" => "deep"}})
+
+	$nexus_repo_url = $a_lot_of_params['nexus_repo_url']
+
+	$params = $a_lot_of_params['crawler']
 	$admin_port = $params['admin_port']
 	$pid_file = $params['pid_file']
 	$init_script = $params['init_script']
@@ -19,6 +23,8 @@ class storyline_components::crawler () {
 	  false => 'stopped',
 	}
 
+	# при запуске на сервер - получить соотвествующее содержимое файла
+	# или пусту строку - для определения дальнейших действий
 	$current_version = file_content("${dir_bin}/version")
 
 	user { 'crawler':
@@ -82,7 +88,7 @@ class storyline_components::crawler () {
 
 			# Initialize Nexus
 			class {'nexus':
-				url => "http://192.168.1.99:8082/nexus"
+				url => $nexus_repo_url
 			}
 
 			# get artifact from nexus

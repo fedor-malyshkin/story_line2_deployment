@@ -8,6 +8,7 @@ WORKDIR /provision
 # Installation:
 COPY *.sh ./
 ADD ${type} ${type}/
+ADD crawler_scripts crawler_scripts/
 ADD puppet_config puppet_config/
 ADD modules modules/
 
@@ -16,9 +17,11 @@ VOLUME ['/data/db']
 VOLUME ['/data/logs']
 
 # Expose port  from the container to the host
-EXPOSE 9200
+EXPOSE 8080
 # monit
 EXPOSE 3000
+# java debug port
+EXPOSE 60000
 
 
 # make provision and start ....

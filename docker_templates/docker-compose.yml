@@ -6,7 +6,7 @@ services:
     build: ./mongodb
     ports:
      - "${mongodb_host_port ?: 27017}:27017"
-     - "3002:3002"
+     - "${mongodb_monit_host_port}:3000"
     volumes:
      - ${data_dir}:/data/db
      - ${logs_dir}:/data/logs
@@ -16,7 +16,7 @@ services:
     build: ./zookeeper
     ports:
      - "${zookeeper_host_port ?: 2181}:2181"
-     - "3001:3001"
+     - "${zookeeper_monit_host_port}:3000"
     volumes:
      - ${data_dir}:/data/db
      - ${logs_dir}:/data/logs
@@ -26,10 +26,22 @@ services:
     build: ./elasticsearch
     ports:
      - "${elasticsearch_host_port ?: 9200}:9200"
-     - "${elasticsearch_monit_host_port ?: 3000}:3000"
+     - "${elasticsearch_monit_host_port}:3000"
     volumes:
      - ${logs_dir}:/data/logs
      - ${data_dir}:/data/db
+  crawler:
+    domainname: story-line.ru
+    hostname: crawler
+    build: ./crawler
+    ports:
+     - "${crawler_host_port}:8080"
+     - "${crawler_monit_host_port}:3000"
+     - "${cralwer_java_debug_host_port}:60000"
+    volumes:
+     - ${logs_dir}:/data/logs
+     - ${data_dir}:/data/db
+
  # server_storm:
  #   domainname: story-line.ru
  #    hostname: server_storm

@@ -12,6 +12,19 @@ node "zookeeper"  {
 	include storyline_infra::monit
 }
 
+node "mongodb"  {
+	include storyline_base::ntp
+	include storyline_base::mongodb
+	include storyline_infra::monit
+}
+
+node "crawler"  {
+	include storyline_base::ntp
+	include storyline_base::oracle_java
+	include storyline_infra::crawler
+	include storyline_infra::monit
+}
+
 node "24ce9fc3b826"  {
 	include storyline_base::ntp
 	include storyline_infra::collectd

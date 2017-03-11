@@ -45,7 +45,7 @@ else
 fi
 
 # replace puppet configs
-cp puppet_config/hiera.yaml  /etc/puppetlabs/puppet/
+cp puppet_config/hiera.yaml  /etc/puppetlabs/code/environments/$PUPPET_ENV/
 
 # replace hiera db
 rm /etc/puppetlabs/code/environments/$PUPPET_ENV/hieradata/*

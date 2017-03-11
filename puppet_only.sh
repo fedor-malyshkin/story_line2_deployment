@@ -26,7 +26,7 @@ PUPPET_BIN='/opt/puppetlabs/bin/puppet'
 # git clone "development" project and go in it
 
 # replace puppet configs
-cp puppet_config/hiera.yaml  /etc/puppetlabs/puppet/
+cp puppet_config/hiera.yaml  /etc/puppetlabs/code/environments/$PUPPET_ENV/
 
 # replace hiera db
 rm -r /etc/puppetlabs/code/environments/$PUPPET_ENV/hieradata/*

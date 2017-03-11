@@ -5,6 +5,9 @@ class storyline_components::crawler () {
 
 	$nexus_repo_url = $a_lot_of_params['nexus_repo_url']
 
+	$script_params = $a_lot_of_params['crawler_scripts']
+	$script_version = $script_params['version']
+
 	$params = $a_lot_of_params['crawler']
 	$admin_port = $params['admin_port']
 	$pid_file = $params['pid_file']
@@ -26,7 +29,12 @@ class storyline_components::crawler () {
 	# при запуске на сервер - получить соотвествующее содержимое файла
 	# или пусту строку - для определения дальнейших действий
 	$current_version = file_content("${dir_bin}/version")
+	$script_current_version = file_content("${dir_bin}/script_version")
 
+	# Initialize Nexus
+	class {'nexus':
+		url => $nexus_repo_url
+	}
 	user { 'crawler':
 		ensure => "present",
 		managehome => true,
@@ -36,7 +44,7 @@ class storyline_components::crawler () {
 		cwd => "/",
 		# exec will run unless the command has an exit code of 0
 		unless => '/usr/bin/test -d /data/db -a -d /data/logs',
-	} ->
+	}
 	# working dirы
 	file { [$dir_bin, $dir_logs, $dir_data, $dir_scripts, $dir_sites_db] :
 		ensure => "directory",
@@ -56,6 +64,7 @@ class storyline_components::crawler () {
 		mode=>"ug=rwx,o=r",
 	}
 
+	# update version
 	if $version == "presented" {
 		$jar_file = "crawler-PRESENTED.jar"
 		# copy in any case
@@ -85,12 +94,6 @@ class storyline_components::crawler () {
 				content => "${version}",
 				notify => Nexus::Artifact["${dir_bin}/crawler-${version}.jar"],
 			}
-
-			# Initialize Nexus
-			class {'nexus':
-				url => $nexus_repo_url
-			}
-
 			# get artifact from nexus
 			nexus::artifact {"${dir_bin}/${jar_file}":
 				gav => "ru.nlp_project.story_line2:crawler:${version}",
@@ -98,6 +101,78 @@ class storyline_components::crawler () {
 				output => "${dir_bin}/${jar_file}",
 				packaging  => 'jar',
 				notify => File["${dir_bin}/crawler.sh"],
+			}
+		} # if $current_version != $version {
+	}
+
+	# update script version
+	if $script_version == "presented" {
+		# get artifact from "/provision/crawler_scripts" dir
+		# returns file names with full path
+		$script_file_name_presented = get_first_jar_file_name('/provision/crawler_scripts')
+		# copy in any case
+		#if $current_version != $version {
+		file { "${dir_bin}/script_version":
+			replace => true,
+			content => "${script_version}",
+			notify => File["${dir_scripts}"],
+		} ->
+		exec { "empty_crawler_dir_scripts":
+			command => "/bin/rm -r -f ${dir_scripts}/*",
+			cwd => "/",
+			onlyif => "/usr/bin/test -d ${dir_scripts}",
+		} ->
+		archive { $script_file_name_presented:
+			# require			=> Exec['empty_crawler_scripts_archive'],
+			# path			=> "${dir_scripts}/crawler_scripts_${version}.jar",
+			# source 			=> "$script_file_name_presented",
+			extract       	=> true,
+			extract_path  	=> "${dir_scripts}",
+			creates			=> "${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
+			cleanup       	=> false,
+			notify 			=> [File["${dir_scripts}"], Service['crawler']],
+		} ->
+		exec { "tune_crawler_dir_scripts":
+			command => "/bin/mv -f  ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts ${dir_scripts}",
+			cwd => "/",
+			onlyif => "/usr/bin/test -d ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
+			notify => File["${dir_scripts}"],
+		}
+		#} # if $current_version != $version {
+	} else {
+		if $script_current_version != $script_version {
+			file { "${dir_bin}/script_version":
+				replace => true,
+				content => "${script_version}",
+				notify => Nexus::Artifact["${dir_scripts}/crawler_scripts_${version}.jar"],
+			}
+			# get artifact from nexus
+			nexus::artifact {"${dir_scripts}/crawler_scripts_${version}.jar":
+				gav => "ru.nlp_project.story_line2:crawler_scripts:${version}",
+				repository => "releases",
+				output => "${dir_scripts}/crawler_scripts_${version}.jar",
+				packaging  => 'jar',
+			}->
+			exec { "empty_crawler_dir_scripts":
+				command => "/bin/rm -f -r ${dir_scripts}/*",
+				cwd => "/",
+				onlyif => "/usr/bin/test -d ${dir_scripts}",
+			} ->
+			archive { "${dir_scripts}/crawler_scripts_${version}.jar":
+				# require			=> Exec['empty_crawler_scripts_archive'],
+				path			=> "${dir_scripts}/crawler_scripts_${version}.jar",
+				# source 			=> "$script_file_name_presented",
+				extract       	=> true,
+				extract_path  	=> "${dir_scripts}",
+				cleanup       	=> false,
+				creates			=> "${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
+				notify 			=> [File["${dir_scripts}"], Service['crawler']],
+			} ->
+			exec { "tune_crawler_dir_scripts":
+				command => "/bin/mv -f ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts ${dir_scripts}",
+				cwd => "/",
+				onlyif => "/usr/bin/test -d ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
+				notify => File["${dir_scripts}"],
 			}
 		} # if $current_version != $version {
 	}

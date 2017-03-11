@@ -77,7 +77,7 @@ storyline_components:
       dir_data:  '/data/db/crawler'
       dir_bin:  '/crawler'
       dir_logs:  '/data/logs/crawler'
-      dir_scripts: "%{storyline_components::crawler::dir_data}/scripts"
-      dir_sites_db: "%{storyline_components::crawler::dir_data}/sites_db"
-      mongodb_connection_url: "mongodb://mongodb:%{storyline_infra::mongodb::port}/"
+      dir_scripts: "/data/db/crawler/scripts"
+      dir_sites_db: "/data/db/crawler/sites_db"
+      mongodb_connection_url: "mongodb://mongodb:%{lookup('storyline_infra::mongodb::port')}/"
       enabled_startup: false

@@ -25,6 +25,22 @@ feed_sites:
    # Расписание в формате cron (http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/crontrigger.html)
    cron_schedule: "0 0/5 * * * ?" # Fire every 5 minutes
 
+# Metrics reporting
+metrics:
+  reporters:
+  - type: influxdb
+    protocol: http
+    host: "<%= $storyline_components::crawler::influxdb_host -%>"
+  	port: "<%= $storyline_components::crawler::influxdb_port -%>"
+  	database: "<%= $storyline_components::crawler::influxdb_db -%>"
+  	#auth: myuser:mypassword
+  	tags:
+		component: crawler
+		host: "<%= $storyline_components::crawler::certname -%>"
+		environment: "production"
+	precision: 1m # only store time precision to the minute
+	prefix: ""
+
 # Logging settings.
 logging:
   # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.

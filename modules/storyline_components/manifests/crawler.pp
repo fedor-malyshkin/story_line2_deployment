@@ -26,6 +26,11 @@ class storyline_components::crawler () {
 	  false => 'stopped',
 	}
 
+	$certname = $trusted['certname']
+	$influxdb_host = $params['influxdb_host']
+	$influxdb_port = $params['influxdb_port']
+	$influxdb_db = $params['influxdb_db']
+
 	# при запуске на сервер - получить соотвествующее содержимое файла
 	# или пусту строку - для определения дальнейших действий
 	$current_version = file_content("${dir_bin}/version")

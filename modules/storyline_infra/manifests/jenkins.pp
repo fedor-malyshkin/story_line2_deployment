@@ -1,4 +1,3 @@
-
 class storyline_infra::jenkins {
 
 	apt::key { 'jenkins-key':

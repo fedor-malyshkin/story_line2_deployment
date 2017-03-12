@@ -80,4 +80,7 @@ storyline_components:
       dir_scripts: "/data/db/crawler/scripts"
       dir_sites_db: "/data/db/crawler/sites_db"
       mongodb_connection_url: "mongodb://mongodb:%{lookup('storyline_infra.mongodb.port')}/"
+      influxdb_host:  "ci.nlp-project.ru"
+      influxdb_port: "%{lookup('storyline_infra.influxdb.port')}"
+      influxdb_db: "storyline"
       enabled_startup: false

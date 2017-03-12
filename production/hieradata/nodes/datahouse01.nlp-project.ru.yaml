@@ -1,0 +1,9 @@
+---
+storyline_infra:
+  monit:
+      port: "3000"
+      enabled_collectd: true
+      enabled_mongodb: true
+      enabled_elasticsearch: true
+      enabled_zookeeper: true
+      enabled_true: true

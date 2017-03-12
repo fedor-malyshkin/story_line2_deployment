@@ -1,4 +1,86 @@
 ---
 storyline_base:
-    oracle_java:
-        version: "8u92"
+  oracle_java:
+    version: "8u92"
+storyline_infra:
+  collectd:
+    server_port: "25826"
+    server_address: "ci.nlp-project.ru"
+    pid_file: '/data/logs/collectd/collectd.pid'
+    init_script: '/etc/init.d/collectd'
+    dir_data:  '/data/db/collectd'
+    dir_logs:  '/data/logs/collectd'
+    version: "1.2.0-1"
+    enabled_startup: true
+  influxdb:
+    port_http: "8086"
+    port_rpc: "8088"
+    pid_file: '/data/logs/influxdb/influxdb.pid'
+    init_script: '/etc/init.d/influxdb'
+    dir_data:  '/data/db/influxdb'
+    dir_logs:  '/data/logs/influxdb'
+    version: "present"
+    enabled_startup: true
+  grafana:
+    port: "8080"
+    pid_file: '/data/logs/grafana/grafana.pid'
+    init_script: '/etc/init.d/grafana'
+    dir_data:  '/data/db/grafana'
+    dir_logs:  '/data/logs/grafana'
+    version: "4.1.2"
+    enabled_startup: true
+  mongodb:
+      port: "27017"
+      pid_file: '/data/logs/mongodb/mongodb.pid'
+      init_script: '/etc/init.d/mongodb'
+      dir_data:  '/data/db/mongodb'
+      dir_logs:  '/data/logs/mongodb'
+      version: "1:2.6.10-0ubuntu1"
+      enabled_startup: true
+  zookeeper:
+      port: "2181"
+      version: "3.4.9"
+      pid_file: '/data/db/zookeeper/zookeeper_server.pid'
+      init_script: '/etc/init.d/zookeeper'
+      dir_bin:  '/zookeeper'
+      dir_data:  '/data/db/zookeeper'
+      dir_logs:  '/data/logs/zookeeper'
+      enabled_startup: true
+  elasticsearch:
+      port: "9200"
+      # version: "5.2.2"
+      version: "5.1.1"
+      pid_file: '/data/logs/elasticsearch/elasticsearch.pid'
+      init_script: '/etc/init.d/elasticsearch'
+      dir_bin:  '/elasticsearch'
+      dir_data:  '/data/db/elasticsearch'
+      dir_logs:  '/data/logs/elasticsearch'
+      cluster_name: 'elastic_storyline'
+      enabled_startup: true
+  monit:
+      port: "8080" # maybe overwritten
+      version: "1:5.16-2"
+      enabled_startup: true
+  storm:
+      version: "1.0.3"
+      ui_port: "8080"
+      nimbus_port: "6627"
+      logviewer_port: "8000"
+      enabled_startup: false
+storyline_components:
+  nexus_repo_url: "http://repo.nlp-project.ru:8082/nexus"
+  server_storm:
+  crawler:
+      admin_port: "8080"
+      pid_file: '/data/logs/crawler/crawler.pid'
+      init_script: '/etc/init.d/crawler'
+      dir_data:  '/data/db/crawler'
+      dir_bin:  '/crawler'
+      dir_logs:  '/data/logs/crawler'
+      dir_scripts: "/data/db/crawler/scripts"
+      dir_sites_db: "/data/db/crawler/sites_db"
+      mongodb_connection_url: "mongodb://datahouse01:%{lookup('storyline_infra.mongodb.port')}/"
+      influxdb_host:  "ci.nlp-project.ru"
+      influxdb_port: "%{lookup('storyline_infra.influxdb.port')}"
+      influxdb_db: "storyline"
+      enabled_startup: false

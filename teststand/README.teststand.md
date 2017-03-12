@@ -8,8 +8,12 @@
 
 1. __Все операции проводим под `root`__
 
-1. by SSH generate new keys for me `ssh-keygen -t rsa -b 4096 -C "your_account@example.com"`
-1. add public keys to to `/home/srv_oper/.ssh/authorized_keys`
+1. set new hostname in `/etc/hosts` + `/etc/hostname`
+1. `apt-get update && apt-get -y install git`
+1. (by root) by SSH generate new keys for me  `ssh-keygen -t rsa -b 4096 -C "your_account@example.com"`
+1. (by root) add to `~/.ssh/config for "story_line2_deployment.github.com"`
+1. add public key to "Deployment keys" on github
+1. (by srv_oper) add my public keys to to `/home/srv_oper/.ssh/authorized_keys`
 1. Run all from common docs in README.md from root of repo
 1. Read first-run Jenkins security token in /var/log/jenknins/jenknis.log
 1. Install Docker according to https://docs.docker.com/engine/installation/linux/ubuntu/ and (https://docs.docker.com/engine/installation/linux/linux-postinstall

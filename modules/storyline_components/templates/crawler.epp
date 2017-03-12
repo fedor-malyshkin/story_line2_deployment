@@ -35,11 +35,12 @@ logging:
 
   appenders:
     - type: console
-      threshold: TRACE
+      threshold: WARN
       target: stdout
     - type: file
-      # The file to which current statements will be logged.
-      currentLogFilename: crawler.log
+	  threshold: DEBUG
+	  # The file to which current statements will be logged.
+      currentLogFilename: <%= $storyline_components::crawler::dir_logs -%>/crawler.log
       # When the log file rotates, the archived log will be renamed to this and gzipped. The
       # %d is replaced with the previous day (yyyy-MM-dd). Custom rolling windows can be created
       # by passing a SimpleDateFormat-compatible format as an argument: "%d{yyyy-MM-dd-hh}".

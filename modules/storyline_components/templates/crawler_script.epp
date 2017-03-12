@@ -3,4 +3,4 @@ java -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=
 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=50000 \
 -Djava.rmi.server.hostname=`hostname -i` -jar <%= $storyline_components::crawler::dir_bin -%>/<%= $storyline_components::crawler::jar_file %> server <%= $storyline_components::crawler::dir_bin -%>/crawler.yaml &
 echo $! > <%= $storyline_components::crawler::pid_file %>
-# java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=60000 -jar <%= $storyline_components::crawler::jar_file %> server <%= $storyline_components::crawler::dir_bin -%>/crawler.yaml
+# java -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=60000 -jar <%= $storyline_components::crawler::jar_file %> server <%= $storyline_components::crawler::dir_bin -%>/crawler.yaml

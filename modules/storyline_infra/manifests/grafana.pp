@@ -60,6 +60,10 @@ class storyline_infra::grafana () {
 	file { '/etc/init.d/grafana-server':
 		ensure => 'absent',
 	} ->
+	file { '/etc/grafana':
+		ensure => "directory",
+		ensure => 'present',
+	} ->
 	file { "/etc/grafana/grafana.ini":
 	 	replace => true,
 	 	content => epp('storyline_infra/grafana.epp'),

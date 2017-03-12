@@ -19,7 +19,8 @@ storyline_infra:
     init_script: '/etc/init.d/influxdb'
     dir_data:  '/data/db/influxdb'
     dir_logs:  '/data/logs/influxdb'
-    version: "1.2.0-1"
+    # version: "1.2.0-1"
+    version: "present"
     enabled_startup: true
   grafana:
     port: "8081"

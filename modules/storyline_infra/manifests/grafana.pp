@@ -62,7 +62,6 @@ class storyline_infra::grafana () {
 	} ->
 	file { '/etc/grafana':
 		ensure => "directory",
-		ensure => 'present',
 	} ->
 	file { "/etc/grafana/grafana.ini":
 	 	replace => true,

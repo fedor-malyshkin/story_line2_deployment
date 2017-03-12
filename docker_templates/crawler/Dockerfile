@@ -9,6 +9,7 @@ WORKDIR /provision
 COPY *.sh ./
 ADD ${type} ${type}/
 ADD crawler_scripts crawler_scripts/
+ADD artifacts artifacts/
 ADD puppet_config puppet_config/
 ADD modules modules/
 
@@ -22,7 +23,8 @@ EXPOSE 8080
 EXPOSE 3000
 # java debug port
 EXPOSE 60000
-
+# java jmx port
+EXPOSE 50000
 
 # make provision and start ....
 ENTRYPOINT ["/provision/start.sh", "${type}"]

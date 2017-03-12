@@ -38,6 +38,7 @@ services:
      - "${crawler_host_port}:8080"
      - "${crawler_monit_host_port}:3000"
      - "${crawler_java_debug_host_port}:60000"
+     - "${crawler_java_jmx_host_port}:50000"
     volumes:
      - ${logs_dir}:/data/logs
      - ${data_dir}:/data/db

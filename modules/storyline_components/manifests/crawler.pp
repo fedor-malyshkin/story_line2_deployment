@@ -115,9 +115,9 @@ class storyline_components::crawler () {
 		file { "${dir_bin}/script_version":
 			replace => true,
 			content => "${script_version}",
-			notify => File["${dir_scripts}"],
 		} ->
 		exec { "empty_crawler_dir_scripts":
+			require => File["${dir_scripts}"],
 			command => "/bin/rm -r -f ${dir_scripts}/*",
 			cwd => "/",
 			onlyif => "/usr/bin/test -d ${dir_scripts}",
@@ -130,13 +130,12 @@ class storyline_components::crawler () {
 			extract_path  	=> "${dir_scripts}",
 			creates			=> "${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
 			cleanup       	=> false,
-			notify 			=> [File["${dir_scripts}"], Service['crawler']],
+			notify 			=> [Service['crawler']],
 		} ->
 		exec { "tune_crawler_dir_scripts":
-			command => "/bin/mv -f  ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts ${dir_scripts}",
+			command => "/bin/mv -f  ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts ${dir_scripts} && chown -R crawler:crawler ${dir_scripts}",
 			cwd => "/",
 			onlyif => "/usr/bin/test -d ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
-			notify => File["${dir_scripts}"],
 		}
 		#} # if $current_version != $version {
 	} else {
@@ -154,6 +153,7 @@ class storyline_components::crawler () {
 				packaging  => 'jar',
 			}->
 			exec { "empty_crawler_dir_scripts":
+				require => File["${dir_scripts}"],
 				command => "/bin/rm -f -r ${dir_scripts}/*",
 				cwd => "/",
 				onlyif => "/usr/bin/test -d ${dir_scripts}",
@@ -166,13 +166,12 @@ class storyline_components::crawler () {
 				extract_path  	=> "${dir_scripts}",
 				cleanup       	=> false,
 				creates			=> "${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
-				notify 			=> [File["${dir_scripts}"], Service['crawler']],
+				notify 			=> [Service['crawler']],
 			} ->
 			exec { "tune_crawler_dir_scripts":
-				command => "/bin/mv -f ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts ${dir_scripts}",
+				command => "/bin/mv -f  ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts ${dir_scripts} && chown -R crawler:crawler ${dir_scripts}",
 				cwd => "/",
 				onlyif => "/usr/bin/test -d ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
-				notify => File["${dir_scripts}"],
 			}
 		} # if $current_version != $version {
 	}
@@ -184,7 +183,7 @@ class storyline_components::crawler () {
 		mode=>"ug=rwx,o=rx",
 	}->
 	service { 'crawler':
-  		ensure => $service_status,
+  		# ensure => $service_status,
 		enable    => true,
 		hasrestart => true,
 		hasstatus => true,

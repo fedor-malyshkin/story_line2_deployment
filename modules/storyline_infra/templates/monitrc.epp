@@ -49,7 +49,7 @@ CHECK PROCESS collectd  with pidfile <%= $params_infra['collectd']['pid_file'] %
 
 # Project component
 <% if $params_infra['monit']['enabled_crawler'] == true { %>
-# check mongodb
-CHECK PROCESS mongodb  with pidfile <%= $params_comp['crawler']['pid_file'] %>
+# check crawler
+CHECK PROCESS crawler  with pidfile <%= $params_comp['crawler']['pid_file'] %>
 	start program = "<%= $params_comp['crawler']['init_script'] %>   start"
 <% } %>

@@ -14,7 +14,7 @@ node "zookeeper"  {
 
 node "mongodb"  {
 	include storyline_base::ntp
-	include storyline_base::mongodb
+	include storyline_infra::mongodb
 	include storyline_infra::monit
 }
 

@@ -1,8 +1,10 @@
 ## Настрока сервера для тестирования и CD
 
 1. For tests use:
- - `docker exec -ti my_test_ubuntu /bin/bash`
- - `docker start my_test_ubuntu`
+- `docker start my_test_ubuntu` (correct ENTRYPOINT)
+- `docker exec -ti my_test_ubuntu /bin/bash`(runned container)
+- `docker run -ti  --entrypoint="/bin/bash"  d71d85654766 -i` (in-correct ENTRYPOINT)
+
 
 1. __Все операции проводим под `root`__
 

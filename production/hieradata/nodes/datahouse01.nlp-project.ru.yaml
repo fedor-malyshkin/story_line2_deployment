@@ -6,4 +6,4 @@ storyline_infra:
       enabled_mongodb: true
       enabled_elasticsearch: true
       enabled_zookeeper: true
-      enabled_true: true
+      enabled_startup: true

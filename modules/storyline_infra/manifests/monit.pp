@@ -9,9 +9,10 @@ class storyline_infra::monit () {
 	    "merge" => {"strategy" => "deep"}})
 	$enabled_startup = $params['enabled_startup']
 	$version = $params['version']
-	$service_status = $enabled_startup ? {
-	  true  => 'running',
-	  false => 'stopped',
+
+	$startup_type = $enabled_startup ? {
+	  true  => true,
+	  false => 'manual',
 	}
 
 	file { '/etc/monitrc':
@@ -28,8 +29,8 @@ class storyline_infra::monit () {
 		notify => Service['monit'],
 	}
 	service { 'monit':
-		ensure => $service_status,
-		enable    => true,
+		ensure => true,
+		enable    => $startup_type,
 		hasrestart => true,
 		hasstatus => true,
 	}

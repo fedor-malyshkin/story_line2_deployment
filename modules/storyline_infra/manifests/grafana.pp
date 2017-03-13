@@ -11,10 +11,11 @@ class storyline_infra::grafana () {
 	$enabled_startup = $params['enabled_startup']
 	$version = $params['version']
 
-	$service_status = $enabled_startup ? {
-	  true  => 'running',
-	  false => 'stopped',
+	$startup_type = $enabled_startup ? {
+	  true  => true,
+	  false => 'manual',
 	}
+
 	user { 'grafana':
 		ensure => "present",
 		managehome => true,
@@ -77,8 +78,8 @@ class storyline_infra::grafana () {
 		notify => Service['grafana'],
 	}->
 	service { 'grafana':
-  		ensure => $service_status,
-		enable    => true,
+		ensure => true,
+		enable    => $startup_type,
 		hasrestart => true,
 		hasstatus => true,
 	}

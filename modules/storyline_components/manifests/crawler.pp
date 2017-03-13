@@ -21,9 +21,9 @@ class storyline_components::crawler () {
 	$enabled_startup = $params['enabled_startup']
 	$version = $params['version']
 
-	$service_status = $enabled_startup ? {
-	  true  => 'running',
-	  false => 'stopped',
+	$startup_type = $enabled_startup ? {
+	  true  => true,
+	  false => 'manual',
 	}
 
 	$certname = $trusted['certname']
@@ -188,8 +188,8 @@ class storyline_components::crawler () {
 		mode=>"ug=rwx,o=rx",
 	}->
 	service { 'crawler':
-  		ensure => $service_status,
-		enable    => true,
+		ensure => true,
+		enable    => $startup_type,
 		hasrestart => true,
 		hasstatus => true,
 	}

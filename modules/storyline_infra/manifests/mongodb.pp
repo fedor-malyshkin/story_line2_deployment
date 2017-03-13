@@ -10,9 +10,9 @@ class storyline_infra::mongodb () {
 	$enabled_startup = $params['enabled_startup']
 	$version = $params['version']
 
-	$service_status = $enabled_startup ? {
-	  true  => 'running',
-	  false => 'stopped',
+	$startup_type = $enabled_startup ? {
+	  true  => true,
+	  false => 'manual',
 	}
 
 	user { 'mongodb':
@@ -56,8 +56,8 @@ class storyline_infra::mongodb () {
 		notify => Service['mongodb'],
 	}->
 	service { 'mongodb':
-  		ensure => $service_status,
-		enable    => true,
+		ensure => true,
+		enable    => $startup_type,
 		hasrestart => true,
 		hasstatus => true,
 	}

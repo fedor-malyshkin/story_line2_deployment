@@ -11,9 +11,9 @@ class storyline_infra::zookeeper () {
 	$enabled_startup = $params['enabled_startup']
 	$version = $params['version']
 
-	$service_status = $enabled_startup ? {
-	  true  => 'running',
-	  false => 'stopped',
+	$startup_type = $enabled_startup ? {
+	  true  => true,
+	  false => 'manual',
 	}
 
 	user { 'zookeeper':
@@ -84,8 +84,8 @@ class storyline_infra::zookeeper () {
 		notify => Service['zookeeper'],
 	}->
 	service { 'zookeeper':
-  		ensure => $service_status,
-		enable    => true,
+		ensure => true,
+		enable    => $startup_type,
 		hasrestart => true,
 		hasstatus => true,
 	}

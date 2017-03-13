@@ -11,7 +11,7 @@ storyline_infra:
     dir_data:  '/data/db/collectd'
     dir_logs:  '/data/logs/collectd'
     version: "1.2.0-1"
-    enabled_startup: true
+    enabled_startup: false
   influxdb:
     port_http: "8086"
     port_rpc: "8088"
@@ -20,7 +20,7 @@ storyline_infra:
     dir_data:  '/data/db/influxdb'
     dir_logs:  '/data/logs/influxdb'
     version: "present"
-    enabled_startup: true
+    enabled_startup: false
   grafana:
     port: "8080"
     pid_file: '/data/logs/grafana/grafana.pid'
@@ -28,7 +28,7 @@ storyline_infra:
     dir_data:  '/data/db/grafana'
     dir_logs:  '/data/logs/grafana'
     version: "4.1.2"
-    enabled_startup: true
+    enabled_startup: false
   mongodb:
       port: "27017"
       pid_file: '/data/logs/mongodb/mongodb.pid'
@@ -36,7 +36,7 @@ storyline_infra:
       dir_data:  '/data/db/mongodb'
       dir_logs:  '/data/logs/mongodb'
       version: "1:2.6.10-0ubuntu1"
-      enabled_startup: true
+      enabled_startup: false
   zookeeper:
       port: "2181"
       version: "3.4.9"
@@ -45,7 +45,7 @@ storyline_infra:
       dir_bin:  '/zookeeper'
       dir_data:  '/data/db/zookeeper'
       dir_logs:  '/data/logs/zookeeper'
-      enabled_startup: true
+      enabled_startup: false
   elasticsearch:
       port: "9200"
       # version: "5.2.2"
@@ -56,7 +56,7 @@ storyline_infra:
       dir_data:  '/data/db/elasticsearch'
       dir_logs:  '/data/logs/elasticsearch'
       cluster_name: 'elastic_storyline'
-      enabled_startup: true
+      enabled_startup: false
   monit:
       port: "8080" # maybe overwritten
       version: "1:5.16-2"

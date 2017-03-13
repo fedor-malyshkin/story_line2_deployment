@@ -60,7 +60,7 @@ storyline_infra:
   monit:
       port: "8080" # maybe overwritten
       version: "1:5.16-2"
-      enabled_startup: false
+      enabled_startup: true
   storm:
       version: "1.0.3"
       ui_port: "8080"

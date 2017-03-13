@@ -84,7 +84,7 @@ class storyline_infra::zookeeper () {
 		notify => Service['zookeeper'],
 	}->
 	service { 'zookeeper':
-  		# ensure => $service_status,
+  		ensure => $service_status,
 		enable    => true,
 		hasrestart => true,
 		hasstatus => true,

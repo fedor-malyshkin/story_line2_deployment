@@ -48,7 +48,7 @@ class storyline_infra::collectd () {
 		notify => Service['collectd'],
 	}->
 	service { 'collectd':
-  		# ensure => $service_status,
+  		ensure => $service_status,
 		enable    => true,
 		hasrestart => true,
 		hasstatus => true,

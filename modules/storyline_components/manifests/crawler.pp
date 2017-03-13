@@ -188,7 +188,7 @@ class storyline_components::crawler () {
 		mode=>"ug=rwx,o=rx",
 	}->
 	service { 'crawler':
-  		# ensure => $service_status,
+  		ensure => $service_status,
 		enable    => true,
 		hasrestart => true,
 		hasstatus => true,

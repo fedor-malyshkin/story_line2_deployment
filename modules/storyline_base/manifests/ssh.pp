@@ -46,7 +46,8 @@ class storyline_base::ssh {
 		# and ChallengeResponseAuthentication to 'no'.
 		'UsePAM' => 'yes',
 		'AllowTcpForwarding' => 'no',
-		'Port'                   => [22],
+		# Use non-stndard Port		
+		'Port'                   => [222],
 		'HostKey' => ['/etc/ssh/ssh_host_ed25519_key', '/etc/ssh/ssh_host_rsa_key'],
 		},
 		client_options => {

@@ -77,7 +77,7 @@ class storyline_infra::grafana () {
 		notify => Service['grafana'],
 	}->
 	service { 'grafana':
-  		# ensure => $service_status,
+  		ensure => $service_status,
 		enable    => true,
 		hasrestart => true,
 		hasstatus => true,

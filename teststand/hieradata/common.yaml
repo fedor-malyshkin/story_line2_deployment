@@ -11,7 +11,7 @@ storyline_infra:
     dir_data:  '/data/db/collectd'
     dir_logs:  '/data/logs/collectd'
     version: "1.2.0-1"
-    enabled_startup: true
+    enabled_startup: false
   influxdb:
     port_http: "8086"
     port_rpc: "8088"
@@ -21,7 +21,7 @@ storyline_infra:
     dir_logs:  '/data/logs/influxdb'
     # version: "1.2.0-1"
     version: "present"
-    enabled_startup: true
+    enabled_startup: false
   grafana:
     port: "8081"
     pid_file: '/data/logs/grafana/grafana.pid'
@@ -29,7 +29,7 @@ storyline_infra:
     dir_data:  '/data/db/grafana'
     dir_logs:  '/data/logs/grafana'
     version: "4.1.2"
-    enabled_startup: true
+    enabled_startup: false
   mongodb:
       port: "27017"
       pid_file: '/data/logs/mongodb/mongodb.pid'

@@ -78,7 +78,7 @@ class storyline_infra::elasticsearch () {
 		notify => Service['elasticsearch'],
 	}->
 	service { 'elasticsearch':
-  		# ensure => $service_status,
+  		ensure => $service_status,
 		enable    => true,
 		hasrestart => true,
 		hasstatus => true,

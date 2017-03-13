@@ -56,7 +56,7 @@ class storyline_infra::mongodb () {
 		notify => Service['mongodb'],
 	}->
 	service { 'mongodb':
-  		# ensure => $service_status,
+  		ensure => $service_status,
 		enable    => true,
 		hasrestart => true,
 		hasstatus => true,

@@ -55,7 +55,7 @@ class storyline_infra::collectd () {
 	}
 	if $enabled_startup != true {
 		exec { "disable_collectd":
-			command => "/bin/systemctl disable collectd",
+			command => "/bin/systemctl disable collectd & /bin/systemctl disable collectd.service",
 			cwd => "/",
 		}
 	}

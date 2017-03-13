@@ -12,10 +12,10 @@ mongodb_connection_url: "<%= $storyline_components::crawler::mongodb_connection_
 # Блок с настройками для анализируемых сайтов
 parse_sites:
    # На каждый сайт. Название домена (будет использоваться для идентфикации и записи в БД)
- #- source: bnkomi.ru
+ - source: bnkomi.ru
    # На каждый сайт. стартовая страница для парсинга
- #  seed: http://bnkomi.ru
- #  cron_schedule: "0 0/5 * * * ?" # Fire every 5 minutes
+   seed: http://bnkomi.ru
+   cron_schedule: "0 0/5 * * * ?" # Fire every 5 minutes
 
 feed_sites:
    # На каждый сайт. Название домена (будет использоваться для идентфикации и записи в БД)
@@ -26,20 +26,14 @@ feed_sites:
    cron_schedule: "0 0/5 * * * ?" # Fire every 5 minutes
 
 # Metrics reporting
-metrics:
-  reporters:
-  - type: influxdb
-    protocol: http
-    host: "<%= $storyline_components::crawler::influxdb_host -%>"
-  	port: "<%= $storyline_components::crawler::influxdb_port -%>"
-  	database: "<%= $storyline_components::crawler::influxdb_db -%>"
-  	#auth: myuser:mypassword
-  	tags:
-		component: crawler
-		host: "<%= $storyline_components::crawler::certname -%>"
-		environment: "production"
-	precision: 1m # only store time precision to the minute
-	prefix: ""
+influxdb_metrics:
+   enabled: true
+   influxdb_host: "<%= $storyline_components::crawler::influxdb_host -%>"
+   influxdb_port: <%= $storyline_components::crawler::influxdb_port %>
+   influxdb_db: "<%= $storyline_components::crawler::influxdb_db -%>"
+   influxdb_user: ""
+   influxdb_password: ""
+   reporting_period: 30
 
 # Logging settings.
 logging:

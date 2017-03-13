@@ -10,11 +10,6 @@ class storyline_infra::monit () {
 	$enabled_startup = $params['enabled_startup']
 	$version = $params['version']
 
-	$startup_type = $enabled_startup ? {
-	  true  => true,
-	  false => 'manual',
-	}
-
 	file { '/etc/monitrc':
 		ensure => 'absent',
 	}
@@ -30,7 +25,7 @@ class storyline_infra::monit () {
 	}
 	service { 'monit':
 		ensure => true,
-		enable    => $startup_type,
+		enable    => $enabled_startup,
 		hasrestart => true,
 		hasstatus => true,
 	}

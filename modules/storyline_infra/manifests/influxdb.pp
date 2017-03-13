@@ -12,11 +12,6 @@ class storyline_infra::influxdb () {
 	$enabled_startup = $params['enabled_startup']
 	$version = $params['version']
 
-	$startup_type = $enabled_startup ? {
-	  true  => true,
-	  false => 'manual',
-	}
-
 	$dist_name = $facts['os']['name']
 
 	user { 'influxdb':
@@ -76,7 +71,11 @@ class storyline_infra::influxdb () {
 	}->
 	service { 'influxdb':
 		ensure => true,
-		enable    => $startup_type,
+		enable    => $enabled_startup,
+		start 		=> "${init_script} start",
+		stop 		=> "${init_script} stop",
+		status 		=> "${init_script} status",
+		restart 	=> "${init_script} restart",
 		hasrestart => true,
 		hasstatus => true,
 	}

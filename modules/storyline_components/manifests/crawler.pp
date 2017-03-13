@@ -21,11 +21,6 @@ class storyline_components::crawler () {
 	$enabled_startup = $params['enabled_startup']
 	$version = $params['version']
 
-	$startup_type = $enabled_startup ? {
-	  true  => true,
-	  false => 'manual',
-	}
-
 	$certname = $trusted['certname']
 	$influxdb_host = $params['influxdb_host']
 	$influxdb_port = $params['influxdb_port']
@@ -189,7 +184,11 @@ class storyline_components::crawler () {
 	}->
 	service { 'crawler':
 		ensure => true,
-		enable    => $startup_type,
+		enable    => $enabled_startup,
+		start 		=> "${init_script} start",
+		stop 		=> "${init_script} stop",
+		status 		=> "${init_script} status",
+		restart 	=> "${init_script} restart",
 		hasrestart => true,
 		hasstatus => true,
 	}

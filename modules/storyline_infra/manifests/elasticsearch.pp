@@ -12,11 +12,6 @@ class storyline_infra::elasticsearch () {
 	$enabled_startup = $params['enabled_startup']
 	$version = $params['version']
 
-	$startup_type = $enabled_startup ? {
-	  true  => true,
-	  false => 'manual',
-	}
-
 	user { 'elasticsearch':
 		ensure => "present",
 		managehome => true,
@@ -79,7 +74,11 @@ class storyline_infra::elasticsearch () {
 	}->
 	service { 'elasticsearch':
 		ensure => true,
-		enable    => $startup_type,
+		enable    => $enabled_startup,
+		start 		=> "${init_script} start",
+		stop 		=> "${init_script} stop",
+		status 		=> "${init_script} status",
+		restart 	=> "${init_script} restart",
 		hasrestart => true,
 		hasstatus => true,
 	}

@@ -82,4 +82,11 @@ class storyline_infra::elasticsearch () {
 		hasrestart => true,
 		hasstatus => true,
 	}
+	if $enabled_startup != true {
+		exec { "disable_elasticsearch":
+			command => "/bin/systemctl disable elasticsearch",
+			cwd => "/",
+		}
+	}
+
 }

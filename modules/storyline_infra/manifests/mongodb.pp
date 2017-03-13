@@ -60,4 +60,11 @@ class storyline_infra::mongodb () {
 		hasrestart => true,
 		hasstatus => true,
 	}
+	if $enabled_startup != true {
+		exec { "disable_mongodb":
+			command => "/bin/systemctl disable mongodb",
+			cwd => "/",
+		}
+	}
+
 }

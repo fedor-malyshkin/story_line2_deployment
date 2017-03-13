@@ -88,4 +88,11 @@ class storyline_infra::zookeeper () {
 		hasrestart => true,
 		hasstatus => true,
 	}
+	if $enabled_startup != true {
+		exec { "disable_zookeeper":
+			command => "/bin/systemctl disable zookeeper",
+			cwd => "/",
+		}
+	}
+
 }

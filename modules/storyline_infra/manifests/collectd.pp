@@ -53,4 +53,10 @@ class storyline_infra::collectd () {
 		hasrestart => true,
 		hasstatus => true,
 	}
+	if $enabled_startup != true {
+		exec { "disable_collectd":
+			command => "/bin/systemctl disable collectd",
+			cwd => "/",
+		}
+	}
 }

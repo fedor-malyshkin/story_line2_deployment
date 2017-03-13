@@ -79,4 +79,11 @@ class storyline_infra::influxdb () {
 		hasrestart => true,
 		hasstatus => true,
 	}
+	if $enabled_startup != true {
+		exec { "disable_influxdb":
+			command => "/bin/systemctl disable influxdb",
+			cwd => "/",
+		}
+	}
+
 }

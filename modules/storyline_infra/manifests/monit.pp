@@ -23,6 +23,12 @@ class storyline_infra::monit () {
 		content => epp('storyline_infra/monitrc.epp', { 'params_infra' => $template_params_infra,  'params_comp' => $template_params_comp  }),
 		notify => Service['monit'],
 	}
+	if $enabled_startup != true {
+		exec { "disable_monit":
+			command => "/bin/systemctl disable monit",
+			cwd => "/",
+		}
+	}
 	service { 'monit':
 		ensure => true,
 		enable    => $enabled_startup,

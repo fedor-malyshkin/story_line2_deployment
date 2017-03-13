@@ -56,7 +56,6 @@ storyline_infra:
       dir_data:  '/data/db/elasticsearch'
       dir_logs:  '/data/logs/elasticsearch'
       cluster_name: 'elastic_storyline'
-      iface: 'eth0'
       enabled_startup: false
   monit:
       port: "8080" # maybe overwritten

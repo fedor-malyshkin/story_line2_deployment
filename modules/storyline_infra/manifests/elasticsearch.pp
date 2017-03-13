@@ -10,7 +10,6 @@ class storyline_infra::elasticsearch () {
 	$dir_logs = $params['dir_logs']
 	$cluster_name = $params['cluster_name']
 	$enabled_startup = $params['enabled_startup']
-	$iface = $params['iface']
 	$version = $params['version']
 
 	user { 'elasticsearch':

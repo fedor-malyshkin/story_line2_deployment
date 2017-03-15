@@ -144,7 +144,7 @@ class storyline_components::crawler () {
 			file { "${dir_bin}/script_version":
 				replace => true,
 				content => "${script_version}",
-				notify => Nexus::Artifact["${dir_scripts}/crawler_scripts_${version}.jar"],
+				notify => Nexus::Artifact["${dir_scripts}/crawler_scripts_${script_version}.jar"],
 			}
 			# get artifact from nexus
 			nexus::artifact {"${dir_scripts}/crawler_scripts_${script_version}.jar":

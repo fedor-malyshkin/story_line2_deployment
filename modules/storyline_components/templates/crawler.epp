@@ -48,7 +48,7 @@ logging:
       threshold: WARN
       target: stdout
     - type: file
-	  threshold: DEBUG
+      threshold: DEBUG
 	  # The file to which current statements will be logged.
       currentLogFilename: <%= $storyline_components::crawler::dir_logs -%>/crawler.log
       # When the log file rotates, the archived log will be renamed to this and gzipped. The

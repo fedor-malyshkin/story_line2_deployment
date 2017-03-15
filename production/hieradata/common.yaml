@@ -79,8 +79,8 @@ storyline_components:
       dir_logs:  '/data/logs/crawler'
       dir_scripts: "/data/db/crawler/scripts"
       dir_sites_db: "/data/db/crawler/sites_db"
-      mongodb_connection_url: "mongodb://datahouse01:%{lookup('storyline_infra.mongodb.port')}/"
+      mongodb_connection_url: "mongodb://datahouse01:%{lookup('storyline_infra::mongodb::port')}/"
       influxdb_host:  "ci.nlp-project.ru"
-      influxdb_port: "%{lookup('storyline_infra.influxdb.port')}"
+      influxdb_port: "%{lookup('storyline_infra::influxdb::port')}"
       influxdb_db: "storyline"
       enabled_startup: false

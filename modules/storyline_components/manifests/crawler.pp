@@ -134,7 +134,7 @@ class storyline_components::crawler () {
 			notify 			=> [Service['crawler']],
 		} ->
 		exec { "tune_crawler_dir_scripts":
-			command => "/bin/mv -f  ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts ${dir_scripts} && chown -R crawler:crawler ${dir_scripts}",
+			command => "/bin/mv -f  ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts/* ${dir_scripts} && chown -R crawler:crawler ${dir_scripts}",
 			cwd => "/",
 			onlyif => "/usr/bin/test -d ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
 		}
@@ -170,7 +170,7 @@ class storyline_components::crawler () {
 				notify 			=> [Service['crawler']],
 			} ->
 			exec { "tune_crawler_dir_scripts":
-			command => "/bin/mv -f  ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts ${dir_scripts} && chown -R crawler:crawler ${dir_scripts}",
+			command => "/bin/mv -f  ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts/* ${dir_scripts} && chown -R crawler:crawler ${dir_scripts}",
 			cwd => "/",
 			onlyif => "/usr/bin/test -d ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
 			}

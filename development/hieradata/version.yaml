@@ -4,7 +4,7 @@ storyline_components:
   crawler_scripts:
     version: "0.1"
   crawler:
-    version: "0.2-all"
+    version: "0.2"
   server_storm:
     version: "presented"
   server_web:

@@ -146,6 +146,12 @@ class storyline_components::crawler () {
 				content => "${script_version}",
 				notify => Nexus::Artifact["${dir_scripts}/crawler_scripts_${script_version}.jar"],
 			}
+			exec { "empty_crawler_dir_scripts":
+				require => File["${dir_scripts}"],
+				command => "/bin/rm -f -r ${dir_scripts}/*",
+				cwd => "/",
+				onlyif => "/usr/bin/test -d ${dir_scripts}",
+			} ->
 			# get artifact from nexus
 			nexus::artifact {"${dir_scripts}/crawler_scripts_${script_version}.jar":
 				gav => "ru.nlp_project.story_line2:crawler_scripts:${script_version}",
@@ -153,12 +159,6 @@ class storyline_components::crawler () {
 				output => "${dir_scripts}/crawler_scripts_${script_version}.jar",
 				packaging  => 'jar',
 			}->
-			exec { "empty_crawler_dir_scripts":
-				require => File["${dir_scripts}"],
-				command => "/bin/rm -f -r ${dir_scripts}/*",
-				cwd => "/",
-				onlyif => "/usr/bin/test -d ${dir_scripts}",
-			} ->
 			archive { "${dir_scripts}/crawler_scripts_${script_version}.jar":
 				# require			=> Exec['empty_crawler_scripts_archive'],
 				# path			=> "${dir_scripts}/crawler_scripts_${script_version}.jar",

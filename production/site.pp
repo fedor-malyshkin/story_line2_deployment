@@ -10,4 +10,5 @@ node "datahouse01.nlp-project.ru"  {
 		include storyline_infra::mongodb
 #		include storyline_components::crawler
 		include storyline_infra::monit
+		include storyline_components::crawler
 }

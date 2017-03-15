@@ -161,7 +161,7 @@ class storyline_components::crawler () {
 			} ->
 			archive { "${dir_scripts}/crawler_scripts_${script_version}.jar":
 				# require			=> Exec['empty_crawler_scripts_archive'],
-				path			=> "${dir_scripts}/crawler_scripts_${script_version}.jar",
+				# path			=> "${dir_scripts}/crawler_scripts_${script_version}.jar",
 				# source 			=> "$script_file_name_presented",
 				extract       	=> true,
 				extract_path  	=> "${dir_scripts}",

@@ -8,3 +8,4 @@ storyline_infra:
       enabled_zookeeper: true
       enabled_crawler: true
       enabled_startup: true
+      enabled_running: true

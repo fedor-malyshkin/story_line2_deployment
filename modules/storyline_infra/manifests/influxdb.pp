@@ -10,6 +10,7 @@ class storyline_infra::influxdb () {
 	$dir_data = $params['dir_data']
 	$dir_logs = $params['dir_logs']
 	$enabled_startup = $params['enabled_startup']
+	$enabled_running = $params['enabled_running']
 	$version = $params['version']
 
 	$dist_name = $facts['os']['name']
@@ -70,7 +71,7 @@ class storyline_infra::influxdb () {
 		notify => Service['influxdb'],
 	}->
 	service { 'influxdb':
-		ensure => true,
+  		ensure => $enabled_running,
 		enable    => $enabled_startup,
 		start 		=> "${init_script} start",
 		stop 		=> "${init_script} stop",

@@ -9,6 +9,7 @@ class storyline_infra::grafana () {
 	$dir_data = $params['dir_data']
 	$dir_logs = $params['dir_logs']
 	$enabled_startup = $params['enabled_startup']
+	$enabled_running = $params['enabled_running']
 	$version = $params['version']
 
 	user { 'grafana':
@@ -73,7 +74,7 @@ class storyline_infra::grafana () {
 		notify => Service['grafana'],
 	}->
 	service { 'grafana':
-		ensure => true,
+  		ensure => $enabled_running,
 		enable    => $enabled_startup,
 		start 		=> "${init_script} start",
 		stop 		=> "${init_script} stop",

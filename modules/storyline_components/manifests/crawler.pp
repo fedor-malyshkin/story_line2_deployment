@@ -19,6 +19,7 @@ class storyline_components::crawler () {
 	$mongodb_connection_url = $params['mongodb_connection_url'] # temporal db with crawling status
 	$dir_logs = $params['dir_logs']
 	$enabled_startup = $params['enabled_startup']
+	$enabled_running = $params['enabled_running']
 	$version = $params['version']
 
 	$certname = $trusted['certname']
@@ -184,7 +185,7 @@ class storyline_components::crawler () {
 		mode=>"ug=rwx,o=rx",
 	}->
 	service { 'crawler':
-		ensure => true,
+  		ensure => $enabled_running,
 		enable    => $enabled_startup,
 		start 		=> "${init_script} start",
 		stop 		=> "${init_script} stop",

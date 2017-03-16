@@ -9,6 +9,7 @@ class storyline_infra::zookeeper () {
 	$dir_data = $params['dir_data']
 	$dir_logs = $params['dir_logs']
 	$enabled_startup = $params['enabled_startup']
+	$enabled_running = $params['enabled_running']
 	$version = $params['version']
 
 	user { 'zookeeper':
@@ -79,7 +80,7 @@ class storyline_infra::zookeeper () {
 		notify => Service['zookeeper'],
 	}->
 	service { 'zookeeper':
-		ensure => true,
+  		ensure => $enabled_running,
 		enable    => $enabled_startup,
 		start 		=> "${init_script} start",
 		stop 		=> "${init_script} stop",

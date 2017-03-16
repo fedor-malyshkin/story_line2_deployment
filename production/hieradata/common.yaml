@@ -1,4 +1,9 @@
 ---
+lookup_options:
+  "^storyline_infra::(.*)$":     # Name of key
+    merge:          # Merge behavior as a hash
+      strategy: deep
+
 storyline_base:
   oracle_java:
     version: "8u92"

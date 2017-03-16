@@ -10,6 +10,7 @@ class storyline_infra::elasticsearch () {
 	$dir_logs = $params['dir_logs']
 	$cluster_name = $params['cluster_name']
 	$enabled_startup = $params['enabled_startup']
+	$enabled_running = $params['enabled_running']
 	$version = $params['version']
 
 	user { 'elasticsearch':
@@ -73,7 +74,7 @@ class storyline_infra::elasticsearch () {
 		notify => Service['elasticsearch'],
 	}->
 	service { 'elasticsearch':
-		ensure => true,
+  		ensure => $enabled_running,
 		enable    => $enabled_startup,
 		start 		=> "${init_script} start",
 		stop 		=> "${init_script} stop",

@@ -1,9 +1,4 @@
 ---
-lookup_options:
-  "^storyline_infra::(.*)$":     # Name of key
-    merge:          # Merge behavior as a hash
-      strategy: deep
-
 storyline_base:
   oracle_java:
     version: "8u92"
@@ -17,6 +12,7 @@ storyline_infra:
     dir_logs:  '/data/logs/collectd'
     version: "1.2.0-1"
     enabled_startup: false
+    enabled_running: true
   influxdb:
     port_http: "8086"
     port_rpc: "8088"
@@ -26,6 +22,7 @@ storyline_infra:
     dir_logs:  '/data/logs/influxdb'
     version: "present"
     enabled_startup: false
+    enabled_running: true
   grafana:
     port: "8080"
     pid_file: '/data/logs/grafana/grafana.pid'
@@ -34,6 +31,7 @@ storyline_infra:
     dir_logs:  '/data/logs/grafana'
     version: "4.1.2"
     enabled_startup: false
+    enabled_running: true
   mongodb:
       port: "27017"
       pid_file: '/data/logs/mongodb/mongodb.pid'
@@ -42,6 +40,7 @@ storyline_infra:
       dir_logs:  '/data/logs/mongodb'
       version: "1:2.6.10-0ubuntu1"
       enabled_startup: false
+      enabled_running: true
   zookeeper:
       port: "2181"
       version: "3.4.9"
@@ -51,6 +50,7 @@ storyline_infra:
       dir_data:  '/data/db/zookeeper'
       dir_logs:  '/data/logs/zookeeper'
       enabled_startup: false
+      enabled_running: true
   elasticsearch:
       port: "9200"
       # version: "5.2.2"
@@ -62,10 +62,12 @@ storyline_infra:
       dir_logs:  '/data/logs/elasticsearch'
       cluster_name: 'elastic_storyline'
       enabled_startup: false
+      enabled_running: true
   monit:
       port: "8080" # maybe overwritten
       version: "1:5.16-2"
       enabled_startup: true
+      enabled_running: true
   storm:
       version: "1.0.3"
       ui_port: "8080"
@@ -84,8 +86,9 @@ storyline_components:
       dir_logs:  '/data/logs/crawler'
       dir_scripts: "/data/db/crawler/scripts"
       dir_sites_db: "/data/db/crawler/sites_db"
-      mongodb_connection_url: "mongodb://datahouse01:%{lookup('storyline_infra::mongodb::port')}/"
+      mongodb_connection_url: "mongodb://datahouse01:27017/"
       influxdb_host:  "ci.nlp-project.ru"
-      influxdb_port: "%{lookup('storyline_infra::influxdb::port')}"
+      influxdb_port: "8086"
       influxdb_db: "storyline"
       enabled_startup: false
+      enabled_running: true

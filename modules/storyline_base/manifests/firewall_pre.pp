@@ -6,6 +6,9 @@ class storyline_base::firewall_pre {
 	$incommming_port_project = $params['incommming_port_project']
 	$host_project = $params['host_project']
 
+  Firewall {
+    require => undef,
+  }
    # Default firewall rules
   firewall { '000 accept all icmp':
     proto  => 'icmp',

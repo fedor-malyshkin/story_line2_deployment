@@ -4,13 +4,13 @@ class storyline_base::firewall {
 	resources { 'firewall':
   		purge => true,
 	}
-	include storyline_base::firewall_pre
-	include storyline_base::firewall_post
+	# include storyline_base::firewall_pre
+	# include storyline_base::firewall_post
 
-	# Class['storyline_base::firewall'] {
- #  		before  => Class['storyline_base::firewall_post'],
- #  		require => Class[''],
-	# }
+	Class['storyline_base::firewall'] {
+  		before  => Class['storyline_base::firewall_post'],
+  		require => Class['storyline_base::firewall_pre'],
+	}
 
 
 }

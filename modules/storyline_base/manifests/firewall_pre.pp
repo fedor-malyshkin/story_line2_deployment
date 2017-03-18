@@ -28,9 +28,9 @@ class storyline_base::firewall_pre {
   # iptables -A OUTPUT -j ACCEPT -m comment --comment "Accept all outgoing"
   firewall { '003 Accept all outgoing':
   	chain => 'OUTPUT',
-	state  => ['NEW', 'RELATED', 'ESTABLISHED'],
+	ctstate  => ['NEW', 'RELATED', 'ESTABLISHED'],
     action      => 'accept',
-  }->  
+  }->
   # iptables -A OUTPUT -j ACCEPT -m comment --comment "Accept all outgoing"
   firewall { '004 Accept all established':
   	chain => 'INPUT',
@@ -42,7 +42,7 @@ class storyline_base::firewall_pre {
     proto       => 'tcp',
 	dport => 222,
  	chain   => 'INPUT',
-	state  => ['NEW', 'ESTABLISHED'],
+	ctstate  => ['NEW', 'ESTABLISHED'],
     action      => 'accept',
   }->
   # iptables -I INPUT -p tcp --dport 80 -j ACCEPT -m comment --comment "Allow HTTP",
@@ -55,7 +55,7 @@ class storyline_base::firewall_pre {
   firewall { '007 all incomming to specific ports for projects servers':
 	proto       => 'tcp',
   	dport => $incommming_port_project,
-	source => $host_project,
+	source => ["datahous01.nlp-project.ru", "ci.nlp-project.ru"],
   	chain   => 'INPUT',
 	action      => 'accept',
   }

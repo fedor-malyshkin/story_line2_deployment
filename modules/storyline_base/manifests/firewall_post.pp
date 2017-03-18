@@ -1,9 +1,4 @@
 class storyline_base::firewall_post {
-	firewall { '997 drop all':
-	  proto  => 'all',
-	  action => 'drop',
-	  before => undef,
-	}->
 	# ? iptables -A INPUT -j REJECT -m comment --comment "Reject all incoming"
 	firewall { '998 Drop all incoming':
 	  chain   => 'INPUT',

@@ -46,7 +46,7 @@ class storyline_base::firewall_pre {
  	chain   => 'INPUT',
     action      => 'accept',
   } ->
-  firewall { '006 all incomming to specific ports for project's servers':
+  firewall { '006 all incomming to specific ports for projects servers':
 	proto       => 'tcp',
   	dport => $incommming_port_project,
 	source => $host_project,

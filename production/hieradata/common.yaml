@@ -3,7 +3,7 @@ storyline_base:
   firewall:
     incommming_port_all: [222, 8080, 3000, 8081]
     incommming_port_project: [25826, 8086,  27017, 2181, 9200, 6627]
-    host_project: ["datahouse01.nlp-project.ru", "ci.nlp-project.ru"]
+    host_project: ['datahouse01.nlp-project.ru', 'ci.nlp-project.ru', 'repo.nlp-project.ru']
   oracle_java:
     version: "8u92"
 storyline_infra:

@@ -1,10 +1,11 @@
 class storyline_base::firewall_pre {
 
-	$params = lookup({"name" => "storyline_base.firewall",
+	$incommming_port_all = lookup({"name" => "storyline_base.firewall.incommming_port_all",
+	    "merge" => {"strategy" => "first"}})
+	$incommming_port_project = lookup({"name" => "storyline_base.firewall.incommming_port_project",
+	    "merge" => {"strategy" => "first"}})
+	$host_project = lookup({"name" => "storyline_base.firewall.host_project",
 	    "merge" => {"strategy" => "deep"}})
-	$incommming_port_all = $params['incommming_port_all']
-	$incommming_port_project = $params['incommming_port_project']
-	$host_project = $params['host_project']
 
   Firewall {
     require => undef,

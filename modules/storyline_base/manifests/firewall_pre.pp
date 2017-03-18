@@ -30,9 +30,15 @@ class storyline_base::firewall_pre {
   	chain => 'OUTPUT',
 	state  => ['NEW', 'RELATED', 'ESTABLISHED'],
     action      => 'accept',
+  }->  
+  # iptables -A OUTPUT -j ACCEPT -m comment --comment "Accept all outgoing"
+  firewall { '004 Accept all established':
+  	chain => 'INPUT',
+	ctstate  => ['RELATED', 'ESTABLISHED'],
+    action      => 'accept',
   }->
   # iptables -A INPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT  /// Allow outgoing SSH connection request,
-  firewall { '004 accept SSH':
+  firewall { '005 accept SSH':
     proto       => 'tcp',
 	dport => 222,
  	chain   => 'INPUT',
@@ -40,13 +46,13 @@ class storyline_base::firewall_pre {
     action      => 'accept',
   }->
   # iptables -I INPUT -p tcp --dport 80 -j ACCEPT -m comment --comment "Allow HTTP",
-  firewall { '005 all incomming to specific ports':
+  firewall { '006 all incomming to specific ports':
     proto       => 'tcp',
 	dport => $incommming_port_all,
  	chain   => 'INPUT',
     action      => 'accept',
   } ->
-  firewall { '006 all incomming to specific ports for projects servers':
+  firewall { '007 all incomming to specific ports for projects servers':
 	proto       => 'tcp',
   	dport => $incommming_port_project,
 	source => $host_project,

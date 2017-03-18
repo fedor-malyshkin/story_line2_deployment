@@ -2,7 +2,7 @@
 storyline_base:
   firewall:
     incommming_port_all: [222, 8080, 3000, 8081]
-    incommming_port_project: [25826, 8086,  27017, 2181, 9200]
+    incommming_port_project: [25826, 8086,  27017, 2181, 9200, 6627]
     host_project: ["datahous01.nlp-project.ru", "ci.nlp-project.ru"]
 storyline_base:
   oracle_java:
@@ -75,7 +75,7 @@ storyline_infra:
       enabled_running: true
   storm:
       version: "1.0.3"
-      ui_port: "8080"
+      ui_port: "8082"
       nimbus_port: "6627"
       logviewer_port: "8000"
       enabled_startup: false

@@ -50,7 +50,6 @@ class storyline_base::firewall_pre {
   }->
   # iptables -I INPUT -p tcp --dport 80 -j ACCEPT -m comment --comment "Allow HTTP",
   firewall { '006 all incomming to specific ports':
-    proto       => 'tcp',
     proto       => 'all',
 	dport => $incommming_port_all,
  	chain   => 'INPUT',
@@ -58,7 +57,6 @@ class storyline_base::firewall_pre {
   }
   $host_project.each |String $host| {
 	  firewall { "007 all incomming to specific ports from ${host}":
-		proto       => 'tcp',
     	proto       => 'all',		
 	  	dport => $incommming_port_project,
 		source => $host,

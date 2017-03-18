@@ -20,6 +20,6 @@ node "datahouse01.nlp-project.ru"  {
 	  		before  => Class['storyline_base::firewall_post'],
 	  		require => Class['storyline_base::firewall_pre'],
 		}
- 		class { ['storyline_base::firewall_pre', 'storyline_base::firewall_post']: }
+# 		class { ['storyline_base::firewall_pre', 'storyline_base::firewall_post']: }
 		class { 'firewall': }
 }

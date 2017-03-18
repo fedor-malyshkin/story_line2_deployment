@@ -11,11 +11,6 @@ node "datahouse01.nlp-project.ru"  {
 		include storyline_infra::monit
 		include storyline_components::crawler
 
-		# purge unmanaged rules
-		resources { 'firewall':
-		  purge => true,
-		}
 		# add 'firewall' class with my pre/post
-		include storyline_base::firewall		
-		class { 'firewall': }
+		include storyline_base::firewall
 }

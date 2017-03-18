@@ -11,15 +11,5 @@ node "datahouse01.nlp-project.ru"  {
 		# include storyline_infra::monit
 		# include storyline_components::crawler
 
-		#include storyline_base::firewall
-		resources { 'firewall':
-	  		purge => true,
-		}
-
-		Firewall {
-	  		before  => Class['storyline_base::firewall_post'],
-	  		require => Class['storyline_base::firewall_pre'],
-		}
-# 		class { ['storyline_base::firewall_pre', 'storyline_base::firewall_post']: }
-		class { 'firewall': }
+		include storyline_base::firewall
 }

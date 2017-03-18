@@ -45,7 +45,7 @@ logging:
 
   appenders:
     - type: console
-      threshold: WARN
+      threshold: ERROR
       target: stdout
     - type: file
       threshold: DEBUG

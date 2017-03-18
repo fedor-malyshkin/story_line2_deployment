@@ -54,13 +54,14 @@ class storyline_base::firewall_pre {
 	dport => $incommming_port_all,
  	chain   => 'INPUT',
     action      => 'accept',
-  } ->
-  firewall { '007 all incomming to specific ports for projects servers':
-	proto       => 'tcp',
-  	dport => $incommming_port_project,
-	source => $host_project,
-  	chain   => 'INPUT',
-	action      => 'accept',
   }
-
+  $host_project.each |String $host| {
+	  firewall { "007 all incomming to specific ports from ${host}":
+		proto       => 'tcp',
+	  	dport => $incommming_port_project,
+		source => $host,
+	  	chain   => 'INPUT',
+		action      => 'accept',
+	  }
+  }
 }

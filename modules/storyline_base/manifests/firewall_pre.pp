@@ -28,12 +28,14 @@ class storyline_base::firewall_pre {
   # iptables -A OUTPUT -j ACCEPT -m comment --comment "Accept all outgoing"
   firewall { '003 Accept all outgoing':
   	chain => 'OUTPUT',
+    proto       => 'all',
 	ctstate  => ['NEW', 'RELATED', 'ESTABLISHED'],
     action      => 'accept',
   }->
   # iptables -A OUTPUT -j ACCEPT -m comment --comment "Accept all outgoing"
   firewall { '004 Accept all established':
   	chain => 'INPUT',
+    proto       => 'all',
 	ctstate  => ['RELATED', 'ESTABLISHED'],
     action      => 'accept',
   }->

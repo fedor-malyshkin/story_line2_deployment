@@ -1,8 +1,8 @@
 class storyline_base::firewall {
 
 Firewall {
-  before  => Class['server_firewall::post'],
-  require => Class['server_firewall::pre'],
+  before  => Class['storyline_base::firewall_post'],
+  require => Class['storyline_base::firewall_pre'],
 }
 
 class { ['storyline_base::firewall_pre', 'storyline_base::firewall_post']: }

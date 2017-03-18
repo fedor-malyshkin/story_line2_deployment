@@ -1,5 +1,10 @@
 ---
 storyline_base:
+  firewall:
+    incommming_port_all: [222, 8080, 3000, 8081]
+    incommming_port_project: [25826, 8086,  27017, 2181, 9200]
+    host_project: ["datahous01.nlp-project.ru", "ci.nlp-project.ru"]
+storyline_base:
   oracle_java:
     version: "8u92"
 storyline_infra:
@@ -64,7 +69,7 @@ storyline_infra:
       enabled_startup: false
       enabled_running: true
   monit:
-      port: "8080" # maybe overwritten
+      port: "3000" # maybe overwritten
       version: "1:5.16-2"
       enabled_startup: true
       enabled_running: true

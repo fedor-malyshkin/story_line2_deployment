@@ -1,4 +1,8 @@
 ---
+storyline_base:
+  firewall:
+    incommming_port_all: [222, 3000]
+    incommming_port_project: []
 storyline_infra:
   monit:
       port: "3000"

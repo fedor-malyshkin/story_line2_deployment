@@ -1,4 +1,11 @@
 class storyline_base::firewall_pre {
+
+	$params = lookup({"name" => "storyline_base.firewall",
+	    "merge" => {"strategy" => "deep"}})
+	$incommming_port_all = $params['incommming_port_all']
+	$incommming_port_project = $params['incommming_port_project']
+	$host_project = $params['host_project']
+
   Firewall {
     require => undef,
   }
@@ -19,25 +26,32 @@ class storyline_base::firewall_pre {
     action      => 'reject',
   }->
   # iptables -A OUTPUT -j ACCEPT -m comment --comment "Accept all outgoing"
-  firewall { 'Accept all outgoing':
+  firewall { '003 Accept all outgoing':
   	chain => 'OUTPUT',
-	state  => ['NEW', 'ESTABLISHED'],
+	state  => ['NEW', 'RELATED', 'ESTABLISHED'],
     action      => 'accept',
   }->
   # iptables -A INPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT  /// Allow outgoing SSH connection request,
-  firewall { '002.2 accept SSH':
+  firewall { '004 accept SSH':
     proto       => 'tcp',
-	dport => 22,
+	dport => 222,
  	chain   => 'INPUT',
 	state  => ['NEW', 'ESTABLISHED'],
     action      => 'accept',
   }->
   # iptables -I INPUT -p tcp --dport 80 -j ACCEPT -m comment --comment "Allow HTTP",
-  firewall { '002.2 accept 80/8080/443':
+  firewall { '005 all incomming to specific ports':
     proto       => 'tcp',
-	dport => [80,8080,443],
+	dport => $incommming_port_all,
  	chain   => 'INPUT',
-	state  => ['NEW', 'ESTABLISHED'],
     action      => 'accept',
+  } ->
+  firewall { '006 all incomming to specific ports for project's servers':
+	proto       => 'tcp',
+  	dport => $incommming_port_project,
+	source => $host_project,
+  	chain   => 'INPUT',
+	action      => 'accept',
   }
+
 }

@@ -9,13 +9,5 @@ node default {
 	include storyline_infra::grafana
 	include storyline_infra::monit
 
-	/*
-	resources { 'firewall':
-	  purge => true,
-	}
-
-	class { 'firewall': }
-	*/
-
-
+	include storyline_base::firewall
 }

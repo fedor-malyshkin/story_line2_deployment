@@ -12,5 +12,15 @@ node "datahouse01.nlp-project.ru"  {
 		include storyline_components::crawler
 
 		# add 'firewall' class with my pre/post
-		include storyline_base::firewall
+		#include storyline_base::firewall
+		resources { 'firewall':
+	  		purge => true,
+		}
+
+	# 	class { ['storyline_base::firewall_pre', 'storyline_base::firewall_post']: }
+		Firewall {
+	  		before  => Class['storyline_base::firewall_post'],
+	  		require => Class['storyline_base::firewall_pre'],
+		}
+		class { 'firewall': }		
 }

@@ -17,5 +17,5 @@ node "datahouse01.nlp-project.ru"  {
 		}
 		# add 'firewall' class with my pre/post
 		class { 'firewall': }
-
+		include storyline_base::firewall
 }

@@ -13,6 +13,10 @@ class storyline_infra::collectd () {
 	$enabled_running = $params['enabled_running']
 	$version = $params['version']
 
+	$enabled_mongodb = $params['enabled_mongodb']
+	$enabled_mongodb_user = $params['enabled_mongodb_user']
+	$enabled_mongodb_password = $params['enabled_mongodb_password']
+
 	exec { "collectd-mkdir":
 		command => "/bin/mkdir -p /data/db && /bin/mkdir -p /data/logs",
 		cwd => "/",
@@ -60,4 +64,30 @@ class storyline_infra::collectd () {
 			cwd => "/",
 		}
 	}
+	if $enabled_mongodb {
+		package {  'python-pip':
+			ensure => "present",
+		} ->
+		exec { "install-pymongo":
+			command => "/usr/bin/python -m pip install pymongo",
+			cwd => "/",
+			unless => '/usr/bin/python -m pip show pymongo',
+		} ->
+		file { "/usr/share/collectd/mongodb":
+			ensure => "directory",
+		}->
+		file { "/usr/share/collectd/mongodb/mongodb.py":
+			replace => true,
+			content => epp('storyline_infra/collectd_mongodb_py.epp'),
+		}->
+		file { "/usr/share/collectd/mongodb/types.db":
+			replace => true,
+			content => epp('storyline_infra/collectd_mongodb_types_db.epp'),
+		}->
+		file { "/etc/collectd/collectd.conf.d/mongodb.conf":
+			replace => true,
+			content => epp('storyline_infra/collectd_mongodb_conf.epp'),
+			notify => Service['collectd'],
+		}
+	} # if $enabled_mongodb {
 }

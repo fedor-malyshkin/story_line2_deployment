@@ -15,6 +15,9 @@ storyline_infra:
     dir_data:  '/data/db/collectd'
     dir_logs:  '/data/logs/collectd'
     version: "1.2.0-1"
+    enabled_mongodb: true
+    enabled_mongodb_user: "collectd"
+    enabled_mongodb_password: "collectd"
     enabled_startup: false
     enabled_running: true
   influxdb:

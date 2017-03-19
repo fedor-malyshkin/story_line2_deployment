@@ -91,5 +91,7 @@ storyline_components:
       influxdb_host:  "ci.nlp-project.ru"
       influxdb_port: "%{lookup('storyline_infra.influxdb.port')}"
       influxdb_db: "storyline"
+      influxdb_user: "crawler"
+      influxdb_password: "crawler"
       enabled_startup: false
       enabled_running: false

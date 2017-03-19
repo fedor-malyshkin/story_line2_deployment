@@ -26,6 +26,8 @@ class storyline_components::crawler () {
 	$influxdb_host = $params['influxdb_host']
 	$influxdb_port = $params['influxdb_port']
 	$influxdb_db = $params['influxdb_db']
+	$influxdb_user = $params['influxdb_user']
+	$influxdb_password = $params['influxdb_password']
 
 	# при запуске на сервер - получить соотвествующее содержимое файла
 	# или пусту строку - для определения дальнейших действий

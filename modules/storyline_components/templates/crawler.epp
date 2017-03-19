@@ -31,8 +31,8 @@ influxdb_metrics:
    influxdb_host: "<%= $storyline_components::crawler::influxdb_host -%>"
    influxdb_port: <%= $storyline_components::crawler::influxdb_port %>
    influxdb_db: "<%= $storyline_components::crawler::influxdb_db -%>"
-   influxdb_user: ""
-   influxdb_password: ""
+   influxdb_user: "<%= $storyline_components::crawler::influxdb_user -%>"
+   influxdb_password: "<%= $storyline_components::crawler::influxdb_password -%>"
    reporting_period: 30
 
 # Logging settings.

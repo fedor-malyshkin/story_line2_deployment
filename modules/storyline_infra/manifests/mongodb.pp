@@ -7,6 +7,7 @@ class storyline_infra::mongodb () {
 	$init_script = $params['init_script']
 	$dir_data = $params['dir_data']
 	$dir_logs = $params['dir_logs']
+	$enabled_auth = $params['enabled_auth']
 	$enabled_startup = $params['enabled_startup']
 	$enabled_running = $params['enabled_running']
 	$version = $params['version']

@@ -47,6 +47,7 @@ storyline_infra:
       dir_data:  '/data/db/mongodb'
       dir_logs:  '/data/logs/mongodb'
       version: "1:2.6.10-0ubuntu1"
+      enabled_auth: true
       enabled_startup: false
       enabled_running: true
   zookeeper:
@@ -95,7 +96,7 @@ storyline_components:
       dir_logs:  '/data/logs/crawler'
       dir_scripts: "/data/db/crawler/scripts"
       dir_sites_db: "/data/db/crawler/sites_db"
-      mongodb_connection_url: "mongodb://datahouse01:27017/"
+      mongodb_connection_url: "mongodb://crawler:crawler@datahouse01:27017/?authSource=admin&authMechanism=SCRAM-SHA-1"
       influxdb_host:  "ci.nlp-project.ru"
       influxdb_port: "8086"
       influxdb_db: "storyline"

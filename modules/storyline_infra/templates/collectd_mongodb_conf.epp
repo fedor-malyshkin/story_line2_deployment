@@ -11,8 +11,8 @@ TypesDB "/usr/share/collectd/mongodb/types.db"
     Import "mongodb"
     <Module mongodb>
         Host "127.0.0.1"
-		# User "<%= $storyline_infra::collectd::enabled_mongodb_user -%>"
-		# Password "<%= $storyline_infra::collectd::enabled_mongodb_password -%>"
+		User "<%= $storyline_infra::collectd::enabled_mongodb_user -%>"
+		Password "<%= $storyline_infra::collectd::enabled_mongodb_password -%>"
         Database "admin" "crawler" "storyline"
     </Module>
 </Plugin>

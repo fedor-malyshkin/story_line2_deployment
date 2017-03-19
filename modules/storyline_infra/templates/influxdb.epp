@@ -202,7 +202,7 @@ bind-address = ":<%= $storyline_infra::influxdb::port_http -%>"
 
   # Determines whether HTTP authentication is enabled.
   <% if $storyline_infra::influxdb::enabled_auth { -%>
-  	auth-enabled = true
+  auth-enabled = true
   <% } -%>
 
   # The default realm sent back when issuing a basic auth challenge.

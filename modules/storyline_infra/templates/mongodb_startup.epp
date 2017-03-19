@@ -23,7 +23,11 @@ NAME="mongodb"
 DESC="non-SQL RDBM"
 #PID="/run/$NAME.pid"
 PID="<%= $storyline_infra::mongodb::pid_file -%>"
+<% if $storyline_infra::mongodb::enabled_auth { -%>
+OPTS="--auth --config /etc/mongod.conf"
+<% } else { -%>
 OPTS="--config /etc/mongod.conf"
+<% } -%>
 USER="mongodb"
 
 # Check if DAEMON binary exist

@@ -81,6 +81,7 @@ storyline_infra:
       nimbus_port: "6627"
       logviewer_port: "8000"
       enabled_startup: false
+      enabled_running: true
 storyline_components:
   nexus_repo_url: "http://repo.nlp-project.ru:8082/nexus"
   server_storm:

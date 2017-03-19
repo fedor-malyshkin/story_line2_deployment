@@ -35,7 +35,7 @@ USER="crawler"
 case "$1" in
   start)
     log_daemon_msg "Starting $DESC" "$NAME"
-    if start-stop-daemon  -d $DIR -u $USER -c $USER --start  --quiet --oknodo --pidfile $PID  --remove-pidfile  --exec $DAEMON -- $OPTS 1>/dev/null
+    if start-stop-daemon  -d $DIR -u $USER -c $USER --start  --quiet --oknodo --pidfile $PID    --exec $DAEMON -- $OPTS 1>/dev/null
     then
       log_end_msg 0
     else
@@ -44,7 +44,7 @@ case "$1" in
     ;;
   stop)
     log_daemon_msg "Stopping $DESC" "$NAME"
-    if start-stop-daemon -d $DIR  -u $USER -c $USER  --retry TERM/5/KILL/5 --oknodo --stop --quiet --pidfile $PID  --remove-pidfile 1>/dev/null
+    if start-stop-daemon -d $DIR  -u $USER -c $USER  --retry TERM/5/KILL/5 --oknodo --stop --quiet --pidfile $PID   1>/dev/null
     then
       log_end_msg 0
     else
@@ -53,7 +53,7 @@ case "$1" in
     ;;
   reload)
     log_daemon_msg "Reloading $DESC configuration" "$NAME"
-    if start-stop-daemon  -d $DIR -u $USER -c $USER  --stop --signal HUP --quiet --oknodo --pidfile $PID  --remove-pidfile --exec $DAEMON -- $OPTS 1>/dev/null
+    if start-stop-daemon  -d $DIR -u $USER -c $USER  --stop --signal HUP --quiet --oknodo --pidfile $PID   --exec $DAEMON -- $OPTS 1>/dev/null
     then
       log_end_msg 0
     else
@@ -62,8 +62,8 @@ case "$1" in
     ;;
   restart|force-reload)
     log_daemon_msg "Restarting $DESC" "$NAME"
-    start-stop-daemon -d $DIR -u $USER -c $USER  --retry TERM/5/KILL/5 --oknodo  --stop --quiet --pidfile $PID  --remove-pidfile 1>/dev/null
-    if start-stop-daemon -d $DIR  -u $USER -c $USER  --start --quiet --oknodo  --pidfile $PID  --remove-pidfile --exec $DAEMON -- $OPTS 1>/dev/null
+    start-stop-daemon -d $DIR -u $USER -c $USER  --retry TERM/5/KILL/5 --oknodo  --stop --quiet --pidfile $PID   1>/dev/null
+    if start-stop-daemon -d $DIR  -u $USER -c $USER  --start --quiet --oknodo  --pidfile $PID   --exec $DAEMON -- $OPTS 1>/dev/null
     then
       log_end_msg 0
     else

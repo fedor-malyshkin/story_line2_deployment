@@ -23,14 +23,7 @@ class storyline_infra::zookeeper () {
 		unless => '/usr/bin/test -d /data/db -a -d /data/logs',
 	} ->
 	# working dir
-	file { $dir_logs:
-		ensure => "directory",
-		recurse => "true",
-		owner => "zookeeper",
-		group=> "zookeeper",
-		require => Exec['zookeeper-mkdir'],
-	}
-	file { $dir_data:
+	file { [$dir_bin, $dir_logs, $dir_data]:
 		ensure => "directory",
 		recurse => "true",
 		owner => "zookeeper",
@@ -42,10 +35,11 @@ class storyline_infra::zookeeper () {
   		source=> "http://apache-mirror.rbc.ru/pub/apache/zookeeper/zookeeper-${version}/zookeeper-${version}.tar.gz",
   		extract       => true,
   		extract_path  => "/provision",
-  		cleanup       => true,
+  		cleanup       => false,
 	}->
 	exec { "zookeeper-move_to_no_version_dir":
-		command => "/bin/mv /provision/zookeeper-${version} ${dir_bin}",
+		#command => "/bin/mv /provision/zookeeper-${version} ${dir_bin}",
+		command => "/bin/mv -f -t ${dir_bin} /provision/zookeeper-${version}/*",
 		creates => $dir_bin,
 		cwd => "/",
 		onlyif => "/usr/bin/test ! -d $dir_bin",

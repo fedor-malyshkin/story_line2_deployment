@@ -23,29 +23,23 @@ class storyline_infra::elasticsearch () {
 		unless => '/usr/bin/test -d /data/db -a -d /data/logs',
 	} ->
 	# working dir
-	file { $dir_logs:
+	file { [$dir_bin, $dir_logs, $dir_data]:
 		ensure => "directory",
 		recurse => "true",
 		owner => "elasticsearch",
 		group=> "elasticsearch",
 		require => Exec['elasticsearch-mkdir'],
 	} ->
-	file { $dir_data:
-		ensure => "directory",
-		recurse => "true",
-		owner => "elasticsearch",
-		group=> "elasticsearch",
-		require => Exec['elasticsearch-mkdir'],
-	}
 	archive { "elasticsearch-archive":
 		path=> "/provision/elasticsearch-${version}.zip",
   		source=>"https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${version}.zip",
   		extract       => true,
   		extract_path  => "/provision",
-  		cleanup       => true,
+  		cleanup       => false,
 	}->
 	exec { "elasticsearch-move_to_no_version_dir":
-		command => "/bin/mv /provision/elasticsearch-${version} ${dir_bin}",
+		# command => "/bin/mv /provision/elasticsearch-${version} ${dir_bin}",
+		command => "/bin/mv -f -t ${dir_bin} /provision/elasticsearch-${version}/* ",
 		creates => $dir_bin,
 		cwd => "/",
 		onlyif => "/usr/bin/test ! -d $dir_bin",

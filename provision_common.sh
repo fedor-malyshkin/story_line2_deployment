@@ -3,7 +3,7 @@
 PUPPET_BIN='/opt/puppetlabs/bin/puppet'
 
 # Ставим необходимые пакеты для старта
-apt-get update &&  apt-get -y install git mc htop apt-transport-https nano wget lsb-release apt-utils curl
+apt-get update &&  apt-get -y install git mc htop apt-transport-https nano wget lsb-release apt-utils curl python
 
 # Первоначально осуществляем установку `puppet-agent`
 if [ ! -d /etc/puppetlabs ]; then

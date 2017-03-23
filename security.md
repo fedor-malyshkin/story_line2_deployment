@@ -23,7 +23,7 @@
 	db.createUser({ user: "admin", 	pwd: "uqctzewud69!5!I#", roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]})
 	```
 1. Create additional users:
-    - connect as admin: `mongo --port 27017 -u "adminт" -p "uqctzewud69!5!I#" --authenticationDatabase "admin"`
+    - connect as admin: `mongo --port 27017 -u "admin" -p "uqctzewud69!5!I#" --authenticationDatabase "admin"`
     - crawler:
 	```js
 	use crawler

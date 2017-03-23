@@ -1,5 +1,0 @@
----
-storyline_infra:
-  monit:
-      port: "3000"
-      enabled_crawler: true

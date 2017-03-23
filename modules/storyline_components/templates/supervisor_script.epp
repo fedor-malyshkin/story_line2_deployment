@@ -1,0 +1,3 @@
+#!/bin/sh
+<%= $storyline_components::server_storm::dir_bin -%>/bin/storm supervisor >> <%= $storyline_components::server_storm::dir_logs -%>/server_storm_supervisor-out.log  2>&1 &
+echo $! > <%= $storyline_components::server_storm::dir_logs -%>/server_storm_supervisor.pid

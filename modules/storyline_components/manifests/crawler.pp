@@ -9,6 +9,7 @@ class storyline_components::crawler () {
 	$script_version = $script_params['version']
 
 	$params = $a_lot_of_params['crawler']
+	$app_port = $params['app_port']
 	$admin_port = $params['admin_port']
 	$pid_file = $params['pid_file']
 	$init_script = $params['init_script']

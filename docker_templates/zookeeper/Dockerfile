@@ -17,7 +17,7 @@ VOLUME ['/data/logs']
 
 # Expose port  from the container to the host
 EXPOSE 2181
-EXPOSE 3001
+EXPOSE 3000
 
 # make provision and start ....
 ENTRYPOINT ["/provision/start.sh", "${type}"]

@@ -36,20 +36,14 @@ class storyline_infra::zookeeper () {
   		extract       => true,
   		extract_path  => "/provision",
   		cleanup       => false,
-	}->
-	exec { "zookeeper-move_to_no_version_dir":
+		notify 		  => Exec['move_to_no_version_dir'],
+	}
+	exec { "move_to_no_version_dir":
 		#command => "/bin/mv /provision/zookeeper-${version} ${dir_bin}",
-		command => "/bin/mv -f -t ${dir_bin} /provision/zookeeper-${version}/*",
-		creates => $dir_bin,
+		command => "/bin/mv -f -t ${dir_bin} /provision/zookeeper-${version}/*  && chown -R zookeeper:zookeeper ${dir_bin}",
 		cwd => "/",
-		onlyif => "/usr/bin/test ! -d $dir_bin",
+		refreshonly => true,
 	} ->
-	file { $dir_bin:
-		ensure => "directory",
-		recurse => "true",
-		owner => "zookeeper",
-		group=> "zookeeper",
-	}->
 	file { "${dir_bin}/conf/zoo.cfg":
 		replace => true,
 		content => epp('storyline_infra/zoo.epp'),

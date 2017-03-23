@@ -16,7 +16,7 @@
 FQDNLookup true
 BaseDir "<%= $storyline_infra::collectd::dir_data -%>"
 #PluginDir "/usr/lib/collectd"
-TypesDB "/usr/share/collectd/types.db" "/etc/collectd/my_types.db"
+TypesDB "/usr/share/collectd/types.db"
 
 #----------------------------------------------------------------------------#
 # When enabled, plugins are loaded automatically with the default options    #
@@ -333,7 +333,7 @@ LoadPlugin swap
 <Plugin cpu>
 	ReportByCpu true
 	ReportByState true
-	ValuesPercentage false
+	ValuesPercentage true
 </Plugin>
 
 #<Plugin csv>

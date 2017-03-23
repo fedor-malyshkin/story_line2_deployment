@@ -120,12 +120,12 @@ class storyline_components::crawler () {
 		file { "${dir_bin}/script_version":
 			replace => true,
 			content => "${script_version}",
-		} ->
+			notify 		  => Exec['empty_crawler_dir_scripts'],
+		}
 		exec { "empty_crawler_dir_scripts":
-			require => File["${dir_scripts}"],
 			command => "/bin/rm -r -f ${dir_scripts}/*",
 			cwd => "/",
-			onlyif => "/usr/bin/test -d ${dir_scripts}",
+			refreshonly => true,
 		} ->
 		archive { $script_file_name_presented:
 			# require			=> Exec['empty_crawler_scripts_archive'],
@@ -135,12 +135,12 @@ class storyline_components::crawler () {
 			extract_path  	=> "${dir_scripts}",
 			creates			=> "${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
 			cleanup       	=> false,
-			notify 			=> [Service['crawler']],
-		} ->
+			notify 			=> [Service['crawler'], Exec['tune_crawler_dir_scripts']],
+		}
 		exec { "tune_crawler_dir_scripts":
 			command => "/bin/mv -f  ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts/* ${dir_scripts} && chown -R crawler:crawler ${dir_scripts}",
 			cwd => "/",
-			onlyif => "/usr/bin/test -d ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
+			refreshonly => true,
 		}
 		#} # if $current_version != $version {
 	} else {
@@ -148,13 +148,13 @@ class storyline_components::crawler () {
 			file { "${dir_bin}/script_version":
 				replace => true,
 				content => "${script_version}",
-				notify => Nexus::Artifact["${dir_scripts}/crawler_scripts_${script_version}.jar"],
+				notify 		  => Exec['empty_crawler_dir_scripts'],
 			}
 			exec { "empty_crawler_dir_scripts":
 				require => File["${dir_scripts}"],
 				command => "/bin/rm -f -r ${dir_scripts}/*",
 				cwd => "/",
-				onlyif => "/usr/bin/test -d ${dir_scripts}",
+				refreshonly => true,
 			} ->
 			# get artifact from nexus
 			nexus::artifact {"${dir_scripts}/crawler_scripts_${script_version}.jar":
@@ -171,12 +171,12 @@ class storyline_components::crawler () {
 				extract_path  	=> "${dir_scripts}",
 				creates			=> "${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
 				cleanup       	=> false,
-				notify 			=> [Service['crawler']],
-			} ->
+				notify 			=> [Service['crawler'], Exec['tune_crawler_dir_scripts']],
+			}
 			exec { "tune_crawler_dir_scripts":
-			command => "/bin/mv -f  ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts/* ${dir_scripts} && chown -R crawler:crawler ${dir_scripts}",
-			cwd => "/",
-			onlyif => "/usr/bin/test -d ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
+				command => "/bin/mv -f  ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts/* ${dir_scripts} && chown -R crawler:crawler ${dir_scripts}",
+				cwd => "/",
+				refreshonly => true,
 			}
 		} # if $current_version != $version {
 	}

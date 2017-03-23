@@ -3,6 +3,7 @@ class storyline_infra::elasticsearch () {
 	$params = lookup({"name" => "storyline_infra.elasticsearch",
 	    "merge" => {"strategy" => "deep"}})
 	$port = $params['port']
+	$bind_scope =  = $params['bind_scope']
 	$pid_file = $params['pid_file']
 	$init_script = $params['init_script']
 	$dir_bin = $params['dir_bin']
@@ -36,20 +37,14 @@ class storyline_infra::elasticsearch () {
   		extract       => true,
   		extract_path  => "/provision",
   		cleanup       => false,
-	}->
-	exec { "elasticsearch-move_to_no_version_dir":
+		notify 		  => Exec['move_to_no_version_dir'],
+	}
+	exec { "move_to_no_version_dir":
 		# command => "/bin/mv /provision/elasticsearch-${version} ${dir_bin}",
-		command => "/bin/mv -f -t ${dir_bin} /provision/elasticsearch-${version}/* ",
-		creates => $dir_bin,
+		command => "/bin/mv -f -t ${dir_bin} /provision/elasticsearch-${version}/* && chown -R elasticsearch:elasticsearch ${dir_bin}",
 		cwd => "/",
-		onlyif => "/usr/bin/test ! -d $dir_bin",
+		refreshonly => true,
 	} ->
-	file { $dir_bin:
-		ensure => "directory",
-		recurse => "true",
-		owner => "elasticsearch",
-		group=> "elasticsearch",
-	}->
 	file { "${dir_bin}/config/elasticsearch.yml":
 		replace => true,
 		content => epp('storyline_infra/elasticsearch.epp'),

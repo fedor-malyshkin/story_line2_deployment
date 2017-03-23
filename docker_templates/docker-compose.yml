@@ -59,6 +59,7 @@ services:
      - "${server_storm_logviewer_host_port}:8083"
      - "${server_storm_nimbus_host_port}:6627"
      - "${server_storm_monit_host_port}:3000"
+     - "${server_storm_drpc_host_port}:3772"
     volumes:
      - ${logs_dir}:/data/logs
      - ${data_dir}:/data/db

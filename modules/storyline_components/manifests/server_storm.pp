@@ -34,8 +34,8 @@ class storyline_components::server_storm () {
 	# при запуске на сервер - получить соотвествующее содержимое файла
 	# или пусту строку - для определения дальнейших действий
 	$current_topology_version = file_content("${dir_bin}/topology_version")
+	$dir_topo = '/server_storm_topology'
 
- 	include stdlib
 	# Initialize Nexus
 	class {'nexus':
 		url => $nexus_repo_url
@@ -51,7 +51,7 @@ class storyline_components::server_storm () {
 		unless => '/usr/bin/test -d /data/db -a -d /data/logs',
 	}
 	# working dirы
-	file { [$dir_bin, $dir_logs, $dir_data] :
+	file { [$dir_bin, $dir_logs, $dir_data, $dir_topo] :
 		ensure => "directory",
 		recurse => "true",
 		owner => "server_storm",
@@ -64,12 +64,12 @@ class storyline_components::server_storm () {
   		extract       => true,
   		extract_path  => "/provision",
   		cleanup       => false,
-	}->
-	exec { "server_storm-move_to_no_version_dir":
-		command => "/bin/mv -f -t ${dir_bin} /provision/apache-storm-${version}/* ",
-		creates => $dir_bin,
+		notify 		  => Exec['move_to_no_version_dir'],
+	}
+	exec { "move_to_no_version_dir":
+		command => "/bin/mv -f -t ${dir_bin} /provision/apache-storm-${version}/* && chown -R server_storm:server_storm ${dir_bin}",
 		cwd => "/",
-		onlyif => "/usr/bin/test ! -d $dir_bin",
+		refreshonly => true,
 	} ->
 	file { "${dir_bin}/conf/storm.yaml":
 		replace => true,
@@ -108,15 +108,16 @@ class storyline_components::server_storm () {
 	# update version
 	if $topology_version == "presented" {
 		$jar_file = "server_storm-PRESENTED.jar"
-		$full_path_jar_file = get_first_jar_file_name('/provision/artifacts')
+		$jar_file_provision = get_first_jar_file_name('/provision/artifacts')
+		$full_path_jar_file = "${dir_topo}/${jar_file}"
 		# get artifact "/provision/artifacts" dir
 		# returns file names with full path
-		file { "${dir_bin}/${jar_file}":
+		file { $full_path_jar_file:
 			replace => true,
 			ensure => file,
 			owner => "server_storm",
 			group=> "server_storm",
-			source => "file://${full_path_jar_file}",
+			source => "file://${jar_file_provision}",
 			notify => Exec['deploy-topology'],
 		}
 		# copy in any case
@@ -124,7 +125,7 @@ class storyline_components::server_storm () {
 		#} # if $current_version != $version {
 	} else {
 		$jar_file = "server_storm-${version}-all.jar"
-		$full_path_jar_file = "${dir_bin}/${jar_file}"
+		$full_path_jar_file = "${dir_topo}/${jar_file}"
 		if $current_topology_version != $topology_version {
 			# get artifact from nexus
 			nexus::artifact { $full_path_jar_file:

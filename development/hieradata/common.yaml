@@ -53,6 +53,7 @@ storyline_infra:
       enabled_running: false
   elasticsearch:
       port: "9200"
+      bind_scope: "site"
       # version: "5.2.2"
       version: "5.1.1"
       pid_file: '/data/logs/elasticsearch/elasticsearch.pid'

@@ -11,8 +11,10 @@ node "datahouse01.nlp-project.ru"  {
 
 		include storyline_components::crawler
 		include storyline_components::server_storm
+
+		include storyline_components::server_web
 		include storyline_infra::nginx
-		
+
 		include storyline_infra::monit
 		include storyline_base::firewall
 }

@@ -3,8 +3,6 @@ class storyline_components::crawler () {
 	$a_lot_of_params = lookup({"name" => "storyline_components",
 	    "merge" => {"strategy" => "deep"}})
 
-	$nexus_repo_url = $a_lot_of_params['nexus_repo_url']
-
 	$script_params = $a_lot_of_params['crawler_scripts']
 	$script_version = $script_params['version']
 

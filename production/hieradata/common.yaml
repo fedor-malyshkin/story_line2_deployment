@@ -89,13 +89,13 @@ storyline_components:
       dir_bin:  '/server_storm'
       dir_logs:  '/data/logs/server_storm'
       supervisor_slot_ports: [6700, 6701, 6702, 6703]
-      mongodb_connection_url: "mongodb://mongodb:27017/"
-      elasticsearch_host:  "elasticsearch"
+      mongodb_connection_url: "mongodb://datahouse01.nlp-project.ru:27017/"
+      elasticsearch_host:  "datahouse01.nlp-project.ru"
       elasticsearch_port: "9200"
-      zookeeper_host:  "zookeeper"
+      zookeeper_host:  "datahouse01.nlp-project.ru"
       zookeeper_port: "2181"
-      influxdb_host:  ""
-      influxdb_port: ""
+      influxdb_host:  "ci.nlp-project.ru"
+      influxdb_port: "8086"
       influxdb_db: "storyline"
       influxdb_user: "server_storm"
       influxdb_password: "server_storm"

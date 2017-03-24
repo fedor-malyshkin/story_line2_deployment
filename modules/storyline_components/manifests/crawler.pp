@@ -35,10 +35,6 @@ class storyline_components::crawler () {
 	$current_version = file_content("${dir_bin}/version")
 	$script_current_version = file_content("${dir_bin}/script_version")
 
-	# Initialize Nexus
-	class {'nexus':
-		url => $nexus_repo_url
-	}
 	user { 'crawler':
 		ensure => "present",
 		managehome => true,

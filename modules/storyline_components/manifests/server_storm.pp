@@ -2,7 +2,7 @@ class storyline_components::server_storm () {
 	$a_lot_of_params = lookup({"name" => "storyline_components",
 	    "merge" => {"strategy" => "deep"}})
 
-	$nexus_repo_url = $a_lot_of_params['nexus_repo_url']
+	# $nexus_repo_url = $a_lot_of_params['nexus_repo_url']
 
 	$params = $a_lot_of_params['server_storm']
 	$topology_version = $a_lot_of_params['server_storm']['version']
@@ -36,10 +36,10 @@ class storyline_components::server_storm () {
 	$current_topology_version = file_content("${dir_bin}/topology_version")
 	$dir_topo = '/server_storm_topology'
 
-	# Initialize Nexus
-	class {'nexus':
-		url => $nexus_repo_url
-	}
+	# # Initialize Nexus
+	# class {'nexus':
+	# 	url => $nexus_repo_url
+	# }
 	user { 'server_storm':
 		ensure => "present",
 		managehome => true,

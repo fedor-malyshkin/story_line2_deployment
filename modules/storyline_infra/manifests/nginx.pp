@@ -81,6 +81,7 @@ class storyline_infra::nginx () {
 	}
 	if $enabled_startup != true {
 		exec { "disable_nginx":
+			require => Package['nginx'],
 			command => "/bin/systemctl disable nginx",
 			cwd => "/",
 		}

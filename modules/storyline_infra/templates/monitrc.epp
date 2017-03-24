@@ -47,7 +47,7 @@ CHECK PROCESS collectd  with pidfile <%= $params_infra['collectd']['pid_file'] %
 <% } %>
 
 <% if $params_infra['monit']['enabled_nginx'] == true { %>
-# check collectd
+# check nginx
 CHECK PROCESS nginx with pidfile <%= $params_infra['nginx']['pid_file'] %>
 	start program = "<%= $params_infra['nginx']['init_script'] %> start"
 <% } %>

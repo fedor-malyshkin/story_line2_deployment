@@ -32,6 +32,8 @@ class storyline_components::server_storm () {
 	$current_topology_version = file_content("${dir_bin}/topology_version")
 	$dir_topo = '/server_storm_topology'
 
+	include storyline_components
+
 	user { 'server_storm':
 		ensure => "present",
 		managehome => true,

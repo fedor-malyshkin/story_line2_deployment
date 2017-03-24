@@ -32,8 +32,18 @@ node "server_storm"  {
 	include storyline_infra::monit
 }
 
-node "24ce9fc3b826"  {
+
+node "server_web"  {
 	include storyline_base::ntp
-	include storyline_components::crawler
+	include storyline_base::oracle_java
+	include storyline_components::server_web
+	include storyline_infra::nginx
 	include storyline_infra::monit
+}
+
+node default  {
+	include storyline_base::ntp
+	include storyline_base::oracle_java
+	include storyline_components::server_web
+	include storyline_infra::nginx
 }

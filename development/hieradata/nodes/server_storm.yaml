@@ -1,9 +1,0 @@
----
-storyline_infra:
-  monit:
-      port: "3000"
-      enabled_server_storm_nimbus: true
-      enabled_server_storm_supervisor: true
-      enabled_server_storm_ui: true
-      enabled_server_storm_logviewer: true
-      enabled_server_storm_drpc: true

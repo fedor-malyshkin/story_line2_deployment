@@ -33,6 +33,8 @@ class storyline_components::crawler () {
 	$current_version = file_content("${dir_bin}/version")
 	$script_current_version = file_content("${dir_bin}/script_version")
 
+	include storyline_components
+
 	user { 'crawler':
 		ensure => "present",
 		managehome => true,

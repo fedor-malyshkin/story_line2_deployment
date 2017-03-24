@@ -1,0 +1,43 @@
+server:
+  applicationConnectors:
+    - type: http
+      port: <%= $storyline_components::server_web::app_port %>
+  adminConnectors:
+    - type: http
+      port: <%= $storyline_components::server_web::admin_port %>
+
+drpc_host: "<%= $storyline_components::server_web::drpc_host -%>"
+drpc_port: <%= $storyline_components::server_web::drpc_port %>
+
+# Metrics reporting
+influxdb_metrics:
+   enabled: true
+   influxdb_host: "<%= $storyline_components::server_web::influxdb_host -%>"
+   influxdb_port: <%= $storyline_components::server_web::influxdb_port %>
+   influxdb_db: "<%= $storyline_components::server_web::influxdb_db -%>"
+   influxdb_user: "<%= $storyline_components::server_web::influxdb_user -%>"
+   influxdb_password: "<%= $storyline_components::server_web::influxdb_password -%>"
+   reporting_period: 30
+
+# Logging settings.
+logging:
+  # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
+  level: INFO
+  # Logger-specific levels.
+  loggers:
+    "ru.nlp_project.story_line2.server_web": DEBUG
+
+  appenders:
+    - type: console
+      threshold: ERROR
+      target: stdout
+    - type: file
+      # threshold: DEBUG
+      # The file to which current statements will be logged.
+      currentLogFilename: <%= $storyline_components::server_web::dir_logs -%>/server_web.log
+      # When the log file rotates, the archived log will be renamed to this and gzipped. The
+      # %d is replaced with the previous day (yyyy-MM-dd). Custom rolling windows can be created
+      # by passing a SimpleDateFormat-compatible format as an argument: "%d{yyyy-MM-dd-hh}".
+      archivedLogFilenamePattern: server_web-%d.log.gz
+      # The number of archived files to keep.
+      archivedFileCount: 5

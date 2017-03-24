@@ -41,6 +41,16 @@ storyline_infra:
     version: "1:2.6.10-0ubuntu1"
     enabled_startup: false
     enabled_running: false
+  nginx:
+    reverse_port: "8000"
+    reverse_url: "http://localhost:8001"
+    pid_file: '/data/logs/ngnix/ngnix.pid'
+    init_script: '/etc/init.d/ngnix'
+    dir_data:  '/data/db/ngnix'
+    dir_logs:  '/data/logs/ngnix'
+    version: "present"
+    enabled_startup: false
+    enabled_running: false
   zookeeper:
       port: "2181"
       version: "3.4.9"
@@ -109,5 +119,22 @@ storyline_components:
       influxdb_db: "storyline"
       influxdb_user: "crawler"
       influxdb_password: "crawler"
+      enabled_startup: false
+      enabled_running: false
+  server_web:
+      app_port: "8001"
+      admin_port: "8002"
+      pid_file: '/data/logs/server_web/server_web.pid'
+      init_script: '/etc/init.d/server_web'
+      dir_data:  '/data/db/server_web'
+      dir_bin:  '/server_web'
+      dir_logs:  '/data/logs/server_web'
+      drpc_port: "3772"
+      drpc_host: "server_storm"
+      influxdb_host:  "ci.nlp-project.ru"
+      influxdb_port: "%{lookup('storyline_infra.influxdb.port')}"
+      influxdb_db: "storyline"
+      influxdb_user: "server_web"
+      influxdb_password: "server_web"
       enabled_startup: false
       enabled_running: false

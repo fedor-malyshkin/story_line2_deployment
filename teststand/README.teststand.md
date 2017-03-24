@@ -3,7 +3,7 @@
 1. For tests use:
 - `docker start my_test_ubuntu` (correct ENTRYPOINT)
 - `docker exec -ti my_test_ubuntu /bin/bash`(runned container)
-- `docker run -ti  --entrypoint="/bin/bash"  d71d85654766 -i` (in-correct ENTRYPOINT)
+- `docker run -ti  --entrypoint="/bin/bash" -v "/home/fedor/Download:/provision" d88267ffba0a -i  ` (in-correct ENTRYPOINT)
 
 
 1. __Все операции проводим под `root`__

@@ -63,3 +63,24 @@ services:
     volumes:
      - ${logs_dir}:/data/logs
      - ${data_dir}:/data/db
+  server_web:
+    domainname: story-line.ru
+    hostname: server_web
+    build: ./server_web
+    depends_on:
+        - zookeeper
+        - elasticsearch
+        - mongodb
+        - server_storm
+    links:
+        - zookeeper
+        - elasticsearch
+        - mongodb
+        - server_storm
+    ports:
+     - "${server_web_host_port}:8001"
+     - "${server_web_monit_host_port}:3000"
+     - "${server_web_ngnix_host_port}:8000"
+    volumes:
+     - ${logs_dir}:/data/logs
+     - ${data_dir}:/data/db

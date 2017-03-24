@@ -46,6 +46,13 @@ CHECK PROCESS collectd  with pidfile <%= $params_infra['collectd']['pid_file'] %
 	start program = "<%= $params_infra['collectd']['init_script'] %> start"
 <% } %>
 
+<% if $params_infra['monit']['enabled_nginx'] == true { %>
+# check collectd
+CHECK PROCESS nginx with pidfile <%= $params_infra['nginx']['pid_file'] %>
+	start program = "<%= $params_infra['nginx']['init_script'] %> start"
+<% } %>
+
+
 # Project component
 <% if $params_infra['monit']['enabled_crawler'] == true { %>
 # check crawler
@@ -53,6 +60,11 @@ CHECK PROCESS crawler  with pidfile <%= $params_comp['crawler']['pid_file'] %>
 	start program = "<%= $params_comp['crawler']['init_script'] %>   start"
 <% } %>
 
+<% if $params_infra['monit']['enabled_server_web'] == true { %>
+# check server_web
+CHECK PROCESS server_web  with pidfile <%= $params_comp['server_web']['pid_file'] %>
+	start program = "<%= $params_comp['server_web']['init_script'] %>   start"
+<% } %>
 
 <% if $params_infra['monit']['enabled_server_storm_nimbus'] == true { %>
 # check server_storm_nimbus

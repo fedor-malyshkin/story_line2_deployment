@@ -3,7 +3,7 @@ class storyline_infra::elasticsearch () {
 	$params = lookup({"name" => "storyline_infra.elasticsearch",
 	    "merge" => {"strategy" => "deep"}})
 	$port = $params['port']
-	$bind_scope =  = $params['bind_scope']
+	$bind_scope = $params['bind_scope']
 	$pid_file = $params['pid_file']
 	$init_script = $params['init_script']
 	$dir_bin = $params['dir_bin']

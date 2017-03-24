@@ -129,3 +129,20 @@ storyline_components:
       influxdb_password: "crawler"
       enabled_startup: false
       enabled_running: true
+  server_web:
+      app_port: "8001"
+      admin_port: "8002"
+      pid_file: '/data/logs/server_web/server_web.pid'
+      init_script: '/etc/init.d/server_web'
+      dir_data:  '/data/db/server_web'
+      dir_bin:  '/server_web'
+      dir_logs:  '/data/logs/server_web'
+      drpc_port: "3772"
+      drpc_host: "server_storm"
+      influxdb_host:  "ci.nlp-project.ru"
+      influxdb_port: "8086"
+      influxdb_db: "storyline"
+      influxdb_user: "server_web"
+      influxdb_password: "server_web"
+      enabled_startup: false
+      enabled_running: false

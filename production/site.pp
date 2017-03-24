@@ -8,9 +8,11 @@ node "datahouse01.nlp-project.ru"  {
 		include storyline_infra::elasticsearch
 		include storyline_infra::zookeeper
 		include storyline_infra::mongodb
-		include storyline_infra::monit
+
 		include storyline_components::crawler
 		include storyline_components::server_storm
+		include storyline_infra::nginx
 		
+		include storyline_infra::monit
 		include storyline_base::firewall
 }

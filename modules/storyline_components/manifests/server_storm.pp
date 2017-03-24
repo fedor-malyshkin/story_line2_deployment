@@ -64,9 +64,9 @@ class storyline_components::server_storm () {
   		extract       => true,
   		extract_path  => "/provision",
   		cleanup       => false,
-		notify 		  => Exec['move_to_no_version_dir'],
+		notify 		  => Exec['server_storm_move_to_no_version_dir'],
 	}
-	exec { "move_to_no_version_dir":
+	exec { "server_storm_move_to_no_version_dir":
 		command => "/bin/mv -f -t ${dir_bin} /provision/apache-storm-${version}/* && chown -R server_storm:server_storm ${dir_bin}",
 		cwd => "/",
 		refreshonly => true,

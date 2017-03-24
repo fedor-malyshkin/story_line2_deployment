@@ -36,9 +36,9 @@ class storyline_infra::zookeeper () {
   		extract       => true,
   		extract_path  => "/provision",
   		cleanup       => false,
-		notify 		  => Exec['move_to_no_version_dir'],
+		notify 		  => Exec['zookeeper_move_to_no_version_dir'],
 	}
-	exec { "move_to_no_version_dir":
+	exec { "zookeeper_move_to_no_version_dir":
 		#command => "/bin/mv /provision/zookeeper-${version} ${dir_bin}",
 		command => "/bin/mv -f -t ${dir_bin} /provision/zookeeper-${version}/*  && chown -R zookeeper:zookeeper ${dir_bin}",
 		cwd => "/",

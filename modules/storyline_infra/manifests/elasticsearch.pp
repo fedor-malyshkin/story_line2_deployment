@@ -37,9 +37,9 @@ class storyline_infra::elasticsearch () {
   		extract       => true,
   		extract_path  => "/provision",
   		cleanup       => false,
-		notify 		  => Exec['move_to_no_version_dir'],
+		notify 		  => Exec['elasticsearch_move_to_no_version_dir'],
 	}
-	exec { "move_to_no_version_dir":
+	exec { "elasticsearch_move_to_no_version_dir":
 		# command => "/bin/mv /provision/elasticsearch-${version} ${dir_bin}",
 		command => "/bin/mv -f -t ${dir_bin} /provision/elasticsearch-${version}/* && chown -R elasticsearch:elasticsearch ${dir_bin}",
 		cwd => "/",

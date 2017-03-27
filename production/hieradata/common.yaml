@@ -15,13 +15,13 @@ storyline_infra:
     dir_data:  '/data/db/collectd'
     dir_logs:  '/data/logs/collectd'
     version: "1.2.0-1"
-    enabled_mongodb: true
+    enabled_mongodb: false
     mongodb_user: "collectd"
     mongodb_password: "collectd"
-    enabled_storm: true
+    enabled_storm: false
     storm_ui_url: "http://datahouse01.nlp-project.ru:8082/"
-    enabled_elasticsearch: true
-    elasticsearch_host: "datahouse01.nlp-project.ru"
+    enabled_elasticsearch: false
+    elasticsearch_host: "ci.nlp-project.ru"
     elasticsearch_port: "9200"
     elasticsearch_cluster: "elastic_storyline"
     enabled_startup: false
@@ -120,7 +120,7 @@ storyline_components:
       enabled_running: false
       topology_configuration_url: "http://datahouse01:9000/server_storm.yaml"
       mongodb_connection_url: "mongodb://server_storm:server_storm@datahouse01:27017/?authSource=storyline"
-      elasticsearch_host:  "datahouse01.nlp-project.ru"
+      elasticsearch_host:  "ci.nlp-project.ru"
       elasticsearch_port: "9200"
   crawler:
       app_port: "8080"

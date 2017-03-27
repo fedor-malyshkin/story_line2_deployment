@@ -1,23 +1,15 @@
 ---
 storyline_base:
   firewall:
-    incommming_port_all: [222, 3000, 8000]
-    incommming_port_project: [25826, 8086,  27017, 2181, 6627, 8082, 8083, 3772, 8001, 9000]
+    incommming_port_all: [222, 8080, 3000, 8081]
+    incommming_port_project: [25826, 8086, 9200]
 storyline_infra:
   monit:
       port: "3000"
       enabled_collectd: true
-      enabled_mongodb: true
       enabled_elasticsearch: true
-      enabled_zookeeper: true
-      enabled_crawler: true
-      enabled_server_storm_nimbus: true  # must be enabled only on one server!!!
-      enabled_server_storm_supervisor: true
-      enabled_server_storm_ui: true
-      enabled_server_storm_logviewer: true
-      enabled_server_storm_drpc: true
-      enabled_server_web: true
-      enabled_nginx: true
+      enabled_influxdb: true
+      enabled_grafana: true
       enabled_startup: true
       enabled_running: true
   collectd:
@@ -28,12 +20,12 @@ storyline_infra:
     dir_data:  '/data/db/collectd'
     dir_logs:  '/data/logs/collectd'
     version: "1.2.0-1"
-    enabled_mongodb: true
+    enabled_mongodb: false
     mongodb_user: "collectd"
     mongodb_password: "collectd"
-    enabled_storm: true
+    enabled_storm: false
     storm_ui_url: "http://datahouse01.nlp-project.ru:8082/"
-    enabled_elasticsearch: false
+    enabled_elasticsearch: true
     elasticsearch_host: "ci.nlp-project.ru"
     elasticsearch_port: "9200"
     elasticsearch_cluster: "elastic_storyline"

@@ -28,9 +28,9 @@ node "ci.nlp-project.ru"  {
 		include storyline_base::oracle_java
 
 		include storyline_infra::collectd
-		
+
 		include storyline_infra::influxdb
-		include storyline_infra::elsticsearch
+		include storyline_infra::elasticsearch
 		include storyline_infra::grafana
 
 		include storyline_infra::monit

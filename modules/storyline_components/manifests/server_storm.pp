@@ -160,9 +160,8 @@ class storyline_components::server_storm () {
 			owner => "server_storm",
 			group=> "server_storm",
 			require => File[ $dir_bin],
-		}
+		} ->
 		file { "${dir_bin}/topology/server_storm.yaml":
-			require => File ["${dir_bin}/topology"],
 			replace => true,
 			owner => "server_storm",
 			group=> "server_storm",

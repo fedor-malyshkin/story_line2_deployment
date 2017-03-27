@@ -8,7 +8,7 @@
     Import "elasticsearch"
     <Module "elasticsearch">
 		Host "<%= $storyline_infra::collectd::elasticsearch_host -%>"
-		Port <%= $storyline_infra::collectd::elasticsearch_portt %>
+		Port <%= $storyline_infra::collectd::elasticsearch_port %>
         Verbose false
         Cluster "<%= $storyline_infra::collectd::elasticsearch_cluster -%>"
         Indexes ["_all"]

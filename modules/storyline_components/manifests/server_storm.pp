@@ -122,7 +122,7 @@ class storyline_components::server_storm () {
 			owner => "server_storm",
 			group=> "server_storm",
 			source => "file://${jar_file_provision}",
-			notify => Exec['deploy-topology'],
+			# notify => Exec['deploy-topology'],
 		}
 		# copy in any case
 		#if $current_version != $version {
@@ -138,7 +138,7 @@ class storyline_components::server_storm () {
 				classifier => 'all',
 				output => $full_path_jar_file,
 				packaging  => 'jar',
-				notify => Exec['deploy-topology'],
+				# notify => Exec['deploy-topology'],
 			}
 		} # if $current_version != $version {
 	}

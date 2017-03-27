@@ -16,8 +16,10 @@ storyline_infra:
     dir_logs:  '/data/logs/collectd'
     version: "1.2.0-1"
     enabled_mongodb: true
-    enabled_mongodb_user: "collectd"
-    enabled_mongodb_password: "collectd"
+    mongodb_user: "collectd"
+    mongodb_password: "collectd"
+    enabled_storm: true
+    storm_ui_url: "http://datahouse01.nlp-project.ru:8082/"
     enabled_startup: false
     enabled_running: true
   influxdb:

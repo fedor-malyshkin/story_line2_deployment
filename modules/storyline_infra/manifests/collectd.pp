@@ -14,8 +14,11 @@ class storyline_infra::collectd () {
 	$version = $params['version']
 
 	$enabled_mongodb = $params['enabled_mongodb']
-	$enabled_mongodb_user = $params['enabled_mongodb_user']
-	$enabled_mongodb_password = $params['enabled_mongodb_password']
+	$mongodb_user = $params['mongodb_user']
+	$mongodb_password = $params['mongodb_password']
+
+	$enabled_storm = $params['enabled_storm']
+	$storm_ui_url = $params['storm_ui_url']
 
 	exec { "collectd-mkdir":
 		command => "/bin/mkdir -p /data/db && /bin/mkdir -p /data/logs",
@@ -87,6 +90,19 @@ class storyline_infra::collectd () {
 		file { "/etc/collectd/collectd.conf.d/mongodb.conf":
 			replace => true,
 			content => epp('storyline_infra/collectd_mongodb_conf.epp'),
+			notify => Service['collectd'],
+		}
+	} # if $enabled_mongodb {
+	# https://github.com/srotya/storm-collectd
+	if $enabled_storm {
+		file { "/usr/share/collectd/java/storm-collectd.jar":
+			replace => true,
+			ensure => file,
+			source => "puppet:///modules/storyline_infra/storm-collectd.jar",
+		}->
+		file { "/etc/collectd/collectd.conf.d/storm.conf":
+			replace => true,
+			content => epp('storyline_infra/collectd_storm_conf.epp'),
 			notify => Service['collectd'],
 		}
 	} # if $enabled_mongodb {

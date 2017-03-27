@@ -1,0 +1,11 @@
+LoadPlugin java
+<Plugin java>
+       JVMArg "-Djava.class.path=/usr/share/collectd/java/collectd-api.jar:/usr/share/collectd/java/storm-collectd.jar"
+
+       LoadPlugin "com.srotya.collectd.storm.StormNimbusMetrics"
+        <Plugin "storm">
+                address "<%= $storyline_infra::collectd::storm_ui_url -%>"
+                kerberos false
+        #       jaas "<PATH TO JAAS CONF>"
+        </Plugin>
+</Plugin>

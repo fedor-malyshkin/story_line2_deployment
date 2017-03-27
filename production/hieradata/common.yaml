@@ -53,6 +53,8 @@ storyline_infra:
   nginx:
     reverse_port: "8000"
     reverse_url: "http://localhost:8001"
+    enabled_topology_configuration: true
+    topology_configuration_port: 9000    
     pid_file: '/data/logs/nginx/nginx.pid'
     init_script: '/etc/init.d/nginx'
     dir_data:  '/data/db/nginx'

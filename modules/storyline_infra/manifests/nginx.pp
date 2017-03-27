@@ -11,6 +11,9 @@ class storyline_infra::nginx () {
 	$version = $params['version']
 	$enabled_startup = $params['enabled_startup']
 	$enabled_running = $params['enabled_running']
+	# topology_configuration
+	$enabled_topology_configuration = $params['enabled_topology_configuration']
+	$topology_configuration_port = $params['topology_configuration_port']
 
 	user { 'nginx':
 		ensure => "present",
@@ -78,6 +81,14 @@ class storyline_infra::nginx () {
 		restart 	=> "${init_script} restart",
 		hasrestart => true,
 		hasstatus => true,
+	}
+	if $enabled_topology_configuration == true {
+		file { "/etc/nginx/conf.d/default.conf":
+			replace => true,
+			content => epp('storyline_infra/nginx_topology.epp'),
+			mode=>"ug=rwx,o=r",
+			notify => Service['nginx'],
+		}
 	}
 	if $enabled_startup != true {
 		exec { "disable_nginx":

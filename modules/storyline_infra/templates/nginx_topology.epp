@@ -1,0 +1,9 @@
+server {
+    listen       <%= $storyline_infra::nginx::topology_configuration_port -%>;
+    server_name  localhost;
+
+	location / {
+        root   /server_storm/topology;
+    }
+
+}

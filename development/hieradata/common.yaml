@@ -94,8 +94,10 @@ storyline_components:
       mongodb_connection_url: "mongodb://mongodb:27017/"
       elasticsearch_host:  "elasticsearch"
       elasticsearch_port: "9200"
-      zookeeper_host:  "zookeeper"
+      zookeeper_hosts:  ["zookeeper"]
       zookeeper_port: "2181"
+      nimbus_seeds: ["server_storm"]
+      drpc_servers: ["server_storm"]
       influxdb_host:  ""
       influxdb_port: ""
       influxdb_db: "storyline"

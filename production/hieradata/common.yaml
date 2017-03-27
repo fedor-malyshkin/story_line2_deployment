@@ -102,8 +102,10 @@ storyline_components:
       mongodb_connection_url: "mongodb://datahouse01.nlp-project.ru:27017/"
       elasticsearch_host:  "datahouse01.nlp-project.ru"
       elasticsearch_port: "9200"
-      zookeeper_host:  "datahouse01.nlp-project.ru"
+      zookeeper_hosts:  ["datahouse01.nlp-project.ru"]
       zookeeper_port: "2181"
+      nimbus_seeds:  ["datahouse01.nlp-project.ru"]
+      drpc_servers:  ["datahouse01.nlp-project.ru"]
       influxdb_host:  "ci.nlp-project.ru"
       influxdb_port: "8086"
       influxdb_db: "storyline"

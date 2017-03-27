@@ -1,11 +1,16 @@
 storm.zookeeper.servers:
-  - "<%= $storyline_components::server_storm::zookeeper_host -%>"
+<% $storyline_components::server_storm::zookeeper_hosts.each |$host| {-%>
+  - "<%= $host -%>"
+<% } -%>
 
 storm.zookeeper.port: <%= $storyline_components::server_storm::zookeeper_port %>
 
 storm.local.dir: "<%= $storyline_components::server_storm::dir_data -%>"
 
-#nimbus.seeds: ["111.222.333.44"]
+nimbus.seeds:
+<% $storyline_components::server_storm::nimbus_seeds.each |$host| {-%>
+  - "<%= $host -%>"
+<% } -%>
 
 supervisor.slots.ports:
 <% $storyline_components::server_storm::supervisor_slot_ports.each |$port| {-%>
@@ -13,7 +18,9 @@ supervisor.slots.ports:
 <% } -%>
 
 drpc.servers:
-  - "localhost"
+<% $storyline_components::server_storm::drpc_servers.each |$host| {-%>
+  - "<%= $host -%>"
+<% } -%>
 
 # ui
 ui.port: <%= $storyline_components::server_storm::ui_port %>

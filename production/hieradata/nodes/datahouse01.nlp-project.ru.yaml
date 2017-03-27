@@ -11,7 +11,7 @@ storyline_infra:
       enabled_elasticsearch: true
       enabled_zookeeper: true
       enabled_crawler: true
-      enabled_server_storm_nimbus: true
+      enabled_server_storm_nimbus: true  # must be enabled only on one server!!!
       enabled_server_storm_supervisor: true
       enabled_server_storm_ui: true
       enabled_server_storm_logviewer: true

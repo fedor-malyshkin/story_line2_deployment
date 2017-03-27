@@ -8,7 +8,6 @@ storyline_infra:
       port: "3000"
       enabled_collectd: true
       enabled_mongodb: true
-      enabled_elasticsearch: true
       enabled_zookeeper: true
       enabled_crawler: true
       enabled_server_storm_nimbus: true  # must be enabled only on one server!!!

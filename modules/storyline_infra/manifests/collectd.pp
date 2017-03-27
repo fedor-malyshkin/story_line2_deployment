@@ -21,6 +21,9 @@ class storyline_infra::collectd () {
 	$storm_ui_url = $params['storm_ui_url']
 	# elasticsearch
 	$enabled_elasticsearch = $params['enabled_elasticsearch']
+	$elasticsearch_host = $params['elasticsearch_host']
+	$elasticsearch_port = $params['elasticsearch_port']
+	$elasticsearch_cluster = $params['elasticsearch_cluster']
 
 	exec { "collectd-mkdir":
 		command => "/bin/mkdir -p /data/db && /bin/mkdir -p /data/logs",

@@ -142,16 +142,16 @@ class storyline_components::server_storm () {
 			}
 		} # if $current_version != $version {
 	}
-	exec{ 'deploy-topology':
-		command => "${dir_bin}/bin/storm deploy ${full_path_jar_file}",
-#		creates => $dir_bin,
-		cwd => "/",
-#		onlyif => "/usr/bin/test ! -d $dir_bin",
-	} ->
-	file { "${dir_bin}/version":
-		replace => true,
-		content => "${topology_version}",
-	}
+# 	exec{ 'deploy-topology':
+# 		command => "${dir_bin}/bin/storm deploy ${full_path_jar_file}",
+# #		creates => $dir_bin,
+# 		cwd => "/",
+# #		onlyif => "/usr/bin/test ! -d $dir_bin",
+# 	} ->
+# 	file { "${dir_bin}/version":
+# 		replace => true,
+# 		content => "${topology_version}",
+# 	}
 
 	if $enabled_topology_configuration == true {
 		file { "${dir_bin}/topology":
@@ -167,7 +167,5 @@ class storyline_components::server_storm () {
 			group=> "server_storm",
 			content => epp('storyline_components/server_storm_config.epp'),
 		}
-
 	}
-
 }

@@ -5,8 +5,8 @@ TypesDB "/usr/share/collectd/mongodb/types.db"
 </LoadPlugin>
 
 <Plugin python>
-    # mongodb.py is at path /usr/share/collectd/mongodb/mongodb.py
-    ModulePath "/usr/share/collectd/mongodb/"
+    # mongodb.py is at path /usr/share/collectd/mongodb.py
+    ModulePath "/usr/share/collectd/"
 
     Import "mongodb"
     <Module mongodb>

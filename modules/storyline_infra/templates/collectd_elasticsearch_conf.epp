@@ -1,0 +1,24 @@
+<LoadPlugin python>
+    Globals true
+</LoadPlugin>
+
+<Plugin python>
+	ModulePath "/usr/share/collectd/"
+
+    Import "elasticsearch"
+    <Module "elasticsearch">
+		Host "<%= $storyline_infra::collectd::elasticsearch_host -%>"
+		Port <%= $storyline_infra::collectd::elasticsearch_portt %>
+        Verbose false
+        Cluster "<%= $storyline_infra::collectd::elasticsearch_cluster -%>"
+        Indexes ["_all"]
+        EnableIndexStats true
+        IndexStatsMasterOnly true
+        EnableClusterHealth true
+        Interval 10
+        IndexInterval 300
+        DetailedMetrics false
+        ThreadPools ["search","index"]
+        AdditionalMetrics [""]
+    </Module>
+</Plugin>

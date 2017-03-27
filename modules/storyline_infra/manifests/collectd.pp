@@ -12,13 +12,15 @@ class storyline_infra::collectd () {
 	$enabled_startup = $params['enabled_startup']
 	$enabled_running = $params['enabled_running']
 	$version = $params['version']
-
+# mongo db
 	$enabled_mongodb = $params['enabled_mongodb']
 	$mongodb_user = $params['mongodb_user']
 	$mongodb_password = $params['mongodb_password']
-
+# storm db
 	$enabled_storm = $params['enabled_storm']
 	$storm_ui_url = $params['storm_ui_url']
+	# elasticsearch
+	$enabled_elasticsearch = $params['enabled_elasticsearch']
 
 	exec { "collectd-mkdir":
 		command => "/bin/mkdir -p /data/db && /bin/mkdir -p /data/logs",
@@ -79,7 +81,7 @@ class storyline_infra::collectd () {
 		file { "/usr/share/collectd/mongodb":
 			ensure => "directory",
 		}->
-		file { "/usr/share/collectd/mongodb/mongodb.py":
+		file { "/usr/share/collectd/mongodb.py":
 			replace => true,
 			content => epp('storyline_infra/collectd_mongodb_py.epp'),
 		}->
@@ -103,6 +105,19 @@ class storyline_infra::collectd () {
 		file { "/etc/collectd/collectd.conf.d/storm.conf":
 			replace => true,
 			content => epp('storyline_infra/collectd_storm_conf.epp'),
+			notify => Service['collectd'],
+		}
+	} # if $enabled_mongodb {
+	# https://github.com/signalfx/integrations/tree/master/collectd-elasticsearch
+	# https://github.com/signalfx/collectd-elasticsearch
+	if $enabled_elasticsearch {
+		file { "/usr/share/collectd/elasticsearch.py":
+			replace => true,
+			content => epp('storyline_infra/collectd_elasticsearch_py.epp'),
+		}->
+		file { "/etc/collectd/collectd.conf.d/elasticsearch.conf":
+			replace => true,
+			content => epp('storyline_infra/collectd_elasticsearch_conf.epp'),
 			notify => Service['collectd'],
 		}
 	} # if $enabled_mongodb {

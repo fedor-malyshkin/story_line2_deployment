@@ -20,6 +20,10 @@ storyline_infra:
     mongodb_password: "collectd"
     enabled_storm: true
     storm_ui_url: "http://datahouse01.nlp-project.ru:8082/"
+    enabled_elasticsearch: true
+    elasticsearch_host: "datahouse01.nlp-project.ru"
+    elasticsearch_port: "9200"
+    elasticsearch_cluster: "elastic_storyline"
     enabled_startup: false
     enabled_running: true
   influxdb:

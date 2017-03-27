@@ -34,3 +34,8 @@
 	use admin
 	db.createUser({user: "collectd", pwd: "collectd", roles: [ { role: "readAnyDatabase", db: "admin" }, { role: "clusterMonitor", db: "admin" } ]});
 	```
+	- server_storm:
+	```js
+	use storyline
+	db.createUser({user: "server_storm", pwd: "server_storm", roles: [ { role: "readWrite", db: "crawler" }, { role: "readWrite", db: "storyline" } ]});
+	```

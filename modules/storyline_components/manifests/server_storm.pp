@@ -13,9 +13,6 @@ class storyline_components::server_storm () {
 	$dir_data = $params['dir_data']
 	$dir_bin = $params['dir_bin']
 	$dir_logs = $params['dir_logs']
-	$mongodb_connection_url = $params['mongodb_connection_url']
-	$elasticsearch_host = $params['elasticsearch_host']
-	$elasticsearch_port = $params['elasticsearch_port']
 	$zookeeper_hosts = $params['zookeeper_hosts']
 	$zookeeper_port = $params['zookeeper_port']
 	$nimbus_seeds = $params['nimbus_seeds']
@@ -28,11 +25,22 @@ class storyline_components::server_storm () {
 	$enabled_startup = $params['enabled_startup']
 	$enabled_running = $params['enabled_running']
 
+	$mongodb_connection_url = $params['mongodb_connection_url']
+	$elasticsearch_host = $params['elasticsearch_host']
+	$elasticsearch_port = $params['elasticsearch_port']
+
 	$certname = $trusted['certname']
 	# при запуске на сервер - получить соотвествующее содержимое файла
 	# или пусту строку - для определения дальнейших действий
 	$current_topology_version = file_content("${dir_bin}/topology_version")
 	$dir_topo = '/server_storm_topology'
+
+
+	$nginx_params = lookup({"name" => "storyline_infra.nginx",
+		"merge" => {"strategy" => "deep"}})
+	# topology_configuration на этом узле
+	$enabled_topology_configuration = $params['enabled_topology_configuration']
+
 
 	include storyline_components
 
@@ -144,4 +152,22 @@ class storyline_components::server_storm () {
 		replace => true,
 		content => "${topology_version}",
 	}
+
+	if $enabled_topology_configuration == true {
+		file { "${dir_bin}/topology":
+			ensure => "directory",
+			recurse => "true",
+			owner => "server_storm",
+			group=> "server_storm",
+			require => File[ $dir_bin],
+		}->
+		file { "${dir_bin}/topology/server_storm.yaml":
+			replace => true,
+			owner => "server_storm",
+			group=> "server_storm",
+			content => epp('storyline_components/server_storm_config.epp'),
+		}
+
+	}
+
 }

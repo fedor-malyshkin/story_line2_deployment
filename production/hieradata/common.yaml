@@ -54,7 +54,7 @@ storyline_infra:
     reverse_port: "8000"
     reverse_url: "http://localhost:8001"
     enabled_topology_configuration: true
-    topology_configuration_port: 9000    
+    topology_configuration_port: 9000
     pid_file: '/data/logs/nginx/nginx.pid'
     init_script: '/etc/init.d/nginx'
     dir_data:  '/data/db/nginx'
@@ -101,9 +101,6 @@ storyline_components:
       dir_bin:  '/server_storm'
       dir_logs:  '/data/logs/server_storm'
       supervisor_slot_ports: [6700, 6701, 6702, 6703]
-      mongodb_connection_url: "mongodb://datahouse01.nlp-project.ru:27017/"
-      elasticsearch_host:  "datahouse01.nlp-project.ru"
-      elasticsearch_port: "9200"
       zookeeper_hosts:  ["datahouse01.nlp-project.ru"]
       zookeeper_port: "2181"
       nimbus_seeds:  ["datahouse01.nlp-project.ru"]
@@ -115,6 +112,10 @@ storyline_components:
       influxdb_password: "server_storm"
       enabled_startup: false
       enabled_running: false
+      topology_configuration_url: "http://datahouse01:9000/server_storm.yaml"
+      mongodb_connection_url: "mongodb://server_storm:server_storm@datahouse01:27017/?authSource=storyline"
+      elasticsearch_host:  "datahouse01.nlp-project.ru"
+      elasticsearch_port: "9200"
   crawler:
       app_port: "8080"
       admin_port: "8081"

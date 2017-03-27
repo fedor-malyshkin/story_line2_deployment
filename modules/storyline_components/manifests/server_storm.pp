@@ -39,7 +39,7 @@ class storyline_components::server_storm () {
 	$nginx_params = lookup({"name" => "storyline_infra.nginx",
 		"merge" => {"strategy" => "deep"}})
 	# topology_configuration на этом узле
-	$enabled_topology_configuration = $params['enabled_topology_configuration']
+	$enabled_topology_configuration = $nginx_params['enabled_topology_configuration']
 
 
 	include storyline_components
@@ -153,15 +153,16 @@ class storyline_components::server_storm () {
 # 		content => "${topology_version}",
 # 	}
 
-	if $enabled_topology_configuration == true {
+	if $enabled_topology_configuration {
 		file { "${dir_bin}/topology":
 			ensure => "directory",
 			recurse => "true",
 			owner => "server_storm",
 			group=> "server_storm",
 			require => File[ $dir_bin],
-		}->
+		}
 		file { "${dir_bin}/topology/server_storm.yaml":
+			require => File ["${dir_bin}/topology"],
 			replace => true,
 			owner => "server_storm",
 			group=> "server_storm",

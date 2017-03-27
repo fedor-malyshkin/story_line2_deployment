@@ -82,7 +82,7 @@ class storyline_infra::nginx () {
 		hasrestart => true,
 		hasstatus => true,
 	}
-	if $enabled_topology_configuration == true {
+	if $enabled_topology_configuration {
 		file { "/etc/nginx/conf.d/topology.conf":
 			replace => true,
 			content => epp('storyline_infra/nginx_topology.epp'),

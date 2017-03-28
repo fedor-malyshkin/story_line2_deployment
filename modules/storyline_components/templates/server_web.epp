@@ -31,8 +31,10 @@ logging:
     - type: console
       threshold: ERROR
       target: stdout
+	  logFormat: "%-5level [%d] %logger{32} - %msg%n"
     - type: file
       # threshold: DEBUG
+	  logFormat: "%-5level [%d] %logger{32} - %msg%n"
       # The file to which current statements will be logged.
       currentLogFilename: <%= $storyline_components::server_web::dir_logs -%>/server_web.log
       # When the log file rotates, the archived log will be renamed to this and gzipped. The

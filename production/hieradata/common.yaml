@@ -119,7 +119,7 @@ storyline_components:
       enabled_startup: false
       enabled_running: false
       topology_configuration_url: "http://datahouse01:9000/server_storm.yaml"
-      mongodb_connection_url: "mongodb://server_storm:server_storm@datahouse01:27017/?authSource=storyline"
+      mongodb_connection_url: "mongodb://server_storm:server_storm@datahouse01.nlp-project.ru:27017/?authSource=storyline"
       elasticsearch_host:  "ci.nlp-project.ru"
       elasticsearch_port: "9200"
   crawler:

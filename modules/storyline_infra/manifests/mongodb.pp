@@ -69,10 +69,11 @@ class storyline_infra::mongodb () {
 		}
 	}
 	logrotate::rule { 'mongodb':
-  		path          => "${dir_logs}/*.log",
-  		rotate        => 5,
+  		path			=> "${dir_logs}/*.log",
+  		rotate      	=> 5,
 		copytruncate	=> true,
-  		size          => '10M',
-  		dateext    => 'day',
+		dateext			=> true,
+  		size          	=> '10M',
+  		rotate_every    => 'day',
 	}
 }

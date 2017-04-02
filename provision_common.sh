@@ -25,6 +25,7 @@ $PUPPET_BIN module install puppetlabs-firewall
 $PUPPET_BIN module install saz-ssh
 $PUPPET_BIN module install saz-sudo
 $PUPPET_BIN module install saz-limits
+$PUPPET_BIN module install thias-sysctl
 $PUPPET_BIN module install yo61-logrotate
 $PUPPET_BIN module install puppetlabs-apt
 $PUPPET_BIN module install puppet-archive

@@ -1,7 +1,7 @@
 
 node "datahouse01.nlp-project.ru"  {
 	    include ::limits
-		include sysctl::base
+		include ::sysctl::base
 		include ::logrotate
 
 		include storyline_base::ntp
@@ -27,9 +27,9 @@ node "datahouse01.nlp-project.ru"  {
 
 node "ci.nlp-project.ru"  {
 	    include ::limits
-		include sysctl::base
+		include ::sysctl::base
 		include ::logrotate
-		
+
 		include storyline_base::ntp
 		include storyline_base::srv_oper
 		include storyline_base::ssh

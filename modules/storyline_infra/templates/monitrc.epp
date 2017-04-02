@@ -13,7 +13,9 @@ set httpd port <%= $params_infra['monit']['port'] %>
 <% if $params_infra['monit']['enabled_elasticsearch'] == true { %>
 # check elasticsearch
 CHECK PROCESS elasticsearch  with pidfile <%= $params_infra['elasticsearch']['pid_file'] %>
+	EVERY 2 CYCLES
 	start program = "<%= $params_infra['elasticsearch']['init_script'] %>   start"
+	TIMEOUT 60 SECOND
 <% } %>
 
 <% if $params_infra['monit']['enabled_zookeeper'] == true { %>

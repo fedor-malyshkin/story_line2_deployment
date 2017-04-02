@@ -1,4 +1,9 @@
 ---
+limits::entries:
+  '*/nofile':
+    both: 1048576
+  '*/memlock':
+    both: unlimited
 storyline_base:
   firewall:
     incommming_port_all: [222, 8080, 3000, 8081]

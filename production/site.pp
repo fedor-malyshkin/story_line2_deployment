@@ -1,9 +1,13 @@
 
 node "datahouse01.nlp-project.ru"  {
+	    include ::limits
+		include ::logrotate
+		
 		include storyline_base::ntp
 		include storyline_base::srv_oper
 		include storyline_base::ssh
 		include storyline_base::oracle_java
+		include storyline_base::logrotate
 
 		include storyline_infra::collectd
 
@@ -22,10 +26,13 @@ node "datahouse01.nlp-project.ru"  {
 }
 
 node "ci.nlp-project.ru"  {
+	    include ::limits
+		include ::logrotate
 		include storyline_base::ntp
 		include storyline_base::srv_oper
 		include storyline_base::ssh
 		include storyline_base::oracle_java
+		include storyline_base::logrotate
 
 		include storyline_infra::collectd
 

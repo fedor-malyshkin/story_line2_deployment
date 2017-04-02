@@ -72,7 +72,6 @@ class storyline_infra::mongodb () {
   		path          => "${dir_logs}/*.log",
   		rotate        => 5,
 		copytruncate	=> true,
-		dateext			=> true,
   		size          => '10M',
   		dateext    => 'day',
 	}

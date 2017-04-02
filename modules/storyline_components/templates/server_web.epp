@@ -9,6 +9,17 @@ server:
 drpc_host: "<%= $storyline_components::server_web::drpc_host -%>"
 drpc_port: <%= $storyline_components::server_web::drpc_port %>
 
+sources:
+    - name: "bnkomi.ru"
+      title: "Информационное агентство БНКоми"
+      title_short: "БНКоми"
+    - name : "7x7-journal.ru"
+      title: "Межрегиональный интернет-журнал \"7x7\""
+      title_short: "\"7x7\""
+    - name: "komiinform.ru"
+      title: "Информационное агенство Комиинформ"
+      title_short: "Комиинформ"
+
 # Metrics reporting
 influxdb_metrics:
    enabled: true

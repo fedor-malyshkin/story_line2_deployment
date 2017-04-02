@@ -38,7 +38,7 @@ storyline_infra:
     enabled_startup: false
     enabled_running: true
   grafana:
-    port: "8080"
+    port: "8081"
     pid_file: '/data/logs/grafana/grafana.pid'
     init_script: '/etc/init.d/grafana'
     dir_data:  '/data/db/grafana'

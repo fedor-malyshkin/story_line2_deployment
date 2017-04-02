@@ -8,3 +8,8 @@ __Все операции проводим под `root`__
 1. Create InfluxDB initial db creation by `curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE storyline"`
 1. Create Grafana "view" user
 1. Connect Grafana to InfluxDB (see: http://docs.grafana.org/features/datasources/influxdb/)
+1. Create swap-file (http://mydebianblog.blogspot.ru/2010/05/swap-swap-linux.html)
+	1. dd if=/dev/zero of=/swapfile bs=1M count=5000
+	1. mkswap /swapfile
+	1. swapon /swapfile
+	1. echo "/swapfile none swap sw 0 0" >> /etc/fstab

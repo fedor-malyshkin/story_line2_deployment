@@ -87,5 +87,13 @@ class storyline_infra::influxdb () {
 			cwd => "/",
 		}
 	}
-
+	logrotate::rule { 'influxdb':
+  		path			=> "${dir_logs}/*.log",
+  		rotate      	=> 10,
+		missingok		=> true,
+		copytruncate	=> true,
+		dateext			=> true,
+  		size          	=> '10M',
+  		rotate_every    => 'day',
+	}
 }

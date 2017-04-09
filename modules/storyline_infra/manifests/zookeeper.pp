@@ -82,7 +82,7 @@ class storyline_infra::zookeeper () {
 		hasstatus => true,
 	}
 	if $ensemble {
-		file { "$Pdir_data}/myid":
+		file { "${dir_data}/myid":
 			replace => true,
 			content => $ensemble[$certname],
 			owner => "zookeeper",

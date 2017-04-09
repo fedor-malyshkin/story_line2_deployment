@@ -88,6 +88,7 @@ class storyline_infra::zookeeper () {
 			owner => "zookeeper",
 			group=> "zookeeper",
 			mode=>"u=rw,og=r",
+			notify => Service['zookeeper'],
 		}
 	}
 	if $enabled_startup != true {

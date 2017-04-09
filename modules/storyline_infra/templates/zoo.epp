@@ -5,8 +5,7 @@ clientPort=<%= $storyline_infra::zookeeper::port %>
 <% if $storyline_infra::zookeeper::ensemble { %>
 initLimit=5
 syncLimit=2
-<% $storyline_infra::zookeeper::ensemble.each |$key, $value| { %>
+<% $storyline_infra::zookeeper::ensemble.each |$key, $value| { -%>
 server.<%= $value -%>=<%= $key -%>:<%= $storyline_infra::zookeeper::leader_port -%>:<%= $storyline_infra::zookeeper::election_port %>
 <% } -%>
-
 <% } %>

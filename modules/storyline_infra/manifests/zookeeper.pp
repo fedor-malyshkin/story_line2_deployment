@@ -68,7 +68,7 @@ class storyline_infra::zookeeper () {
 	file { $init_script:
 		replace => true,
 		content => epp('storyline_infra/zookeeper_startup.epp'),
-		mode=>"ug=rwx,o=r",
+		mode=>"u=rwx,og=r",
 		notify => Service['zookeeper'],
 	}->
 	service { 'zookeeper':
@@ -87,7 +87,7 @@ class storyline_infra::zookeeper () {
 			content => $ensemble[$certname],
 			owner => "zookeeper",
 			group=> "zookeeper",
-			mode=>"ug=rw,o=r",
+			mode=>"u=rw,og=r",
 		}
 	}
 	if $enabled_startup != true {

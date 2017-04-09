@@ -2,7 +2,7 @@
 storyline_base:
   firewall:
     incommming_port_all: [222, 3000, 8000]
-    incommming_port_project: [25826, 8086,  27017, 2181, 6627, 8082, 8083, 3772, 8001, 9000, 60000]
+    incommming_port_project: [25826, 8086,  27017, 2181, 2888, 3888, 6627, 8082, 8083, 3772, 8001, 9000, 60000]
 storyline_infra:
   monit:
       port: "3000"
@@ -32,9 +32,5 @@ storyline_infra:
     mongodb_password: "collectd"
     enabled_storm: true
     storm_ui_url: "http://datahouse01.nlp-project.ru:8082/"
-    enabled_elasticsearch: false
-    elasticsearch_host: "ci.nlp-project.ru"
-    elasticsearch_port: "9200"
-    elasticsearch_cluster: "elastic_storyline"
     enabled_startup: false
     enabled_running: true

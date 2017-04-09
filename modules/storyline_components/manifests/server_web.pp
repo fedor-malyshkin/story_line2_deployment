@@ -104,7 +104,7 @@ class storyline_components::server_web () {
 		replace => true,
 		content => epp('storyline_components/server_web_script.epp'),
 		notify => Service['server_web'],
-		mode=>"ug=rwx,o=rx",
+		mode=>"u=rwx,og=rx",
 	}->
 	service { 'server_web':
   		ensure => $enabled_running,

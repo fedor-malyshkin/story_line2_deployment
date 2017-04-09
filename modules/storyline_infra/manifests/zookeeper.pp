@@ -63,7 +63,7 @@ class storyline_infra::zookeeper () {
 	file { "${dir_bin}/bin/zkServer.sh":
 		owner => "zookeeper",
 		group=> "zookeeper",
-		mode=>"ug=rwx,o=rx",
+		mode=>"u=rwx,og=rx",
 	}->
 	file { $init_script:
 		replace => true,

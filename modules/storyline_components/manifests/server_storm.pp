@@ -105,7 +105,7 @@ class storyline_components::server_storm () {
 			owner => "server_storm",
 			group=> "server_storm",
 			content => epp("storyline_components/${service}_script.epp"),
-			mode=>"ug=rwx,o=rx",
+			mode=>"u=rwx,og=rx",
 		}
 	}
 

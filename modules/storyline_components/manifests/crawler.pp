@@ -61,7 +61,7 @@ class storyline_components::crawler () {
 	file { $init_script:
 		replace => true,
 		content => epp('storyline_components/crawler_startup.epp'),
-		mode=>"ug=rwx,o=r",
+		mode=>"u=rwx,og=r",
 	}
 
 	# update version
@@ -181,7 +181,7 @@ class storyline_components::crawler () {
 		replace => true,
 		content => epp('storyline_components/crawler_script.epp'),
 		notify => Service['crawler'],
-		mode=>"ug=rwx,o=rx",
+		mode=>"u=rwx,og=rx",
 	}->
 	service { 'crawler':
   		ensure => $enabled_running,

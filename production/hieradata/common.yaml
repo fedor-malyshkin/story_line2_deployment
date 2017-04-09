@@ -132,10 +132,10 @@ storyline_components:
       dir_bin:  '/server_storm'
       dir_logs:  '/data/logs/server_storm'
       supervisor_slot_ports: [6700, 6701, 6702, 6703]
-      zookeeper_hosts:  ["datahouse01.nlp-project.ru"]
+      zookeeper_hosts:  ["datahouse01.nlp-project.ru", "ci.nlp-project.ru"]
       zookeeper_port: "2181"
       nimbus_seeds:  ["datahouse01.nlp-project.ru"]
-      drpc_servers:  ["datahouse01.nlp-project.ru"]
+      drpc_servers:  ["datahouse01.nlp-project.ru", "ci.nlp-project.ru"]
       influxdb_host:  "ci.nlp-project.ru"
       influxdb_port: "8086"
       influxdb_db: "storyline"

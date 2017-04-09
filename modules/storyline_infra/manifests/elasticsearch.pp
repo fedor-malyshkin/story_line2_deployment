@@ -54,7 +54,7 @@ class storyline_infra::elasticsearch () {
 	file { "${dir_bin}/bin/elasticsearch":
 		owner => "elasticsearch",
 		group=> "elasticsearch",
-		mode=>"ug=rwx,o=rx",
+		mode=>"u=rwx,og=rx",
 	}->
 	file { $init_script:
 		replace => true,

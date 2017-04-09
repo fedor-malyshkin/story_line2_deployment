@@ -96,6 +96,11 @@ storyline_infra:
       dir_bin:  '/zookeeper'
       dir_data:  '/data/db/zookeeper'
       dir_logs:  '/data/logs/zookeeper'
+      ensemble:
+        datahouse01.nlp-project.ru: '1'
+        ci.nlp-project.ru: '2'
+      leader_port: "2888"
+      election_port: "3888"
       enabled_startup: false
       enabled_running: true
   elasticsearch:

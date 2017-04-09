@@ -37,6 +37,7 @@ node "ci.nlp-project.ru"  {
 
 		include storyline_infra::collectd
 
+		include storyline_infra::zookeeper
 		include storyline_infra::influxdb
 		include storyline_infra::elasticsearch
 		include storyline_infra::grafana

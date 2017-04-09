@@ -8,9 +8,13 @@ class storyline_infra::zookeeper () {
 	$dir_bin = $params['dir_bin']
 	$dir_data = $params['dir_data']
 	$dir_logs = $params['dir_logs']
+	$ensemble = $params['ensemble']
+	$leader_port = $params['leader_port']
+	$election_port = $params['election_port']
 	$enabled_startup = $params['enabled_startup']
 	$enabled_running = $params['enabled_running']
 	$version = $params['version']
+	$certname = $trusted['certname']
 
 	user { 'zookeeper':
 		ensure => "present",
@@ -76,6 +80,15 @@ class storyline_infra::zookeeper () {
 		restart 	=> "${init_script} restart",
 		hasrestart => true,
 		hasstatus => true,
+	}
+	if $ensemble {
+		file { "$Pdir_data}/myid":
+			replace => true,
+			content => $ensemble[$certname],
+			owner => "zookeeper",
+			group=> "zookeeper",
+			mode=>"ug=rw,o=r",
+		}
 	}
 	if $enabled_startup != true {
 		exec { "disable_zookeeper":

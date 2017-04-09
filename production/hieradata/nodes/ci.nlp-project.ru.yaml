@@ -2,7 +2,7 @@
 storyline_base:
   firewall:
     incommming_port_all: [222, 8080, 3000, 8081]
-    incommming_port_project: [25826, 8086, 9200]
+    incommming_port_project: [25826, 8086, 9200, 2888, 3888]
 storyline_infra:
   monit:
       port: "3000"

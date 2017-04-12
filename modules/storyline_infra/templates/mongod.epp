@@ -4,12 +4,15 @@ processManagement:
 net:
 #   bindIp: 127.0.0.1
    port: 27017
-storage:
-   dbPath: "<%= $storyline_infra::mongodb::dir_data -%>"
 systemLog:
    destination: file
    path: "<%= $storyline_infra::mongodb::dir_logs -%>/mongod.log"
    logAppend: true
+
 storage:
+   dbPath: "<%= $storyline_infra::mongodb::dir_data -%>"
    journal:
       enabled: true
+   wiredTiger:
+      collectionConfig:
+         blockCompressor: "zlib"

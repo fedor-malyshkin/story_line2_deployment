@@ -22,8 +22,8 @@ parse_sites:
    # На каждый сайт. Название домена (будет использоваться для идентфикации и записи в БД)
  - source: bnkomi.ru
    # На каждый сайт. стартовая страница для парсинга
-   seed: http://bnkomi.ru
-   cron_schedule: "0 0/5 * * * ?" # Fire every 5 minutes
+   seed: https://bnkomi.ru
+   cron_schedule: "0 0/5 7-23 * * ?" # Fire every 5 minutes
 
 feed_sites:
    # На каждый сайт. Название домена (будет использоваться для идентфикации и записи в БД)
@@ -31,7 +31,7 @@ feed_sites:
    # На каждый сайт. стартовая страница для парсинга
    feed: http://komiinform.ru/rss/news/
    # Расписание в формате cron (http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/crontrigger.html)
-   cron_schedule: "0 0/5 * * * ?" # Fire every 5 minutes
+   cron_schedule: "0 0/5 7-23 * * ?" # Fire every 5 minutes
 
 # Metrics reporting
 influxdb_metrics:

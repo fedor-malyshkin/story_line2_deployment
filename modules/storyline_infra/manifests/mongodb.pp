@@ -53,9 +53,9 @@ class storyline_infra::mongodb () {
 	package {  'mongodb-org':
 		ensure => $version,
 	} ->
-	file { "/etc/mongod.conf":
+	file { "/etc/mongodb.conf":
 		replace => true,
-		content => epp('storyline_infra/mongod.epp'),
+		content => epp('storyline_infra/mongodb.epp'),
 		owner => "mongodb",
 		group=> "mongodb",
 		notify => Service['mongodb'],
@@ -63,7 +63,7 @@ class storyline_infra::mongodb () {
 	file { $init_script:
 		replace => true,
 		content => epp('storyline_infra/mongodb_startup.epp'),
-		mode=>"ug=rwx,o=r",
+		mode=>"u=rwx,go=r",
 		notify => Service['mongodb'],
 	}->
 	service { 'mongodb':
@@ -77,10 +77,15 @@ class storyline_infra::mongodb () {
 		hasstatus => true,
 	}
 	if $enabled_startup != true {
+		exec { "disable_mongod":
+			command => "/bin/systemctl disable mongod",
+			cwd => "/",
+		}
 		exec { "disable_mongodb":
 			command => "/bin/systemctl disable mongodb",
 			cwd => "/",
 		}
+
 	}
 	logrotate::rule { 'mongodb':
   		path			=> "${dir_logs}/*.log",

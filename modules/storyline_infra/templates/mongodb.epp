@@ -10,6 +10,7 @@ systemLog:
    logAppend: true
 
 storage:
+   engine: "wiredTiger"
    dbPath: "<%= $storyline_infra::mongodb::dir_data -%>"
    journal:
       enabled: true

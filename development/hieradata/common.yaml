@@ -38,7 +38,7 @@ storyline_infra:
     init_script: '/etc/init.d/mongodb'
     dir_data:  '/data/db/mongodb'
     dir_logs:  '/data/logs/mongodb'
-    version: "1:2.6.10-0ubuntu1"
+    version: "present"
     enabled_auth: false
     enabled_startup: false
     enabled_running: false

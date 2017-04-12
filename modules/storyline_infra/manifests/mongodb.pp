@@ -36,7 +36,22 @@ class storyline_infra::mongodb () {
 		group=> "mongodb",
 		require => Exec['mongodb-mkdir'],
 	}
-	package {  'mongodb':
+	# see by "gpg --verify keyfile"
+	apt::key { 'grafana-key':
+		id => '0C49F3730359A14518585931BC711F9BA15703C6',
+		source  => 'https://www.mongodb.org/static/pgp/server-3.4.asc',
+	} ->
+	# deb https://packagecloud.io/grafana/stable/debian/ jessie main
+	apt::source { 'mongodb-repo':
+		comment  => 'mongodb repo',
+		location => "http://repo.mongodb.org/apt/ubuntu",
+		release => "xenial/mongodb-org/3.4",
+		repos    => 'multiverse',
+		include  => {
+	   		'deb' => true,
+		},
+	} ->
+	package {  'mongodb-org':
 		ensure => $version,
 	} ->
 	file { "/etc/mongod.conf":

@@ -24,10 +24,11 @@ class storyline_components::server_storm () {
 	$influxdb_password = $params['influxdb_password']
 	$enabled_startup = $params['enabled_startup']
 	$enabled_running = $params['enabled_running']
-
+ 	# config params
 	$mongodb_connection_url = $params['mongodb_connection_url']
 	$elasticsearch_host = $params['elasticsearch_host']
 	$elasticsearch_port = $params['elasticsearch_port']
+	$configuration_url_prefix = $params['configuration_url_prefix']
 
 	$certname = $trusted['certname']
 	# при запуске на сервер - получить соотвествующее содержимое файла
@@ -40,7 +41,11 @@ class storyline_components::server_storm () {
 		"merge" => {"strategy" => "deep"}})
 	# topology_configuration на этом узле
 	$enabled_topology_configuration = $nginx_params['enabled_topology_configuration']
-
+	# crawler_scripts
+	$params = lookup({"name" => "storyline_components.crawler_scripts",
+		"merge" => {"strategy" => "deep"}})
+	$script_version = $params['version']
+	$script_current_version = file_content("${dir_bin}/script_version")
 
 	include storyline_components
 
@@ -166,6 +171,41 @@ class storyline_components::server_storm () {
 			owner => "server_storm",
 			group=> "server_storm",
 			content => epp('storyline_components/server_storm_config.epp'),
+		}
+
+		# scripts
+		# update script version
+		if $script_version == "presented" {
+			# get artifact from "/provision/crawler_scripts" dir
+			# returns file names with full path
+			$script_file_name_presented = get_first_jar_file_name('/provision/crawler_scripts')
+			$script_name = "server_storm_scripts.jar"
+			$script_full_path = "${dir_bin}/topology/${script_name}"
+			# copy in any case
+			file { $script_full_path:
+				replace => true,
+				ensure => file,
+				owner => "server_storm",
+				group=> "server_storm",
+				source => "file://${file_name_presented}",
+			}
+			#} # if $current_version != $version {
+		} else {
+			if $script_current_version != $script_version {
+				file { "${dir_bin}/script_version":
+					replace => true,
+					content => "${script_version}",
+				}
+				$script_name = "server_storm_scripts_${script_version}.jar"
+				$script_full_path = "${dir_bin}/topology/${script_name}"
+				# get artifact from nexus
+				nexus::artifact { $script_full_path:
+					gav => "ru.nlp_project.story_line2:crawler_scripts:${script_version}",
+					repository => "releases",
+					output => $script_full_path,
+					packaging  => 'jar',
+				}
+			} # if $current_version != $version {
 		}
 	}
 }

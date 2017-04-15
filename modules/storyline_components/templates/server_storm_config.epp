@@ -1,3 +1,5 @@
+# scripts
+server_storm.content_extraction.script_path: "<%= $storyline_components::server_storm::configuration_url_prefix -%><%= $storyline_components::server_storm::$script_name -%>
 # строка подключения к MongoDB для сохранения результатаов анализа
 server_storm.mongodb.connection_url: "<%= $storyline_components::server_storm::mongodb_connection_url -%>"
 # elastic

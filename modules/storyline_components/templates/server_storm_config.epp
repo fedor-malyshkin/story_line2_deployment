@@ -1,13 +1,16 @@
 # scripts
-server_storm.content_extraction.script_path: "<%= $storyline_components::server_storm::configuration_url_prefix -%><%= $storyline_components::server_storm::$script_name -%>
+server_storm.content_extraction.script_path: "<%= $storyline_components::server_storm::configuration_url_prefix -%><%= $storyline_components::server_storm::script_name -%>"
+
 # строка подключения к MongoDB для сохранения результатаов анализа
 server_storm.mongodb.connection_url: "<%= $storyline_components::server_storm::mongodb_connection_url -%>"
+
 # elastic
 server_storm.elasticsearch.hostname: "<%= $storyline_components::server_storm::elasticsearch_host -%>"
 server_storm.elasticsearch.port: <%= $storyline_components::server_storm::elasticsearch_port %>
 server_storm.elasticsearch.index.real_name: story_line2_v1
 server_storm.elasticsearch.index.read_alias: story_line2_read_index
 server_storm.elasticsearch.index.write_alias: story_line2_write_index
+
 # GLR parser
 glr_parser.debug: true
 glr_parser.dictionary_file: dictionary.yaml

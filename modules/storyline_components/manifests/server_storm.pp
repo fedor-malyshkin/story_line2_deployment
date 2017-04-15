@@ -42,9 +42,9 @@ class storyline_components::server_storm () {
 	# topology_configuration на этом узле
 	$enabled_topology_configuration = $nginx_params['enabled_topology_configuration']
 	# crawler_scripts
-	$params = lookup({"name" => "storyline_components.crawler_scripts",
+	$crawler_params = lookup({"name" => "storyline_components.crawler_scripts",
 		"merge" => {"strategy" => "deep"}})
-	$script_version = $params['version']
+	$script_version = $crawler_params['version']
 	$script_current_version = file_content("${dir_bin}/script_version")
 
 	include storyline_components

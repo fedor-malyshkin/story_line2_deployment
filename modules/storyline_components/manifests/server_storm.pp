@@ -159,6 +159,13 @@ class storyline_components::server_storm () {
 # 	}
 
 	if $enabled_topology_configuration {
+		file { "${dir_bin}/topology":
+			ensure => "directory",
+			recurse => "true",
+			owner => "server_storm",
+			group=> "server_storm",
+			require => File[ $dir_bin],
+		}
 		# scripts
 		# update script version
 		if $script_version == "presented" {
@@ -181,6 +188,8 @@ class storyline_components::server_storm () {
 			if $script_current_version != $script_version {
 				file { "${dir_bin}/script_version":
 					replace => true,
+					owner => "server_storm",
+					group=> "server_storm",
 					content => "${script_version}",
 				}
 				$script_full_path = "${dir_bin}/topology/${script_name}"
@@ -193,13 +202,6 @@ class storyline_components::server_storm () {
 				}
 			} # if $current_version != $version {
 		}
-		file { "${dir_bin}/topology":
-			ensure => "directory",
-			recurse => "true",
-			owner => "server_storm",
-			group=> "server_storm",
-			require => File[ $dir_bin],
-		} ->
 		file { "${dir_bin}/topology/server_storm.yaml":
 			replace => true,
 			owner => "server_storm",

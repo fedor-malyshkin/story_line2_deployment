@@ -4,6 +4,8 @@ class storyline_base::firewall_pre {
 	    "merge" => {"strategy" => "first"}})
 	$incommming_port_project = lookup({"name" => "storyline_base.firewall.incommming_port_project",
 	    "merge" => {"strategy" => "first"}})
+	$incommming_port_project2 = lookup({"name" => "storyline_base.firewall.incommming_port_project2",
+		    "merge" => {"strategy" => "first"}})
 	$host_project = lookup({"name" => "storyline_base.firewall.host_project",
 	    "merge" => {"strategy" => "deep"}})
 
@@ -60,6 +62,14 @@ class storyline_base::firewall_pre {
 	  	firewall { "007 all incomming to specific ports from ${host} (${proto})":
     		proto       => $proto,
 	  		dport => $incommming_port_project,
+			source => $host,
+	  		chain   => 'INPUT',
+			action      => 'accept',
+	  	}
+
+		firewall { "008 all incomming to specific ports from ${host} (${proto})":
+    		proto       => $proto,
+	  		dport => $incommming_port_project2,
 			source => $host,
 	  		chain   => 'INPUT',
 			action      => 'accept',

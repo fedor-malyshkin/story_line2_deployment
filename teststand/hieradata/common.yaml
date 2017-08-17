@@ -2,7 +2,10 @@
 storyline_base:
   firewall:
     incommming_port_all: [222, 8080, 3000, 8081]
+    # iptables' limit 15 positions in list!!!
     incommming_port_project: [25826, 8086,  27017, 2181, 9200, 6627]
+	# iptables' limit 15 positions in list!!!
+    incommming_port_project2: []
     host_project: ['datahouse01.nlp-project.ru', 'ci.nlp-project.ru', 'repo.nlp-project.ru']
   oracle_java:
     version: "8u92"

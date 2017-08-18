@@ -160,7 +160,7 @@ storyline_components:
       dir_logs:  '/data/logs/crawler'
       dir_scripts: "/data/db/crawler/scripts"
       dir_sites_db: "/data/db/crawler/sites_db"
-      mongodb_connection_url: "mongodb://crawler:crawler@datahouse01:27017/?authSource=crawler"
+      mongodb_connection_url: "mongodb://crawler:crawler@datahouse01.nlp-project.ru:27017/?authSource=crawler"
       influxdb_host:  "ci.nlp-project.ru"
       influxdb_port: "8086"
       influxdb_db: "storyline"
@@ -177,11 +177,11 @@ storyline_components:
       dir_bin:  '/server_web'
       dir_logs:  '/data/logs/server_web'
       drpc_port: "3772"
-      drpc_host: "server_storm"
+      drpc_host: "datahouse01.nlp-project.ru"
       influxdb_host:  "ci.nlp-project.ru"
       influxdb_port: "8086"
       influxdb_db: "storyline"
       influxdb_user: "server_web"
       influxdb_password: "server_web"
       enabled_startup: false
-      enabled_running: false
+      enabled_running: true

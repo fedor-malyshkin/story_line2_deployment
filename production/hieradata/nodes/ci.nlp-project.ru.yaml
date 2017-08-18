@@ -2,8 +2,11 @@
 storyline_base:
   firewall:
     incommming_port_all: [222, 8080, 3000, 8081]
-    incommming_port_project: [25826, 8086, 9200, 2181, 2888, 3888, 8083, 3772, 9000]
-    incommming_port_project2: [6700, 6701, 6702, 6703 ]
+    incommming_port_project: [25826, 8086, 9200, 2181, 2888, 3888, 8083, 9000]
+    # 3772 	drpc.port (External DRPC Clients)
+    # 3773 - drpc.invocations.port  (Worker Processes)
+    # 3774 - drpc.http.port (External HTTP DRPC Clients)
+    incommming_port_project2: [3772, 3773, 3774, 6700, 6701, 6702, 6703]
 storyline_infra:
   monit:
       port: "3000"

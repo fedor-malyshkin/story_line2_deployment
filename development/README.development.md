@@ -13,6 +13,7 @@ db.crawler_entries.update( {"in_process": true}, {$set: {"in_process": false}}, 
 db.crawler_entries.update( {"processed": true}, {$set: {"processed": false}}, {multi:true})
 ```
 # Query elasticsearch
+## Запросить просто новости
 ```
 curl -XGET 'ci.nlp-project.ru:9200/story_line2_v1/_search?pretty' -H 'Content-Type: application/json' -d'
 {
@@ -23,5 +24,32 @@ curl -XGET 'ci.nlp-project.ru:9200/story_line2_v1/_search?pretty' -H 'Content-Ty
 
     }
 }'
+```
+## Запросить дату публикации еонкретной новости
+```
+curl -XGET 'ci.nlp-project.ru:9200/story_line2_v1/_search?pretty' -H 'Content-Type: application/json' -d'
+{
+	"_source": [ "publication_date"],
+ 	"sort" : [{ "publication_date" : {"order" : "desc"}}],    
+    "query" : {
+        "term" : { "_id" : "59b4cde7dd12c0cca3588129" }
 
+    }
+}'
+```
+## Запросить просто новости с конкретной даты
+```
+curl -XGET 'ci.nlp-project.ru:9200/story_line2_v1/_search?pretty&size=3' -H 'Content-Type: application/json' -d'
+{
+	"_source": [ "publication_date", "title", "path", "source", "image_url", "url" ],
+ 	"sort" : [{ "publication_date" : {"order" : "desc"}}],    
+	"query": {
+      "bool": {
+        "must": [
+          {"term": { "source": "bnkomi.ru" }},
+          {"range": { "publication_date": { "lt": "2017-09-10T05:25:00Z" }}}
+        ]
+      }
+    }
+}'
 ```

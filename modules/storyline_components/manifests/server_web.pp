@@ -104,6 +104,8 @@ class storyline_components::server_web () {
 		replace => true,
 		content => epp('storyline_components/server_web_script.epp'),
 		notify => Service['server_web'],
+		owner => "server_web",
+		group=> "server_web",		
 		mode=>"u=rwx,og=rx",
 	}->
 	service { 'server_web':

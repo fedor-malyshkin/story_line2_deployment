@@ -181,6 +181,8 @@ class storyline_components::crawler () {
 		replace => true,
 		content => epp('storyline_components/crawler_script.epp'),
 		notify => Service['crawler'],
+		owner => "crawler",
+		group=> "crawler",		
 		mode=>"u=rwx,og=rx",
 	}->
 	service { 'crawler':

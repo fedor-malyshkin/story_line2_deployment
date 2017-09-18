@@ -131,13 +131,13 @@ class storyline_components::crawler () {
 			extract_path  	=> "${dir_scripts}",
 			creates			=> "${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
 			cleanup       	=> false,
-			notify 			=> [Service['crawler'], Exec['tune_crawler_dir_scripts']],
+			notify 			=> [Service['crawler']],
 		}
-		exec { "tune_crawler_dir_scripts":
-			command => "/bin/mv -f  ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts/* ${dir_scripts} && chown -R crawler:crawler ${dir_scripts}",
-			cwd => "/",
-			refreshonly => true,
-		}
+		# exec { "tune_crawler_dir_scripts":
+		# 	command => "/bin/mv -f  ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts/* ${dir_scripts} && chown -R crawler:crawler ${dir_scripts}",
+		# 	cwd => "/",
+		# 	refreshonly => true,
+		# }
 		#} # if $current_version != $version {
 	} else {
 		if $script_current_version != $script_version {
@@ -167,13 +167,13 @@ class storyline_components::crawler () {
 				extract_path  	=> "${dir_scripts}",
 				creates			=> "${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
 				cleanup       	=> false,
-				notify 			=> [Service['crawler'], Exec['tune_crawler_dir_scripts']],
+				notify 			=> [Service['crawler']],
 			}
-			exec { "tune_crawler_dir_scripts":
-				command => "/bin/mv -f  ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts/* ${dir_scripts} && chown -R crawler:crawler ${dir_scripts}",
-				cwd => "/",
-				refreshonly => true,
-			}
+			# exec { "tune_crawler_dir_scripts":
+			# 	command => "/bin/mv -f  ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts/* ${dir_scripts} && chown -R crawler:crawler ${dir_scripts}",
+			# 	cwd => "/",
+			# 	refreshonly => true,
+			# }
 		} # if $current_version != $version {
 	}
 
@@ -182,7 +182,7 @@ class storyline_components::crawler () {
 		content => epp('storyline_components/crawler_script.epp'),
 		notify => Service['crawler'],
 		owner => "crawler",
-		group=> "crawler",		
+		group=> "crawler",
 		mode=>"u=rwx,og=rx",
 	}->
 	service { 'crawler':

@@ -7,6 +7,7 @@ class storyline_infra::nginx () {
 	$pid_file = $params['pid_file']
 	$init_script = $params['init_script']
 	$dir_data = $params['dir_data']
+	$dir_cache = $params['dir_cache']
 	$dir_logs = $params['dir_logs']
 	$version = $params['version']
 	$enabled_startup = $params['enabled_startup']
@@ -25,7 +26,7 @@ class storyline_infra::nginx () {
 		unless => '/usr/bin/test -d /data/db -a -d /data/logs',
 	} ->
 	# working dir
-	file { [ $dir_logs, $dir_data] :
+	file { [ $dir_logs, $dir_data, $dir_cache ] :
 		ensure => "directory",
 		recurse => "true",
 		owner => "nginx",

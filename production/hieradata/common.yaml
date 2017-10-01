@@ -87,6 +87,7 @@ storyline_infra:
     pid_file: '/data/logs/nginx/nginx.pid'
     init_script: '/etc/init.d/nginx'
     dir_data:  '/data/db/nginx'
+    dir_cache:  '/data/db/nginx_cache'
     dir_logs:  '/data/logs/nginx'
     version: "present"
     enabled_startup: false

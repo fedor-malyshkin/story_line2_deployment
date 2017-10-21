@@ -30,6 +30,8 @@ $PUPPET_BIN module install yo61-logrotate
 $PUPPET_BIN module install puppetlabs-apt
 $PUPPET_BIN module install puppet-archive
 
+# at this moment
+POVISION_NO_GIT_CLONE = "true"
 # git pull "deployment" project and go in it only if POVISION_NO_GIT_CLONE set to "true"
 if [ ${POVISION_NO_GIT_CLONE:-"false"} = "true" ];
 then

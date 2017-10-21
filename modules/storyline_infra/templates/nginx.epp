@@ -28,7 +28,7 @@ http {
     #gzip  on;
 
 	# cache directives
-	proxy_cache_path <%= $storyline_infra::nginx::dir_cache -%> keys_zone=one:100m max_size=500M; 
+	proxy_cache_path <%= $storyline_infra::nginx::dir_cache %> keys_zone=one:100m max_size=500M; 
 
     include /etc/nginx/conf.d/*.conf;
 }

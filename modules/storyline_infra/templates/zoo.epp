@@ -1,6 +1,8 @@
 tickTime=2000
 dataDir=<%= $storyline_infra::zookeeper::dir_data %>
 clientPort=<%= $storyline_infra::zookeeper::port %>
+autopurge.purgeInterval=1
+autopurge.snapRetainCount=5
 
 <% if $storyline_infra::zookeeper::ensemble { %>
 initLimit=5

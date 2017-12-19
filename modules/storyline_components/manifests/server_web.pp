@@ -93,7 +93,7 @@ class storyline_components::server_web () {
 			nexus::artifact {"${dir_bin}/${jar_file}":
 				gav => "ru.nlp_project.story_line2:server_web:${version}",
 				repository => "releases",
-				classifier => 'all',
+				# classifier => 'all',
 				output => "${dir_bin}/${jar_file}",
 				packaging  => 'jar',
 				notify => File["${dir_bin}/server_web.sh"],
@@ -105,7 +105,7 @@ class storyline_components::server_web () {
 		content => epp('storyline_components/server_web_script.epp'),
 		notify => Service['server_web'],
 		owner => "server_web",
-		group=> "server_web",		
+		group=> "server_web",
 		mode=>"u=rwx,og=rx",
 	}->
 	service { 'server_web':

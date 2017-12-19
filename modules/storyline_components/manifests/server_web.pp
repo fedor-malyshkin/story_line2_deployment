@@ -64,11 +64,6 @@ class storyline_components::server_web () {
 		$jar_file = "server_web-PRESENTED.jar"
 		# copy in any case
 		#if $current_version != $version {
-			file { "${dir_bin}/version":
-				replace => true,
-				content => "${version}",
-				notify => File["${dir_bin}/${jar_file}"],
-			}
 			# get artifact "/provision/artifacts" dir
 			# returns file names with full path
 			$file_name_presented = get_first_jar_file_name('/provision/artifacts')
@@ -79,16 +74,16 @@ class storyline_components::server_web () {
 				group=> "server_web",
 				source => "file://${file_name_presented}",
 				notify => File["${dir_bin}/server_web.sh"],
+			} ->
+			file { "${dir_bin}/version":
+				replace => true,
+				content => "${version}",
 			}
+
 		#} # if $current_version != $version {
 	} else {
 		$jar_file = "server_web-${version}.jar"
 		if $current_version != $version {
-			file { "${dir_bin}/version":
-				replace => true,
-				content => "${version}",
-				notify => Nexus::Artifact["${dir_bin}/server_web-${version}.jar"],
-			}
 			# get artifact from nexus
 			nexus::artifact {"${dir_bin}/${jar_file}":
 				gav => "ru.nlp_project.story_line2:server_web:${version}",
@@ -97,6 +92,10 @@ class storyline_components::server_web () {
 				output => "${dir_bin}/${jar_file}",
 				packaging  => 'jar',
 				notify => File["${dir_bin}/server_web.sh"],
+			} ->
+			file { "${dir_bin}/version":
+				replace => true,
+				content => "${version}",
 			}
 		} # if $current_version != $version {
 	}

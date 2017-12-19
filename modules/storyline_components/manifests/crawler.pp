@@ -69,11 +69,6 @@ class storyline_components::crawler () {
 		$jar_file = "crawler-PRESENTED.jar"
 		# copy in any case
 		#if $current_version != $version {
-			file { "${dir_bin}/version":
-				replace => true,
-				content => "${version}",
-				notify => File["${dir_bin}/${jar_file}"],
-			}
 			# get artifact "/provision/artifacts" dir
 			# returns file names with full path
 			$file_name_presented = get_first_jar_file_name('/provision/artifacts')
@@ -84,16 +79,15 @@ class storyline_components::crawler () {
 				group=> "crawler",
 				source => "file://${file_name_presented}",
 				notify => File["${dir_bin}/crawler.sh"],
+			} ->
+			file { "${dir_bin}/version":
+				replace => true,
+				content => "${version}",
 			}
 		#} # if $current_version != $version {
 	} else {
 		$jar_file = "crawler-${version}.jar"
 		if $current_version != $version {
-			file { "${dir_bin}/version":
-				replace => true,
-				content => "${version}",
-				notify => Nexus::Artifact["${dir_bin}/crawler-${version}.jar"],
-			}
 			# get artifact from nexus
 			nexus::artifact {"${dir_bin}/${jar_file}":
 				gav => "ru.nlp_project.story_line2:crawler:${version}",
@@ -102,6 +96,10 @@ class storyline_components::crawler () {
 				output => "${dir_bin}/${jar_file}",
 				packaging  => 'jar',
 				notify => File["${dir_bin}/crawler.sh"],
+			} ->
+			file { "${dir_bin}/version":
+				replace => true,
+				content => "${version}",
 			}
 		} # if $current_version != $version {
 	}

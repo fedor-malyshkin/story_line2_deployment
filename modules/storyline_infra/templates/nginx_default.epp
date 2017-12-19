@@ -1,17 +1,35 @@
+# see: https://www.nginx.com/blog/nginx-high-performance-caching/
+# cache directives
+proxy_cache_path <%= $storyline_infra::nginx::dir_cache %>  levels=1:2  keys_zone=one:100m max_size=500M;
+
 server {
     listen       <%= $storyline_infra::nginx::reverse_port -%>;
     server_name  localhost;
 
+# debug cache
+	add_header X-Cache-Status $upstream_cache_status;
 
-	location / {
-	    proxy_set_header Host $host;
-	    proxy_set_header X-Real-IP $remote_addr;
-		proxy_buffering off;
-	    proxy_pass <%= $storyline_infra::nginx::reverse_url -%>;
+	# general caching directives
+	proxy_set_header Host $host;
+	proxy_set_header X-Real-IP $remote_addr;
+	proxy_buffering off;
+	proxy_pass <%= $storyline_infra::nginx::reverse_url -%>;
 
-		proxy_cache one;
-		proxy_cache_min_uses 3;
-		proxy_cache_valid any 7d;
+	# cache directives
+	expires 1d;
+	proxy_cache_key "$request_method|$http_if_modified_since|$http_if_none_match|$host|$request_uri";
+	proxy_cache_methods GET;
+	proxy_cache one;
+	proxy_cache_min_uses 1;
+
+	proxy_cache_valid 404 502 503 1m;
+	proxy_cache_valid 200 302 10m;
+	proxy_cache_valid 301      1h;
+	proxy_cache_valid any      1m;
+
+	location /news_headers {
+		expires off;
+		proxy_cache off;
 	}
 
     # redirect server error pages to the static page /50x.html

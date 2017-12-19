@@ -14,6 +14,7 @@
   - connect as admin: `influx -username admin -password mprdig0jw91@89M#`
   - grafana: `CREATE USER "grafana" WITH PASSWORD 'grafana'` and `GRANT READ ON "collectd" TO "grafana"` and `GRANT READ ON "storyline" TO "grafana"`
   - crawler: `CREATE USER "crawler" WITH PASSWORD 'crawler'` and `GRANT WRITE ON "storyline" TO "crawler"`
+  - server_web: `CREATE USER "server_web" WITH PASSWORD 'server_web'` and `GRANT WRITE ON "storyline" TO "server_web"`
 
 
 ## MongoDB

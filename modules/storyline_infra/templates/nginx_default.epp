@@ -5,31 +5,30 @@ proxy_cache_path <%= $storyline_infra::nginx::dir_cache %>  levels=1:2  keys_zon
 server {
     listen       <%= $storyline_infra::nginx::reverse_port -%>;
     server_name  localhost;
+	access_log  /data/logs/nginx/access2.log  cache_log;
 
-# debug cache
-	add_header X-Cache-Status $upstream_cache_status;
+    # debug cache
+    add_header X-Cache-Status $upstream_cache_status;
 
-	# general caching directives
-	proxy_set_header Host $host;
-	proxy_set_header X-Real-IP $remote_addr;
-	proxy_buffering off;
-	proxy_pass <%= $storyline_infra::nginx::reverse_url -%>;
+    # general caching directives
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
 
-	# cache directives
-	expires 1d;
-	proxy_cache_key "$request_method|$http_if_modified_since|$http_if_none_match|$host|$request_uri";
-	proxy_cache_methods GET;
-	proxy_cache one;
-	proxy_cache_min_uses 1;
+    # important to turn in on - 'off = cache off'
+    proxy_buffering on;
 
-	proxy_cache_valid 404 502 503 1m;
-	proxy_cache_valid 200 302 10m;
-	proxy_cache_valid 301      1h;
-	proxy_cache_valid any      1m;
+    # cache directives
+    proxy_cache_key "$request_method|$http_if_modified_since|$http_if_none_match|$host|$request_uri";
+    proxy_cache_methods GET;
+    proxy_cache one;
+    proxy_cache_min_uses 1;
 
-	location /news_headers {
-		expires off;
-		proxy_cache off;
+    proxy_cache_valid 404 502 503 1m;
+    proxy_cache_valid 302 10m;
+    proxy_cache_valid 301      5m;
+
+	location / {
+		proxy_pass <%= $storyline_infra::nginx::reverse_url -%>;
 	}
 
     # redirect server error pages to the static page /50x.html

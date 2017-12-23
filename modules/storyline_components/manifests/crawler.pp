@@ -94,6 +94,7 @@ class storyline_components::crawler () {
 				repository => "releases",
 				# classifier => 'all',
 				output => "${dir_bin}/${jar_file}",
+				timeout => 0,
 				packaging  => 'jar',
 				notify => File["${dir_bin}/crawler.sh"],
 			} ->

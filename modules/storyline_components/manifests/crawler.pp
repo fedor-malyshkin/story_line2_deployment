@@ -154,6 +154,7 @@ class storyline_components::crawler () {
 			nexus::artifact {"${dir_scripts}/crawler_scripts_${script_version}.jar":
 				gav => "ru.nlp_project.story_line2:crawler_scripts:${script_version}",
 				repository => "releases",
+				timeout => 0,
 				output => "${dir_scripts}/crawler_scripts_${script_version}.jar",
 				packaging  => 'jar',
 			}->

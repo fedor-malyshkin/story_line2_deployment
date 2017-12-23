@@ -39,4 +39,4 @@ config:
         # период отправки данных на сервер (в секундах)
         reporting_period: 30
         # период отправки данных в лог (в секундах)
-        log_reporting_period: 30
+        log_reporting_period: 300

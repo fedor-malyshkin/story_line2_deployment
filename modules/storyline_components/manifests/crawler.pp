@@ -92,7 +92,7 @@ class storyline_components::crawler () {
 			nexus::artifact {"${dir_bin}/${jar_file}":
 				gav => "ru.nlp_project.story_line2:crawler:${version}",
 				repository => "releases",
-				classifier => 'all',
+				# classifier => 'all',
 				output => "${dir_bin}/${jar_file}",
 				packaging  => 'jar',
 				notify => File["${dir_bin}/crawler.sh"],

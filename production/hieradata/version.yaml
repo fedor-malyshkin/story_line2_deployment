@@ -8,4 +8,4 @@ storyline_components:
   server_storm:
     version: "presented"
   server_web:
-    version: "0.7"
+    version: "0.8"

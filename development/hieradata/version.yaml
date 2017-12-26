@@ -2,9 +2,9 @@
 # presented - for test/development only - use artifact from ""/provision/artifacts" directory
 storyline_components:
   crawler_scripts:
-    version: "0.3"
+    version: "0.11"
   crawler:
-    version: "0.10"
+    version: "0.11"
   server_storm:
     version: "presented"
   server_web:

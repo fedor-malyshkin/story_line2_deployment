@@ -142,15 +142,15 @@ storyline_components:
       drpc_servers:  ["datahouse01.nlp-project.ru", "ci.nlp-project.ru"]
       influxdb_host:  "ci.nlp-project.ru"
       influxdb_port: "8086"
-      influxdb_db: "storyline"
+      influxdb_db: "server_storm"
       influxdb_user: "server_storm"
       influxdb_password: "server_storm"
-      enabled_startup: false
-      enabled_running: false
       configuration_url_prefix: "http://datahouse01.nlp-project.ru:9000/"
       mongodb_connection_url: "mongodb://server_storm:server_storm@datahouse01.nlp-project.ru:27017/?authSource=storyline"
       elasticsearch_host:  "ci.nlp-project.ru"
       elasticsearch_port: "9200"
+      enabled_startup: false
+      enabled_running: false
   crawler:
       app_port: "8080"
       admin_port: "8081"
@@ -164,7 +164,7 @@ storyline_components:
       mongodb_connection_url: "mongodb://crawler:crawler@datahouse01.nlp-project.ru:27017/?authSource=crawler"
       influxdb_host:  "ci.nlp-project.ru"
       influxdb_port: "8086"
-      influxdb_db: "storyline"
+      influxdb_db: "crawler"
       influxdb_user: "crawler"
       influxdb_password: "crawler"
       enabled_startup: false
@@ -181,7 +181,7 @@ storyline_components:
       drpc_host: "datahouse01.nlp-project.ru"
       influxdb_host:  "ci.nlp-project.ru"
       influxdb_port: "8086"
-      influxdb_db: "storyline"
+      influxdb_db: "server_web"
       influxdb_user: "server_web"
       influxdb_password: "server_web"
       enabled_startup: false

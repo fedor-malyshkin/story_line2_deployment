@@ -12,9 +12,32 @@
   - restart influxdb
 1. Create additional users:
   - connect as admin: `influx -username admin -password mprdig0jw91@89M#`
-  - grafana: `CREATE USER "grafana" WITH PASSWORD 'grafana'` and `GRANT READ ON "collectd" TO "grafana"` and `GRANT READ ON "storyline" TO "grafana"`
-  - crawler: `CREATE USER "crawler" WITH PASSWORD 'crawler'` and `GRANT WRITE ON "storyline" TO "crawler"`
+  - grafana: `CREATE USER "grafana" WITH PASSWORD 'grafana'` and `GRANT READ ON "collectd" TO "grafana"` and `GRANT READ ON "storyline" TO "grafana"` (**and other bases**)
+  - crawler: `CREATE USER "crawler" WITH PASSWORD 'crawler'` and `GRANT WRITE ON "crawler" TO "crawler"`
   - server_web: `CREATE USER "server_web" WITH PASSWORD 'server_web'` and `GRANT WRITE ON "storyline" TO "server_web"`
+  - server_storm: `CREATE USER "server_storm" WITH PASSWORD 'server_storm'` and `GRANT WRITE ON "storyline" TO "server_storm"`
+  - finnaly:
+	- CREATE DATABASE collectd WITH DURATION 4w
+	- CREATE DATABASE storyline WITH DURATION 4w
+	- CREATE DATABASE crawler WITH DURATION 4w
+	- CREATE DATABASE server_web WITH DURATION 4w
+	- CREATE DATABASE server_storm WITH DURATION 4w
+	- CREATE USER "grafana" WITH PASSWORD 'grafana'
+	- GRANT READ ON "collectd" TO "grafana"
+	- GRANT READ ON "storyline" TO "grafana"
+	- GRANT READ ON "crawler" TO "grafana"
+	- GRANT READ ON "server_web" TO "grafana"
+	- GRANT READ ON "server_storm" TO "grafana"
+	- CREATE USER "collectd" WITH PASSWORD 'collectd'
+	- GRANT WRITE ON "collectd" TO "collectd"
+	- CREATE USER "crawler" WITH PASSWORD 'crawler'
+	- GRANT WRITE ON "crawler" TO "crawler"
+	- CREATE USER "server_web" WITH PASSWORD 'server_web'
+	- GRANT WRITE ON "server_web" TO "server_web"
+	- CREATE USER "server_storm" WITH PASSWORD 'server_storm'
+	- GRANT WRITE ON "server_storm" TO "server_storm"
+
+
 
 
 ## MongoDB

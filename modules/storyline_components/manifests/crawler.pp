@@ -28,6 +28,10 @@ class storyline_components::crawler () {
 	$influxdb_user = $params['influxdb_user']
 	$influxdb_password = $params['influxdb_password']
 
+	# Java memory settings
+	$jvm_start_memory_mb  = $params['jvm_start_memory_mb']
+	$jvm_max_memory_mb  = $params['jvm_max_memory_mb']
+
 	# при запуске на сервер - получить соотвествующее содержимое файла
 	# или пусту строку - для определения дальнейших действий
 	$current_version = file_content("${dir_bin}/version")

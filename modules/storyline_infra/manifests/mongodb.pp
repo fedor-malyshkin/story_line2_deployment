@@ -11,6 +11,7 @@ class storyline_infra::mongodb () {
 	$enabled_startup = $params['enabled_startup']
 	$enabled_running = $params['enabled_running']
 	$version = $params['version']
+	$cache_size_gb = $params['cache_size_gb']
 
 	user { 'mongodb':
 		ensure => "present",

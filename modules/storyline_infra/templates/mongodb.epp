@@ -16,6 +16,6 @@ storage:
       enabled: true
    wiredTiger:
       engineConfig:
-         cacheSizeGB: <%= $storyline_infra::mongodb::cache_size_gb -%>
+         cacheSizeGB: <%= $storyline_infra::mongodb::cache_size_gb %>
       collectionConfig:
          blockCompressor: "zlib"

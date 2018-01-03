@@ -75,7 +75,7 @@ storyline_infra:
       init_script: '/etc/init.d/mongodb'
       dir_data:  '/data/db/mongodb'
       dir_logs:  '/data/logs/mongodb'
-      cache_size_gb: 1
+      cache_size_gb: '1'
       version: "present"
       enabled_auth: true
       enabled_startup: false
@@ -118,6 +118,7 @@ storyline_infra:
       dir_data:  '/data/db/elasticsearch'
       dir_logs:  '/data/logs/elasticsearch'
       cluster_name: 'elastic_storyline'
+      jvm_max_memory_mb: 896
       enabled_startup: false
       enabled_running: true
   monit:
@@ -168,8 +169,8 @@ storyline_components:
       influxdb_db: "crawler"
       influxdb_user: "crawler"
       influxdb_password: "crawler"
-      start_memory: "128"
-      max_memory: "512"
+      jvm_start_memory_mb: 128
+      jvm_max_memory_mb: 512
       enabled_startup: false
       enabled_running: true
   server_web:
@@ -187,7 +188,7 @@ storyline_components:
       influxdb_db: "server_web"
       influxdb_user: "server_web"
       influxdb_password: "server_web"
-      start_memory: "128"
-      max_memory: "512"
+      jvm_start_memory_mb: 128
+      jvm_max_memory_mb: 512
       enabled_startup: false
       enabled_running: true

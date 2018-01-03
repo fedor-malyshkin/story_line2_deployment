@@ -12,6 +12,11 @@ class storyline_infra::elasticsearch () {
 	$cluster_name = $params['cluster_name']
 	$enabled_startup = $params['enabled_startup']
 	$enabled_running = $params['enabled_running']
+
+	# Java memory settings (in elastic start and max must be same )
+	# see: https://www.elastic.co/guide/en/elasticsearch/reference/6.1/heap-size.html
+	$jvm_max_memory_mb  = $params['jvm_max_memory_mb']
+
 	$version = $params['version']
 
 	user { 'elasticsearch':
@@ -48,6 +53,12 @@ class storyline_infra::elasticsearch () {
 	file { "${dir_bin}/config/elasticsearch.yml":
 		replace => true,
 		content => epp('storyline_infra/elasticsearch.epp'),
+		owner => "elasticsearch",
+		group=> "elasticsearch",
+	}->
+	file { "${dir_bin}/config/jvm.options":
+		replace => true,
+		content => epp('storyline_infra/elasticsearch_jvm_options.epp'),
 		owner => "elasticsearch",
 		group=> "elasticsearch",
 	}->

@@ -2,7 +2,7 @@
 # -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false  \
 # -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=50000 \
 # -Djava.rmi.server.hostname=`hostname -i` \
-java -Xms<%= $storyline_components::server_web::start_memory -%>m  -Xmx<%= $storyline_components::server_web::max_memory -%>m \
+java -Xms<%= $storyline_components::server_web::jvm_start_memory_mb -%>m  -Xmx<%= $storyline_components::server_web::jvm_max_memory_mb -%>m \
 -jar <%= $storyline_components::server_web::dir_bin -%>/<%= $storyline_components::server_web::jar_file %> \
 --spring.config.location=<%= $storyline_components::server_web::dir_bin -%>/server_web.yaml  >> <%= $storyline_components::server_web::dir_logs -%>/server_web-out.log  2>&1 &
 echo $! > <%= $storyline_components::server_web::pid_file %>

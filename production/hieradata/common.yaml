@@ -167,8 +167,8 @@ storyline_components:
       influxdb_db: "crawler"
       influxdb_user: "crawler"
       influxdb_password: "crawler"
-      jvm_start_memory_mb: "128"
-      jvm_max_memory_mb: "512"
+      start_memory: "128"
+      max_memory: "512"
       enabled_startup: false
       enabled_running: true
   server_web:
@@ -186,7 +186,7 @@ storyline_components:
       influxdb_db: "server_web"
       influxdb_user: "server_web"
       influxdb_password: "server_web"
-      jvm_start_memory_mb: "128"
-      jvm_max_memory_mb: "512"
+      start_memory: "128"
+      max_memory: "512"
       enabled_startup: false
       enabled_running: true

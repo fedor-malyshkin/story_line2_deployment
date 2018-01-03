@@ -75,6 +75,7 @@ storyline_infra:
       init_script: '/etc/init.d/mongodb'
       dir_data:  '/data/db/mongodb'
       dir_logs:  '/data/logs/mongodb'
+      cache_size_gb: 1
       version: "present"
       enabled_auth: true
       enabled_startup: false

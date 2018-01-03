@@ -2,7 +2,7 @@
 # -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false  \
 # -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=50000 \
 # -Djava.rmi.server.hostname=`hostname -i` \
-java \
+java -Xms<%= $storyline_components::crawler::jvm_start_memory_mb -%>m  -Xmx<%= $storyline_components::crawler::jvm_max_memory_mb -%>m \
 -jar <%= $storyline_components::crawler::dir_bin -%>/<%= $storyline_components::crawler::jar_file %> \
 --spring.config.location=<%= $storyline_components::crawler::dir_bin -%>/crawler.yaml  >> <%= $storyline_components::crawler::dir_logs -%>/crawler-out.log  2>&1 &
 echo $! > <%= $storyline_components::crawler::pid_file %>

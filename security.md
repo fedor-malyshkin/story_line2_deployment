@@ -45,6 +45,8 @@
 	```js
 	use admin
 	db.createUser({ user: "admin", 	pwd: "uqctzewud69!5!I#", roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]})
+	db.grantRolesToUser(    "admin", [ { role: "dbAdminAnyDatabase", db: "admin" } ] )
+	db.grantRolesToUser(    "admin", [ { role: "clusterAdmin", db: "admin" } ] )
 	```
 1. Create additional users:
     - connect as admin: `mongo --port 27017 -u "admin" -p "uqctzewud69!5!I#" --authenticationDatabase "admin"`

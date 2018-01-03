@@ -14,6 +14,13 @@ db.crawler_entries.update( {"in_process": true}, {$set: {"in_process": false}}, 
 db.crawler_entries.update( {"processed": true}, {$set: {"processed": false}}, {multi:true})
 ```
 
+# Umark as 'in process' crawler_entries
+```
+use crawler
+db.crawler_entries.update( {"in_process": true, "source": "pg11.ru"}, {$set: {"in_process": false}}, {multi:true})
+db.crawler_entries.update( {"in_process": true, "source": "bnkomi.ru"}, {$set: {"in_process": false}}, {multi:true})
+````
+
 # get elasticsearch mapping
 ```
 curl -X GET ci.nlp-project.ru:9200/story_line2_v1/_mapping?pretty
@@ -67,3 +74,6 @@ curl -XGET 'ci.nlp-project.ru:9200/story_line2_v1/_search?pretty&size=3' -H 'Con
     }
 }'
 ```
+# MongoDB Monitoring
+`mongostat --port 27017 -u "admin" -p "uqctzewud69!5!I#" --authenticationDatabase "admin"`
+`mongotop --port 27017 -u "admin" -p "uqctzewud69!5!I#" --authenticationDatabase "admin"`

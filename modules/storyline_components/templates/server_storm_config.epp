@@ -1,12 +1,12 @@
 # scripts
-server_storm.content_extraction.script_path: "<%= $storyline_components::server_storm::configuration_url_prefix -%><%= $storyline_components::server_storm::script_name -%>"
+server_storm.content_extraction.script_path: "<%= $storyline_components::storm::configuration_url_prefix -%><%= $storyline_components::server_storm::script_name -%>"
 
 # строка подключения к MongoDB для сохранения результатаов анализа
-server_storm.mongodb.connection_url: "<%= $storyline_components::server_storm::mongodb_connection_url -%>"
+server_storm.mongodb.connection_url: "<%= $storyline_components::storm::mongodb_connection_url -%>"
 
 # elastic
-server_storm.elasticsearch.hostname: "<%= $storyline_components::server_storm::elasticsearch_host -%>"
-server_storm.elasticsearch.port: <%= $storyline_components::server_storm::elasticsearch_port %>
+server_storm.elasticsearch.hostname: "<%= $storyline_components::storm::elasticsearch_host -%>"
+server_storm.elasticsearch.port: <%= $storyline_components::storm::elasticsearch_port %>
 server_storm.elasticsearch.index.real_name: story_line2_v1
 server_storm.elasticsearch.index.read_alias: story_line2_read_index
 server_storm.elasticsearch.index.write_alias: story_line2_write_index
@@ -25,11 +25,11 @@ server_storm.metrics.enabled: true
 # период сбора данных (в секундах)
 server_storm.metrics.collectiong_pertiod: 15
 server_storm.influxdb_metrics.enabled: true
-server_storm.influxdb_metrics.influxdb_host: "<%= $storyline_components::server_storm::influxdb_host -%>"
-server_storm.influxdb_metrics.influxdb_port: <%= $storyline_components::server_storm::influxdb_port %>
-server_storm.influxdb_metrics.influxdb_db: "<%= $storyline_components::server_storm::influxdb_db -%>"
-server_storm.influxdb_metrics.influxdb_user: "<%= $storyline_components::server_storm::influxdb_user -%>"
-server_storm.influxdb_metrics.influxdb_password: "<%= $storyline_components::server_storm::influxdb_password -%>"
+server_storm.influxdb_metrics.influxdb_host: "<%= $storyline_components::storm::influxdb_host -%>"
+server_storm.influxdb_metrics.influxdb_port: <%= $storyline_components::storm::influxdb_port %>
+server_storm.influxdb_metrics.influxdb_db: "<%= $storyline_components::storm::influxdb_db -%>"
+server_storm.influxdb_metrics.influxdb_user: "<%= $storyline_components::storm::influxdb_user -%>"
+server_storm.influxdb_metrics.influxdb_password: "<%= $storyline_components::storm::influxdb_password -%>"
 # период отправки данных на сервер (в секундах)
 server_storm.influxdb_metrics.reporting_period: 30
 # период отправки данных в лог (в секундах)

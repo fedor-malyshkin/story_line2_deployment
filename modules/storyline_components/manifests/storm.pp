@@ -114,38 +114,38 @@ class storyline_components::storm () {
 	}
 
 	# update version
-	if $topology_version == "presented" {
-		$jar_file = "server_storm-PRESENTED.jar"
-		$jar_file_provision = get_first_jar_file_name('/provision/artifacts')
-		$full_path_jar_file = "${dir_topo}/${jar_file}"
-		# get artifact "/provision/artifacts" dir
-		# returns file names with full path
-		file { $full_path_jar_file:
-			replace => true,
-			ensure => file,
-			owner => "storm",
-			group => "storm",
-			source => "file://${jar_file_provision}",
-			# notify => Exec['deploy-topology'],
-		}
-		# copy in any case
-		#if $current_version != $version {
-		#} # if $current_version != $version {
-	} else {
-		$jar_file = "server_storm-${topology_version}-all.jar"
-		$full_path_jar_file = "${dir_topo}/${jar_file}"
-		if $current_topology_version != $topology_version {
-			# get artifact from nexus
-			nexus::artifact { $full_path_jar_file:
-				gav => "ru.nlp_project.story_line2:server_storm:${topology_version}",
-				repository => "releases",
-				classifier => 'all',
-				output => $full_path_jar_file,
-				packaging  => 'jar',
-				# notify => Exec['deploy-topology'],
-			}
-		} # if $current_version != $version {
-	}
+	# if $topology_version == "presented" {
+	# 	$jar_file = "server_storm-PRESENTED.jar"
+	# 	$jar_file_provision = get_first_jar_file_name('/provision/artifacts')
+	# 	$full_path_jar_file = "${dir_topo}/${jar_file}"
+	# 	# get artifact "/provision/artifacts" dir
+	# 	# returns file names with full path
+	# 	file { $full_path_jar_file:
+	# 		replace => true,
+	# 		ensure => file,
+	# 		owner => "storm",
+	# 		group => "storm",
+	# 		source => "file://${jar_file_provision}",
+	# 		# notify => Exec['deploy-topology'],
+	# 	}
+	# 	# copy in any case
+	# 	#if $current_version != $version {
+	# 	#} # if $current_version != $version {
+	# } else {
+	# 	$jar_file = "server_storm-${topology_version}-all.jar"
+	# 	$full_path_jar_file = "${dir_topo}/${jar_file}"
+	# 	if $current_topology_version != $topology_version {
+	# 		# get artifact from nexus
+	# 		nexus::artifact { $full_path_jar_file:
+	# 			gav => "ru.nlp_project.story_line2:server_storm:${topology_version}",
+	# 			repository => "releases",
+	# 			classifier => 'all',
+	# 			output => $full_path_jar_file,
+	# 			packaging  => 'jar',
+	# 			# notify => Exec['deploy-topology'],
+	# 		}
+	# 	} # if $current_version != $version {
+	# }
 # 	exec{ 'deploy-topology':
 # 		command => "${dir_bin}/bin/storm deploy ${full_path_jar_file}",
 # #		creates => $dir_bin,

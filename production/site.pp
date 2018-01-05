@@ -21,6 +21,8 @@ node "datahouse01.nlp-project.ru"  {
 		include storyline_components::server_web
 		include storyline_infra::nginx
 
+		include storyline_components::spark
+
 		include storyline_infra::monit
 }
 
@@ -43,9 +45,9 @@ node "ci.nlp-project.ru"  {
 
 		include storyline_infra::zookeeper
 		include storyline_components::storm
-		include storyline_components::spark
 		include storyline_infra::elasticsearch
 
+		include storyline_components::spark
 
 		include storyline_infra::monit
 }

@@ -6,7 +6,12 @@ storyline_base:
     # 3772 	drpc.port (External DRPC Clients)
     # 3773 - drpc.invocations.port  (Worker Processes)
     # 3774 - drpc.http.port (External HTTP DRPC Clients)
-    incommming_port_project2: [3772, 3773, 3774, 6700, 6701, 6702, 6703]
+
+    # 7077 - Spark Master port
+    # 7078 - Spark Worker port
+    # 8090 - Spark Master UI port
+    # 8091 - Spark Worker UI port
+    incommming_port_project2: [3772, 3773, 3774, 6700, 6701, 6702, 6703, 7078, 8091]
 storyline_infra:
   monit:
       port: "3000"
@@ -21,6 +26,8 @@ storyline_infra:
       enabled_storm_drpc: true
       enabled_server_web: true
       enabled_nginx: true
+      enabled_spark_master: false
+      enabled_spark_worker: true
       enabled_startup: true
       enabled_running: true
   collectd:

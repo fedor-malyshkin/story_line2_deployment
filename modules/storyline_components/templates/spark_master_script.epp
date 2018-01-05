@@ -1,0 +1,3 @@
+#!/bin/sh
+<%= $storyline_components::spark::dir_bin -%>/sbin/start-master.sh >> <%= $storyline_components::spark::dir_logs -%>/spark_master.log  2>&1 &
+echo $! > <%= $storyline_components::spark::dir_logs -%>/spark_master.pid

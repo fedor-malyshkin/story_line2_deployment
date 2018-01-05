@@ -97,3 +97,15 @@ CHECK PROCESS storm_logviewer with pidfile <%= $params_comp['storm']['dir_logs']
 CHECK PROCESS storm_drpc with pidfile <%= $params_comp['storm']['dir_logs'] -%>/storm_drpc.pid
 	start program = "/etc/init.d/storm_drpc start"
 <% } %>
+
+<% if $params_infra['monit']['enabled_spark_master'] == true { %>
+# check spart_master
+CHECK PROCESS spart_master with pidfile <%= $params_comp['spark']['dir_logs'] -%>/spark_master.pid
+	start program = "/etc/init.d/spark_master start"
+<% } %>
+
+<% if $params_infra['monit']['enabled_spark_worker'] == true { %>
+# check spark_worker
+CHECK PROCESS spark_worker with pidfile <%= $params_comp['spark']['dir_logs'] -%>/spark_worker.pid
+	start program = "/etc/init.d/spark_worker start"
+<% } %>

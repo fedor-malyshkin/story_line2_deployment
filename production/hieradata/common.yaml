@@ -138,7 +138,7 @@ storyline_components:
       dir_bin:  '/storm'
       dir_logs:  '/data/logs/storm'
     #   storm_supervisor_slot_ports: [6700, 6701, 6702, 6703]
-      storm_supervisor_slot_ports: [6700, 6701]    
+      storm_supervisor_slot_ports: [6700, 6701]
       zookeeper_hosts:  ["datahouse01.nlp-project.ru", "ci.nlp-project.ru"]
       zookeeper_port: "2181"
       storm_nimbus_seeds:  ["datahouse01.nlp-project.ru"]
@@ -193,3 +193,26 @@ storyline_components:
       jvm_max_memory_mb: 512
       enabled_startup: false
       enabled_running: true
+  spark:
+      version: "2.2.1"
+      dir_data:  '/data/db/spark'
+      dir_bin:  '/spark'
+      dir_logs:  '/data/logs/spark'
+      # executors
+      executor_data_dir: '/data/db/spark-executors'
+      # master
+      master_port: 7077
+      master_webui_port: 8090
+      # worker
+      worker_master_url: "spark://ci.nlp-project.ru:7077"
+      worker_cores: 2
+      worker_memory: "1g"
+      worker_port: 7078
+      worker_webui_port: 8091
+      worker_dir: '/data/db/spark-workers'
+      # daemon
+      daemon_memory: "256m"
+      # spark it self
+      spark_pid_dir: '/data/logs/spark'
+      enabled_startup: false
+      enabled_running: false

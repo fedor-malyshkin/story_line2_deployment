@@ -9,6 +9,8 @@ node "datahouse01.nlp-project.ru"  {
 		include storyline_base::ssh
 		include storyline_base::oracle_java
 
+		include storyline_base::firewall
+
 		include storyline_infra::collectd
 
 		include storyline_infra::mongodb
@@ -16,12 +18,10 @@ node "datahouse01.nlp-project.ru"  {
 
 		include storyline_infra::zookeeper
 		include storyline_components::storm
-
 		include storyline_components::server_web
 		include storyline_infra::nginx
 
 		include storyline_infra::monit
-		include storyline_base::firewall
 }
 
 node "ci.nlp-project.ru"  {
@@ -34,6 +34,8 @@ node "ci.nlp-project.ru"  {
 		include storyline_base::ssh
 		include storyline_base::oracle_java
 
+		include storyline_base::firewall
+
 		include storyline_infra::collectd
 
 		include storyline_infra::influxdb
@@ -41,9 +43,9 @@ node "ci.nlp-project.ru"  {
 
 		include storyline_infra::zookeeper
 		include storyline_components::storm
+		include storyline_components::spark
 		include storyline_infra::elasticsearch
 
-		include storyline_infra::monit
-		include storyline_base::firewall
 
+		include storyline_infra::monit
 }

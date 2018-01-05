@@ -15,9 +15,9 @@ storyline_infra:
       enabled_influxdb: true
       enabled_grafana: true
       enabled_zookeeper: true
-      enabled_server_storm_supervisor: true
-      enabled_server_storm_logviewer: true
-      enabled_server_storm_drpc: true
+      enabled_storm_supervisor: true
+      enabled_storm_logviewer: true
+      enabled_storm_drpc: true
       enabled_startup: true
       enabled_running: true
   collectd:

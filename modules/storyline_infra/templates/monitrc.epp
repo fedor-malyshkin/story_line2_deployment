@@ -68,32 +68,32 @@ CHECK PROCESS server_web  with pidfile <%= $params_comp['server_web']['pid_file'
 	start program = "<%= $params_comp['server_web']['init_script'] %>   start"
 <% } %>
 
-<% if $params_infra['monit']['enabled_server_storm_nimbus'] == true { %>
-# check server_storm_nimbus
-CHECK PROCESS server_storm_nimbus with pidfile <%= $params_comp['server_storm']['dir_logs'] -%>/server_storm_nimbus.pid
-	start program = "/etc/init.d/server_storm_nimbus start"
+<% if $params_infra['monit']['enabled_storm_nimbus'] == true { %>
+# check storm_nimbus
+CHECK PROCESS storm_nimbus with pidfile <%= $params_comp['storm']['dir_logs'] -%>/storm_nimbus.pid
+	start program = "/etc/init.d/storm_nimbus start"
 <% } %>
 
-<% if $params_infra['monit']['enabled_server_storm_supervisor'] == true { %>
-# check server_storm_supervisor
-CHECK PROCESS server_storm_supervisor with pidfile <%= $params_comp['server_storm']['dir_logs'] -%>/server_storm_supervisor.pid
-	start program = "/etc/init.d/server_storm_supervisor start"
+<% if $params_infra['monit']['enabled_storm_supervisor'] == true { %>
+# check storm_supervisor
+CHECK PROCESS storm_supervisor with pidfile <%= $params_comp['storm']['dir_logs'] -%>/storm_supervisor.pid
+	start program = "/etc/init.d/storm_supervisor start"
 <% } %>
 
-<% if $params_infra['monit']['enabled_server_storm_ui'] == true { %>
-# check server_storm_ui
-CHECK PROCESS server_storm_ui with pidfile <%= $params_comp['server_storm']['dir_logs'] -%>/server_storm_ui.pid
-	start program = "/etc/init.d/server_storm_ui start"
+<% if $params_infra['monit']['enabled_storm_ui'] == true { %>
+# check storm_ui
+CHECK PROCESS storm_ui with pidfile <%= $params_comp['storm']['dir_logs'] -%>/storm_ui.pid
+	start program = "/etc/init.d/storm_ui start"
 <% } %>
 
-<% if $params_infra['monit']['enabled_server_storm_logviewer'] == true { %>
-# check server_storm_logviewer
-CHECK PROCESS server_storm_logviewer with pidfile <%= $params_comp['server_storm']['dir_logs'] -%>/server_storm_logviewer.pid
-	start program = "/etc/init.d/server_storm_logviewer start"
+<% if $params_infra['monit']['enabled_storm_logviewer'] == true { %>
+# check storm_logviewer
+CHECK PROCESS storm_logviewer with pidfile <%= $params_comp['storm']['dir_logs'] -%>/storm_logviewer.pid
+	start program = "/etc/init.d/storm_logviewer start"
 <% } %>
 
-<% if $params_infra['monit']['enabled_server_storm_drpc'] == true { %>
-# check server_storm_drpc
-CHECK PROCESS server_storm_drpc with pidfile <%= $params_comp['server_storm']['dir_logs'] -%>/server_storm_drpc.pid
-	start program = "/etc/init.d/server_storm_drpc start"
+<% if $params_infra['monit']['enabled_storm_drpc'] == true { %>
+# check storm_drpc
+CHECK PROCESS storm_drpc with pidfile <%= $params_comp['storm']['dir_logs'] -%>/storm_drpc.pid
+	start program = "/etc/init.d/storm_drpc start"
 <% } %>

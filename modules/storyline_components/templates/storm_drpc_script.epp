@@ -1,0 +1,3 @@
+#!/bin/sh
+<%= $storyline_components::storm::dir_bin -%>/bin/storm drpc >> <%= $storyline_components::storm::dir_logs -%>/storm_drpc-out.log  2>&1 &
+echo $! > <%= $storyline_components::storm::dir_logs -%>/storm_drpc.pid

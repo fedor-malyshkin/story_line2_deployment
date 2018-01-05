@@ -128,20 +128,20 @@ storyline_infra:
       enabled_running: true
 storyline_components:
   nexus_repo_url: "http://repo.nlp-project.ru:8082/nexus"
-  server_storm:
-      apache_storm_version: "1.1.1"
-      ui_port: "8082"
-      nimbus_port: "6627"
-      logviewer_port: "8083"
-      drpc_port: "3772"
+  storm:
+      version: "1.1.1"
+      storm_ui_port: "8082"
+      storm_nimbus_port: "6627"
+      storm_logviewer_port: "8083"
+      storm_drpc_port: "3772"
       dir_data:  '/data/db/server_storm'
       dir_bin:  '/server_storm'
       dir_logs:  '/data/logs/server_storm'
-      supervisor_slot_ports: [6700, 6701, 6702, 6703]
+      storm_supervisor_slot_ports: [6700, 6701, 6702, 6703]
       zookeeper_hosts:  ["datahouse01.nlp-project.ru", "ci.nlp-project.ru"]
       zookeeper_port: "2181"
-      nimbus_seeds:  ["datahouse01.nlp-project.ru"]
-      drpc_servers:  ["datahouse01.nlp-project.ru", "ci.nlp-project.ru"]
+      storm_nimbus_seeds:  ["datahouse01.nlp-project.ru"]
+      storm_drpc_servers:  ["datahouse01.nlp-project.ru", "ci.nlp-project.ru"]
       influxdb_host:  "ci.nlp-project.ru"
       influxdb_port: "8086"
       influxdb_db: "server_storm"

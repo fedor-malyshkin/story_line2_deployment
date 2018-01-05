@@ -1,3 +1,0 @@
-#!/bin/sh
-<%= $storyline_components::server_storm::dir_bin -%>/bin/storm logviewer >> <%= $storyline_components::server_storm::dir_logs -%>/server_storm_logviewer-out.log  2>&1 &
-echo $! > <%= $storyline_components::server_storm::dir_logs -%>/server_storm_logviewer.pid

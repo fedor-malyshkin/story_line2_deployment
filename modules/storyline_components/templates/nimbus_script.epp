@@ -1,3 +1,0 @@
-#!/bin/sh
-<%= $storyline_components::server_storm::dir_bin -%>/bin/storm nimbus >> <%= $storyline_components::server_storm::dir_logs -%>/server_storm_nimbus-out.log  2>&1 &
-echo $! > <%= $storyline_components::server_storm::dir_logs -%>/server_storm_nimbus.pid

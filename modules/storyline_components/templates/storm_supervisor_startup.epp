@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ### BEGIN INIT INFO
-# Provides:          server_storm_drpc
+# Provides:          storm_supervisor
 # Required-Start:    $remote_fs
 # Required-Stop:     $remote_fs
 # Should-Start:      $all
@@ -16,13 +16,13 @@ set -e
 
 . /lib/lsb/init-functions
 
-DAEMON="<%= $storyline_components::server_storm::dir_bin -%>/server_storm_drpc.sh"
-DIR="<%= $storyline_components::server_storm::dir_logs -%>"
-NAME="server_storm_drpc"
+DAEMON="<%= $storyline_components::storm::dir_bin -%>/storm_supervisor.sh"
+DIR="<%= $storyline_components::storm::dir_logs -%>"
+NAME="storm_supervisor"
 DESC="-"
-PID="<%= $storyline_components::server_storm::dir_logs -%>/server_storm_drpc.pid"
+PID="<%= $storyline_components::storm::dir_logs -%>/storm_supervisor.pid"
 OPTS="start"
-USER="server_storm"
+USER="storm"
 
 # Check if DAEMON binary exist
 [ -f $DAEMON ] || exit 0

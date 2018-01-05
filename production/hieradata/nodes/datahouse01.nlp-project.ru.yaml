@@ -14,11 +14,11 @@ storyline_infra:
       enabled_mongodb: true
       enabled_zookeeper: true
       enabled_crawler: true
-      enabled_server_storm_nimbus: true  # must be enabled only on one server!!!
-      enabled_server_storm_supervisor: true
-      enabled_server_storm_ui: true
-      enabled_server_storm_logviewer: true
-      enabled_server_storm_drpc: true
+      enabled_storm_nimbus: true  # must be enabled only on one server!!!
+      enabled_storm_supervisor: true
+      enabled_storm_ui: true
+      enabled_storm_logviewer: true
+      enabled_storm_drpc: true
       enabled_server_web: true
       enabled_nginx: true
       enabled_startup: true
@@ -34,7 +34,7 @@ storyline_infra:
     enabled_mongodb: true
     mongodb_user: "collectd"
     mongodb_password: "collectd"
-    enabled_storm: true
+    enabled_storm: false
     storm_ui_url: "http://datahouse01.nlp-project.ru:8082/"
     enabled_startup: false
     enabled_running: true

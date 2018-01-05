@@ -1,9 +1,8 @@
-class storyline_components::server_storm () {
-	$params = lookup({"name" => "storyline_components.server_storm",
+class storyline_components::spark_master () {
+	$params = lookup({"name" => "storyline_components.spark_master",
 	    "merge" => {"strategy" => "deep"}})
 
-	$topology_version = $params['version']
-	$version = $params['apache_storm_version']
+	$version = $params['apache_spark_version']
 	$ui_port = $params['ui_port']
 	$nimbus_port = $params['nimbus_port']
 	$logviewer_port = $params['logviewer_port']

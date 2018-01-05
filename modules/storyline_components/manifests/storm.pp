@@ -57,7 +57,7 @@ class storyline_components::storm () {
 		cwd => "/",
 		# exec will run unless the command has an exit code of 0
 		unless => '/usr/bin/test -d /data/db -a -d /data/logs',
-	}
+	} ->
 	# working dirы
 	file { [$dir_bin, $dir_logs, $dir_data, $dir_topo] :
 		ensure => "directory",
@@ -65,7 +65,7 @@ class storyline_components::storm () {
 		owner => "storm",
 		group => "storm",
 		require => Exec['storm-mkdir'],
-	}->
+	} ->
 	archive { "server_storm-archive":
 		path=> "/provision/apache-storm-${version}.zip",
   		source=>"http://apache-mirror.rbc.ru/pub/apache/storm/apache-storm-${version}/apache-storm-${version}.zip",
@@ -73,7 +73,7 @@ class storyline_components::storm () {
   		extract_path  => "/provision",
   		cleanup       => false,
 		notify 		  => Exec['storm_move_to_no_version_dir'],
-	}
+	} ->
 	exec { "storm_move_to_no_version_dir":
 		command => "/bin/mv -f -t ${dir_bin} /provision/apache-storm-${version}/* && chown -R storm:storm ${dir_bin}",
 		cwd => "/",
@@ -96,14 +96,14 @@ class storyline_components::storm () {
 			restart 	=> "/etc/init.d/storm_${service} restart",
 			hasrestart => true,
 			hasstatus => true,
-		}
+		} ->
 		file { "/etc/init.d/storm_${service}":
 			replace => true,
 			owner => "storm",
 			group => "storm",
 			content => epp("storyline_components/storm_${service}_startup.epp"),
 			mode=>"ug=rwx,o=r",
- 		}
+ 		} ->
 		file { "${dir_bin}/storm_${service}.sh":
 			replace => true,
 			owner => "storm",

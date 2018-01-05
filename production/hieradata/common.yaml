@@ -137,7 +137,8 @@ storyline_components:
       dir_data:  '/data/db/storm'
       dir_bin:  '/storm'
       dir_logs:  '/data/logs/storm'
-      storm_supervisor_slot_ports: [6700, 6701, 6702, 6703]
+    #   storm_supervisor_slot_ports: [6700, 6701, 6702, 6703]
+      storm_supervisor_slot_ports: [6700, 6701]    
       zookeeper_hosts:  ["datahouse01.nlp-project.ru", "ci.nlp-project.ru"]
       zookeeper_port: "2181"
       storm_nimbus_seeds:  ["datahouse01.nlp-project.ru"]

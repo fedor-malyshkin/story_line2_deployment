@@ -23,7 +23,7 @@ glr_parser.fact_file: facts.yaml
 # metrics
 server_storm.metrics.enabled: true
 # период сбора данных (в секундах)
-server_storm.metrics.collectiong_pertiod: 15
+server_storm.metrics.collectiong_pertiod: 60
 server_storm.influxdb_metrics.enabled: true
 server_storm.influxdb_metrics.influxdb_host: "<%= $storyline_components::storm::influxdb_host -%>"
 server_storm.influxdb_metrics.influxdb_port: <%= $storyline_components::storm::influxdb_port %>

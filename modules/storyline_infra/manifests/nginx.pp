@@ -58,6 +58,7 @@ class storyline_infra::nginx () {
 		content => epp('storyline_infra/nginx.epp'),
 		owner => "nginx",
 		group=> "nginx",
+		mode=>"ug=rw,o=r",
 		notify => Service['nginx'],
 	}->
 	file { "/etc/nginx/conf.d/default.conf":
@@ -65,6 +66,7 @@ class storyline_infra::nginx () {
 		content => epp('storyline_infra/nginx_default.epp'),
 		owner => "nginx",
 		group=> "nginx",
+		mode=>"ug=rw,o=r",
 		notify => Service['nginx'],
 	}->
 	file { $init_script:
@@ -87,7 +89,9 @@ class storyline_infra::nginx () {
 		file { "/etc/nginx/conf.d/topology.conf":
 			replace => true,
 			content => epp('storyline_infra/nginx_topology.epp'),
-			mode=>"ug=rwx,o=r",
+			owner => "nginx",
+			group=> "nginx",
+			mode=>"ug=rw,o=r",
 			notify => Service['nginx'],
 		}
 	}

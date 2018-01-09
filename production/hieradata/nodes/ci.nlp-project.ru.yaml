@@ -46,3 +46,6 @@ storyline_infra:
     elasticsearch_cluster: "elastic_storyline"
     enabled_startup: false
     enabled_running: true
+storyline_components:
+  spark:
+      worker_memory: "2g"

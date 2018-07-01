@@ -67,7 +67,7 @@ class storyline_components::spark () {
 		group => "spark",
 		mode=>"u=rwx,og=rx",
 		content => epp('storyline_components/spark-env.sh.epp'),
-		notify => Service['spark_master', 'spark_worker'],
+		notify => Service['spark_worker'],
 	}
 	['master','worker'].each |String $service| {
 		service { "spark_${service}":

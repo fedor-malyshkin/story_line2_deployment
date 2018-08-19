@@ -1,6 +1,0 @@
----
-storyline_infra:
-  monit:
-      port: "3000"
-      enabled_server_web: true
-      enabled_nginx: true

@@ -95,7 +95,7 @@ storyline_infra:
     enabled_running: false
   zookeeper:
       port: "2181"
-      version: "3.4.9"
+      version: "3.4.13"
       pid_file: '/data/db/zookeeper/zookeeper_server.pid'
       init_script: '/etc/init.d/zookeeper'
       dir_bin:  '/zookeeper'

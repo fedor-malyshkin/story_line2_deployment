@@ -26,7 +26,7 @@ storyline_base:
     incommming_port_project: [25826, 8086,  27017, 2181, 9200, 6627, 8082, 8083, 3772]
     # iptables' limit 15 positions in list!!!
     incommming_port_project2: []
-    host_project: ['datahouse01.nlp-project.ru', 'ci.nlp-project.ru', 'repo.nlp-project.ru']
+    host_project: ['datahouse02.nlp-project.ru', 'datahouse01.nlp-project.ru', 'ci.nlp-project.ru', 'repo.nlp-project.ru']
   oracle_java:
     version: "8u92"
 storyline_infra:
@@ -124,7 +124,7 @@ storyline_infra:
       enabled_running: true
   monit:
       port: "3000" # maybe overwritten
-      version: "1:5.16-2"
+      version: "present"
       enabled_startup: true
       enabled_running: true
 storyline_components:

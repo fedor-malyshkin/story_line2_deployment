@@ -11,7 +11,7 @@ storyline_base:
     # 7078 - Spark Worker port
     # 8090 - Spark Master UI port
     # 8091 - Spark Worker UI port
-    incommming_port_project2: []
+    incommming_port_project2: [22]
 storyline_infra:
   monit:
       port: "3000"

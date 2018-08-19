@@ -1,4 +1,4 @@
-class storyline_base::oracle_java (String $version = '8') {
+class storyline_base::oracle_java (String $version = '8u181') {
 
 # java oracle
 	class { 'oracle_java':

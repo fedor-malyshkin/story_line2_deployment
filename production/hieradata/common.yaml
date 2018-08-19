@@ -104,6 +104,7 @@ storyline_infra:
       ensemble:
         datahouse01.nlp-project.ru: '1'
         ci.nlp-project.ru: '2'
+        datahouse02.nlp-project.ru: '3'
       leader_port: "2888"
       election_port: "3888"
       enabled_startup: false

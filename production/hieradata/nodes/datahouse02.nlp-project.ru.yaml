@@ -1,0 +1,20 @@
+---
+storyline_base:
+  firewall:
+    incommming_port_all: [222, 3000]
+    incommming_port_project: [2181, 2888, 3888]
+    # 3772 	drpc.port (External DRPC Clients)
+    # 3773 - drpc.invocations.port  (Worker Processes)
+    # 3774 - drpc.http.port (External HTTP DRPC Clients)
+
+    # 7077 - Spark Master port
+    # 7078 - Spark Worker port
+    # 8090 - Spark Master UI port
+    # 8091 - Spark Worker UI port
+    incommming_port_project2: []
+storyline_infra:
+  monit:
+      port: "3000"
+      enabled_zookeeper: true
+      enabled_startup: true
+      enabled_running: true

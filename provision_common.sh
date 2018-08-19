@@ -20,7 +20,7 @@ fi
 
 # Install puppet modules
 $PUPPET_BIN module install puppetlabs-ntp
-$PUPPET_BIN module install aco-oracle_java
+$PUPPET_BIN module install puppetlabs-java
 $PUPPET_BIN module install puppetlabs-firewall
 $PUPPET_BIN module install saz-ssh
 $PUPPET_BIN module install saz-sudo

@@ -5,7 +5,5 @@ storyline_components:
     version: "0.11"
   crawler:
     version: "0.12"
-  storm:
-    topology_version: "presented"
   server_web:
     version: "0.8"

@@ -29,7 +29,7 @@ storyline_infra:
     init_script: '/etc/init.d/grafana'
     dir_data:  '/data/db/grafana'
     dir_logs:  '/data/logs/grafana'
-    version: "4.1.2"
+    version: "present"
     enabled_startup: false
     enabled_running: false
   mongodb:
@@ -84,31 +84,6 @@ storyline_infra:
       enabled_running: false
 storyline_components:
   nexus_repo_url: "http://192.168.1.99:8082/nexus"
-  server_storm:
-      apache_storm_version: "1.0.3"
-      ui_port: "8082"
-      nimbus_port: "6627"
-      logviewer_port: "8083"
-      drpc_port: "3772"
-      dir_data:  '/data/db/server_storm'
-      dir_bin:  '/server_storm'
-      dir_logs:  '/data/logs/server_storm'
-      supervisor_slot_ports: [6700, 6701, 6702, 6703]
-      zookeeper_hosts:  ["zookeeper"]
-      zookeeper_port: "2181"
-      nimbus_seeds: ["server_storm"]
-      drpc_servers: ["server_storm"]
-      influxdb_host:  ""
-      influxdb_port: ""
-      influxdb_db: "storyline"
-      influxdb_user: "server_storm"
-      influxdb_password: "server_storm"
-      enabled_startup: false
-      enabled_running: false
-      topology_configuration_url: "http://server_web:9000/server_storm.yaml"
-      mongodb_connection_url: "mongodb://mongodb:27017/"
-      elasticsearch_host:  "elasticsearch"
-      elasticsearch_port: "9200"
   crawler:
       app_port: "8080"
       admin_port: "8081"
@@ -135,8 +110,6 @@ storyline_components:
       dir_data:  '/data/db/server_web'
       dir_bin:  '/server_web'
       dir_logs:  '/data/logs/server_web'
-      drpc_port: "3772"
-      drpc_host: "server_storm"
       influxdb_host:  "ci.nlp-project.ru"
       influxdb_port: "8086"
       influxdb_db: "storyline"

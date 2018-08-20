@@ -25,14 +25,6 @@ node "crawler"  {
 	include storyline_infra::monit
 }
 
-node "server_storm"  {
-	include storyline_base::ntp
-	include storyline_base::java
-	include storyline_components::server_storm
-	include storyline_infra::monit
-}
-
-
 node "server_web"  {
 	include storyline_base::ntp
 	include storyline_base::java

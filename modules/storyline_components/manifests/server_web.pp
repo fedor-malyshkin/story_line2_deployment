@@ -60,7 +60,7 @@ class storyline_components::server_web () {
 	file { $init_script:
 		replace => true,
 		content => epp('storyline_components/server_web_startup.epp'),
-		mode=>"ug=rwx,o=r",
+		mode=>"ug=rw,o=r",
 	}
 
 	# update version
@@ -114,10 +114,10 @@ class storyline_components::server_web () {
 	service { 'server_web':
   		ensure => $enabled_running,
 		enable    => $enabled_startup,
-		start 		=> "${init_script} start",
-		stop 		=> "${init_script} stop",
-		status 		=> "${init_script} status",
-		restart 	=> "${init_script} restart",
+		start 		=> "systemctl start server_web",
+		stop 		=> "systemctl stop server_web",
+		status 		=> "systemctl status server_web",
+		restart 	=> "systemctl restart server_web",
 		hasrestart => true,
 		hasstatus => true,
 	}

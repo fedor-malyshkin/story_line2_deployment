@@ -68,36 +68,6 @@ CHECK PROCESS server_web  with pidfile <%= $params_comp['server_web']['pid_file'
 	start program = "systemctl start server_web"
 <% } %>
 
-<% if $params_infra['monit']['enabled_storm_nimbus'] == true { %>
-# check storm_nimbus
-CHECK PROCESS storm_nimbus with pidfile <%= $params_comp['storm']['dir_logs'] -%>/storm_nimbus.pid
-	start program = "systemctl start storm_nimbus"
-<% } %>
-
-<% if $params_infra['monit']['enabled_storm_supervisor'] == true { %>
-# check storm_supervisor
-CHECK PROCESS storm_supervisor with pidfile <%= $params_comp['storm']['dir_logs'] -%>/storm_supervisor.pid
-	start program = "systemctl start storm_supervisor"
-<% } %>
-
-<% if $params_infra['monit']['enabled_storm_ui'] == true { %>
-# check storm_ui
-CHECK PROCESS storm_ui with pidfile <%= $params_comp['storm']['dir_logs'] -%>/storm_ui.pid
-	start program = "systemctl start storm_ui"
-<% } %>
-
-<% if $params_infra['monit']['enabled_storm_logviewer'] == true { %>
-# check storm_logviewer
-CHECK PROCESS storm_logviewer with pidfile <%= $params_comp['storm']['dir_logs'] -%>/storm_logviewer.pid
-	start program = "systemctl start storm_logviewer"
-<% } %>
-
-<% if $params_infra['monit']['enabled_storm_drpc'] == true { %>
-# check storm_drpc
-CHECK PROCESS storm_drpc with pidfile <%= $params_comp['storm']['dir_logs'] -%>/storm_drpc.pid
-	start program = "systemctl start storm_drpc"
-<% } %>
-
 <% if $params_infra['monit']['enabled_spark_master'] == true { %>
 # check spart_master
 CHECK PROCESS spart_master with pidfile <%= $params_comp['spark']['dir_logs'] -%>/spark_master.pid

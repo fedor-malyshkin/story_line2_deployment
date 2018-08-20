@@ -1,17 +1,9 @@
 ---
 storyline_base:
   firewall:
-    incommming_port_all: [222, 8080, 3000, 8081]
-    incommming_port_project: [25826, 8086, 9200, 2181, 2888, 3888, 8083, 9000]
-    # 3772 	drpc.port (External DRPC Clients)
-    # 3773 - drpc.invocations.port  (Worker Processes)
-    # 3774 - drpc.http.port (External HTTP DRPC Clients)
-
-    # 7077 - Spark Master port
-    # 7078 - Spark Worker port
-    # 8090 - Spark Master UI port
-    # 8091 - Spark Worker UI port
-    incommming_port_project2: [3772, 3773, 3774, 6700, 6701, 6702, 6703, 7077, 7078, 8090, 8091]
+    incommming_port_all: [222, 3000, 8080, 8081]
+    incommming_port_project: [25826,  8086, 8088, 9200, 2181, 2888, 3888]
+    incommming_port_project2: [7077, 7078, 8090, 8091]
 storyline_infra:
   monit:
       port: "3000"
@@ -20,9 +12,6 @@ storyline_infra:
       enabled_influxdb: true
       enabled_grafana: true
       enabled_zookeeper: true
-      enabled_storm_supervisor: true
-      enabled_storm_logviewer: true
-      enabled_storm_drpc: true
       enabled_spark_master: true
       enabled_spark_worker: true
       enabled_startup: true
@@ -38,8 +27,6 @@ storyline_infra:
     enabled_mongodb: false
     mongodb_user: "collectd"
     mongodb_password: "collectd"
-    enabled_storm: false
-    storm_ui_url: "http://datahouse01.nlp-project.ru:8082/"
     enabled_elasticsearch: true
     elasticsearch_host: "ci.nlp-project.ru"
     elasticsearch_port: "9200"
@@ -48,4 +35,4 @@ storyline_infra:
     enabled_running: true
 storyline_components:
   spark:
-      worker_memory: "2g"
+      worker_memory: "1g"

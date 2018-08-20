@@ -26,7 +26,7 @@ storyline_base:
     incommming_port_project: [25826, 8086,  27017, 2181, 9200, 6627, 8082, 8083, 3772]
     # iptables' limit 15 positions in list!!!
     incommming_port_project2: []
-    host_project: ['datahouse02.nlp-project.ru', 'datahouse01.nlp-project.ru', 'ci.nlp-project.ru', 'repo.nlp-project.ru']
+    host_project: ['datahouse02.nlp-project.ru', 'ci.nlp-project.ru', 'repo.nlp-project.ru']
   java:
     version: "present"
 storyline_infra:
@@ -41,8 +41,6 @@ storyline_infra:
     enabled_mongodb: false
     mongodb_user: "collectd"
     mongodb_password: "collectd"
-    enabled_storm: false
-    storm_ui_url: "http://datahouse01.nlp-project.ru:8082/"
     enabled_elasticsearch: false
     elasticsearch_host: "ci.nlp-project.ru"
     elasticsearch_port: "9200"
@@ -60,8 +58,6 @@ storyline_infra:
     enabled_mongodb: false
     mongodb_user: "collectd"
     mongodb_password: "collectd"
-    enabled_storm: false
-    storm_ui_url: "http://datahouse01.nlp-project.ru:8082/"
     enabled_elasticsearch: false
     elasticsearch_host: "ci.nlp-project.ru"
     elasticsearch_port: "9200"
@@ -121,7 +117,6 @@ storyline_infra:
       dir_data:  '/data/db/zookeeper'
       dir_logs:  '/data/logs/zookeeper'
       ensemble:
-        datahouse01.nlp-project.ru: '1'
         ci.nlp-project.ru: '2'
         datahouse02.nlp-project.ru: '3'
       leader_port: "2888"
@@ -148,43 +143,17 @@ storyline_infra:
       enabled_running: true
 storyline_components:
   nexus_repo_url: "http://repo.nlp-project.ru:8082/nexus"
-  storm:
-      version: "1.1.1"
-      storm_ui_port: "8082"
-      storm_nimbus_port: "6627"
-      storm_logviewer_port: "8083"
-      storm_drpc_port: "3772"
-      dir_data:  '/data/db/storm'
-      dir_bin:  '/storm'
-      dir_logs:  '/data/logs/storm'
-    #   storm_supervisor_slot_ports: [6700, 6701, 6702, 6703]
-      storm_supervisor_slot_ports: [6700, 6701]
-      zookeeper_hosts:  ["datahouse01.nlp-project.ru", "ci.nlp-project.ru"]
-      zookeeper_port: "2181"
-      storm_nimbus_seeds:  ["datahouse01.nlp-project.ru"]
-      storm_drpc_servers:  ["datahouse01.nlp-project.ru", "ci.nlp-project.ru"]
-      influxdb_host:  "ci.nlp-project.ru"
-      influxdb_port: "8086"
-      influxdb_db: "server_storm"
-      influxdb_user: "server_storm"
-      influxdb_password: "server_storm"
-      configuration_url_prefix: "http://datahouse01.nlp-project.ru:9000/"
-      mongodb_connection_url: "mongodb://server_storm:server_storm@datahouse01.nlp-project.ru:27017/?authSource=storyline"
-      elasticsearch_host:  "ci.nlp-project.ru"
-      elasticsearch_port: "9200"
-      enabled_startup: false
-      enabled_running: false
   crawler:
-      app_port: "8080"
-      admin_port: "8081"
+      app_port: "8088"
+      admin_port: "8089"
       pid_file: '/data/logs/crawler/crawler.pid'
-      init_script: '/etc/init.d/crawler.service'
+      init_script: '/etc/systemd/system/crawler.service'
       dir_data:  '/data/db/crawler'
       dir_bin:  '/crawler'
       dir_logs:  '/data/logs/crawler'
       dir_scripts: "/data/db/crawler/scripts"
       dir_sites_db: "/data/db/crawler/sites_db"
-      mongodb_connection_url: "mongodb://crawler:crawler@datahouse01.nlp-project.ru:27017/?authSource=crawler"
+      mongodb_connection_url: "mongodb://crawler:crawler@datahouse02.nlp-project.ru:27017/?authSource=crawler"
       influxdb_host:  "ci.nlp-project.ru"
       influxdb_port: "8086"
       influxdb_db: "crawler"
@@ -198,7 +167,7 @@ storyline_components:
       app_port: "8001"
       admin_port: "8002"
       pid_file: '/data/logs/server_web/server_web.pid'
-      init_script: '/etc/init.d/server_web.service'
+      init_script: '/etc/systemd/system/server_web.service'
       dir_data:  '/data/db/server_web'
       dir_bin:  '/server_web'
       dir_logs:  '/data/logs/server_web'
@@ -214,7 +183,7 @@ storyline_components:
       enabled_startup: false
       enabled_running: true
   spark:
-      version: "2.2.1"
+      version: "2.3.1"
       dir_data:  '/data/db/spark'
       dir_bin:  '/spark'
       dir_logs:  '/data/logs/spark'

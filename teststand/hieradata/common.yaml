@@ -69,15 +69,8 @@ storyline_infra:
       port: "8080" # maybe overwritten
       version: "1:5.16-2"
       enabled_startup: true
-  storm:
-      version: "1.0.3"
-      ui_port: "8080"
-      nimbus_port: "6627"
-      logviewer_port: "8000"
-      enabled_startup: false
 storyline_components:
   nexus_repo_url: "http://repo.nlp-project.ru:8082/nexus"
-  server_storm:
   crawler:
       admin_port: "8080"
       pid_file: '/data/logs/crawler/crawler.pid'

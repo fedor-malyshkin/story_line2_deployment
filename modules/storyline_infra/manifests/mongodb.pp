@@ -64,16 +64,16 @@ class storyline_infra::mongodb () {
 	file { $init_script:
 		replace => true,
 		content => epp('storyline_infra/mongodb_startup.epp'),
-		mode=>"u=rwx,go=r",
+		mode=>"u=rw,go=r",
 		notify => Service['mongodb'],
 	}->
 	service { 'mongodb':
   		ensure => $enabled_running,
 		enable    => $enabled_startup,
-		start 		=> "${init_script} start",
-		stop 		=> "${init_script} stop",
-		status 		=> "${init_script} status",
-		restart 	=> "${init_script} restart",
+		start 		=> "systemctl start mongodb",
+		stop 		=> "systemctl stop mongodb",
+		status 		=> "systemctl status mongodb",
+		restart 	=> "systemctl restart mongodb",
 		hasrestart => true,
 		hasstatus => true,
 	}

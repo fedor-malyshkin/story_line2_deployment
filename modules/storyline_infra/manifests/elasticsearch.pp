@@ -70,16 +70,16 @@ class storyline_infra::elasticsearch () {
 	file { $init_script:
 		replace => true,
 		content => epp('storyline_infra/elasticsearch_startup.epp'),
-		mode=>"ug=rwx,o=r",
+		mode=>"ug=rw,o=r",
 		notify => Service['elasticsearch'],
 	}->
 	service { 'elasticsearch':
   		ensure => $enabled_running,
 		enable    => $enabled_startup,
-		start 		=> "${init_script} start",
-		stop 		=> "${init_script} stop",
-		status 		=> "${init_script} status",
-		restart 	=> "${init_script} restart",
+		start 		=> "systemctl start elasticsearch",
+		stop 		=> "systemctl stop elasticsearch",
+		status 		=> "systemctl status elasticsearch",
+		restart 	=> "systemctl restart elasticsearch",
 		hasrestart => true,
 		hasstatus => true,
 	}

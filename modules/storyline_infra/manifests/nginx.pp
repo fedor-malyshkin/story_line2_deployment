@@ -42,11 +42,10 @@ class storyline_infra::nginx () {
 	apt::source { 'nginx-repo':
 		comment  => 'nginx repo',
 		location => "http://nginx.org/packages/ubuntu/",
-		release => "xenial",
+		release => "${facts['os']['distro']['codename']}",
 		repos    => "nginx",
 		include  => {
 	   		'deb' => true,
-			'deb-src' => true,
 		},
 	} ->
 	package {  'nginx':
@@ -72,16 +71,16 @@ class storyline_infra::nginx () {
 	file { $init_script:
 		replace => true,
 		content => epp('storyline_infra/nginx_startup.epp'),
-		mode=>"ug=rwx,o=r",
+		mode=>"ug=rw,o=r",
 		notify => Service['nginx'],
 	}->
 	service { 'nginx':
   		ensure => $enabled_running,
 		enable    => $enabled_startup,
-		start 		=> "${init_script} start",
-		stop 		=> "${init_script} stop",
-		status 		=> "${init_script} status",
-		restart 	=> "${init_script} restart",
+		start 		=> "systemctl start nginx",
+		stop 		=> "systemctl stop nginx",
+		status 		=> "systemctl status nginx",
+		restart 	=> "systemctl restart nginx",
 		hasrestart => true,
 		hasstatus => true,
 	}

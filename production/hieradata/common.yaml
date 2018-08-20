@@ -30,11 +30,30 @@ storyline_base:
   java:
     version: "present"
 storyline_infra:
+  telegraf:
+    server_port: "25826"
+    server_address: "ci.nlp-project.ru"
+    pid_file: '/data/logs/collectd/telegraf.pid'
+    init_script: '/etc/systemd/system/telegraf.service'
+    dir_data:  '/data/db/telegraf'
+    dir_logs:  '/data/logs/telegraf'
+    version: "present"
+    enabled_mongodb: false
+    mongodb_user: "collectd"
+    mongodb_password: "collectd"
+    enabled_storm: false
+    storm_ui_url: "http://datahouse01.nlp-project.ru:8082/"
+    enabled_elasticsearch: false
+    elasticsearch_host: "ci.nlp-project.ru"
+    elasticsearch_port: "9200"
+    elasticsearch_cluster: "elastic_story_line2"
+    enabled_startup: false
+    enabled_running: true
   collectd:
     server_port: "25826"
     server_address: "ci.nlp-project.ru"
     pid_file: '/data/logs/collectd/collectd.pid'
-    init_script: '/etc/init.d/collectd'
+    init_script: '/etc/systemd/system/collectd.service'
     dir_data:  '/data/db/collectd'
     dir_logs:  '/data/logs/collectd'
     version: "1.2.0-1"
@@ -46,14 +65,14 @@ storyline_infra:
     enabled_elasticsearch: false
     elasticsearch_host: "ci.nlp-project.ru"
     elasticsearch_port: "9200"
-    elasticsearch_cluster: "elastic_storyline"
+    elasticsearch_cluster: "elastic_story_line2"
     enabled_startup: false
     enabled_running: true
   influxdb:
     port_http: "8086"
     port_rpc: "8088"
     pid_file: '/data/logs/influxdb/influxdb.pid'
-    init_script: '/etc/init.d/influxdb'
+    init_script: '/etc/systemd/system/influxdb.service'
     dir_data:  '/data/db/influxdb'
     dir_logs:  '/data/logs/influxdb'
     version: "present"
@@ -63,16 +82,16 @@ storyline_infra:
   grafana:
     port: "8081"
     pid_file: '/data/logs/grafana/grafana.pid'
-    init_script: '/etc/init.d/grafana'
+    init_script: '/etc/systemd/system/grafana.service'
     dir_data:  '/data/db/grafana'
     dir_logs:  '/data/logs/grafana'
-    version: "4.1.2"
+    version: "present"
     enabled_startup: false
     enabled_running: true
   mongodb:
       port: "27017"
       pid_file: '/data/logs/mongodb/mongodb.pid'
-      init_script: '/etc/init.d/mongodb'
+      init_script: '/etc/systemd/system/mongodb.service'
       dir_data:  '/data/db/mongodb'
       dir_logs:  '/data/logs/mongodb'
       cache_size_gb: '1'
@@ -86,7 +105,7 @@ storyline_infra:
     enabled_topology_configuration: true
     topology_configuration_port: 9000
     pid_file: '/data/logs/nginx/nginx.pid'
-    init_script: '/etc/init.d/nginx'
+    init_script: '/etc/systemd/system/nginx.service'
     dir_data:  '/data/db/nginx'
     dir_cache:  '/data/db/nginx_cache'
     dir_logs:  '/data/logs/nginx'
@@ -97,7 +116,7 @@ storyline_infra:
       port: "2181"
       version: "3.4.13"
       pid_file: '/data/db/zookeeper/zookeeper_server.pid'
-      init_script: '/etc/init.d/zookeeper'
+      init_script: '/etc/systemd/system/zookeeper.service'
       dir_bin:  '/zookeeper'
       dir_data:  '/data/db/zookeeper'
       dir_logs:  '/data/logs/zookeeper'
@@ -112,13 +131,13 @@ storyline_infra:
   elasticsearch:
       port: "9200"
       bind_scope: "global"
-      version: "5.1.1"
+      version: "6.3.2"
       pid_file: '/data/logs/elasticsearch/elasticsearch.pid'
-      init_script: '/etc/init.d/elasticsearch'
+      init_script: '/etc/systemd/system/elasticsearch.service'
       dir_bin:  '/elasticsearch'
       dir_data:  '/data/db/elasticsearch'
       dir_logs:  '/data/logs/elasticsearch'
-      cluster_name: 'elastic_storyline'
+      cluster_name: 'elastic_story_line2'
       jvm_max_memory_mb: 896
       enabled_startup: false
       enabled_running: true
@@ -159,7 +178,7 @@ storyline_components:
       app_port: "8080"
       admin_port: "8081"
       pid_file: '/data/logs/crawler/crawler.pid'
-      init_script: '/etc/init.d/crawler'
+      init_script: '/etc/init.d/crawler.service'
       dir_data:  '/data/db/crawler'
       dir_bin:  '/crawler'
       dir_logs:  '/data/logs/crawler'
@@ -179,7 +198,7 @@ storyline_components:
       app_port: "8001"
       admin_port: "8002"
       pid_file: '/data/logs/server_web/server_web.pid'
-      init_script: '/etc/init.d/server_web'
+      init_script: '/etc/init.d/server_web.service'
       dir_data:  '/data/db/server_web'
       dir_bin:  '/server_web'
       dir_logs:  '/data/logs/server_web'

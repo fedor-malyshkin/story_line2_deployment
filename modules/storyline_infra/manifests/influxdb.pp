@@ -68,16 +68,16 @@ class storyline_infra::influxdb () {
 	file { $init_script:
 		replace => true,
 		content => epp('storyline_infra/influxdb_startup.epp'),
-		mode=>"ug=rwx,o=r",
+		mode=>"ug=rw,o=r",
 		notify => Service['influxdb'],
 	}->
 	service { 'influxdb':
   		ensure => $enabled_running,
 		enable    => $enabled_startup,
-		start 		=> "${init_script} start",
-		stop 		=> "${init_script} stop",
-		status 		=> "${init_script} status",
-		restart 	=> "${init_script} restart",
+		start 		=> "systemctl start influxdb",
+		stop 		=> "systemctl stop influxdb",
+		status 		=> "systemctl status influxdb",
+		restart 	=> "systemctl restart influxdb",
 		hasrestart => true,
 		hasstatus => true,
 	}

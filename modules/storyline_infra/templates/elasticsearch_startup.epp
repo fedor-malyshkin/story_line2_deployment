@@ -1,84 +1,18 @@
-#!/bin/sh
+[Unit]
+Description=index engine
+After=syslog.target
+After=network.target
 
-### BEGIN INIT INFO
-# Provides:          elasticsearch
-# Required-Start:    $remote_fs
-# Required-Stop:     $remote_fs
-# Should-Start:      $all
-# Should-Stop:       $all
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
-# Short-Description: index engine
-# Description:
-### END INIT INFO
+[Service]
+Type=forking
+PIDFile=<%= $storyline_infra::elasticsearch::pid_file -%>
+WorkingDirectory=<%= $storyline_infra::elasticsearch::dir_data -%>
 
-set -e
+User=elasticsearch
+Group=elasticsearch
 
-. /lib/lsb/init-functions
+ExecStart=<%= $storyline_infra::elasticsearch::dir_bin -%>/bin/elasticsearch -d -p <%= $storyline_infra::elasticsearch::pid_file -%>
+TimeoutSec=30
 
-DAEMON="<%= $storyline_infra::elasticsearch::dir_bin -%>/bin/elasticsearch"
-#CONFIG=/etc/monit/monitrc
-NAME="elasticsearch"
-DESC="index engine"
-#PID="/run/$NAME.pid"
-PID="<%= $storyline_infra::elasticsearch::pid_file -%>"
-OPTS="-d -p $PID"
-USER="elasticsearch"
-
-# Check if DAEMON binary exist
-[ -f $DAEMON ] || exit 0
-
-[ -f "/etc/default/$NAME" ] && . /etc/default/$NAME
-
-#MONIT_OPTS="-c $CONFIG $MONIT_OPTS"
-
-case "$1" in
-  start)
-    log_daemon_msg "Starting $DESC" "$NAME"
-    if start-stop-daemon -u $USER -c $USER --start  --quiet --oknodo --pidfile $PID --exec $DAEMON -- $OPTS 1>/dev/null
-    then
-      log_end_msg 0
-    else
-      log_end_msg 1
-    fi
-    ;;
-  stop)
-    log_daemon_msg "Stopping $DESC" "$NAME"
-    if start-stop-daemon -u $USER -c $USER  --retry TERM/5/KILL/5 --oknodo --stop --quiet --pidfile $PID 1>/dev/null
-    then
-      log_end_msg 0
-    else
-      log_end_msg 1
-    fi
-    ;;
-  reload)
-    log_daemon_msg "Reloading $DESC configuration" "$NAME"
-    if start-stop-daemon -u $USER -c $USER  --stop --signal HUP --quiet --oknodo --pidfile $PID --exec $DAEMON -- $OPTS 1>/dev/null
-    then
-      log_end_msg 0
-    else
-      log_end_msg 1
-	fi
-    ;;
-  restart|force-reload)
-    log_daemon_msg "Restarting $DESC" "$NAME"
-    start-stop-daemon -u $USER -c $USER  --retry TERM/5/KILL/5 --oknodo  --stop --quiet --pidfile $PID 1>/dev/null
-    if start-stop-daemon -u $USER -c $USER  --start --quiet --oknodo  --pidfile $PID --exec $DAEMON -- $OPTS 1>/dev/null
-    then
-      log_end_msg 0
-    else
-      log_end_msg 1
-    fi
-    ;;
-  syntax)
-    $DAEMON $OPTS -t
-    ;;
-  status)
-    status_of_proc -p $PID $DAEMON $NAME
-    ;;
-  *)
-    log_action_msg "Usage: /etc/init.d/$NAME {start|stop|reload|restart|force-reload|syntax|status}"
-    ;;
-esac
-
-exit 0
+[Install]
+WantedBy=multi-user.target

@@ -5,14 +5,13 @@ After=network.target
 
 [Service]
 Type=forking
-PIDFile=<%= $storyline_infra::telegraf::pid_file -%>
-WorkingDirectory=<%= $storyline_infra::telegraf::dir_data -%>
+PIDFile=<%= $storyline_infra::telegraf::pid_file %>
+WorkingDirectory=<%= $storyline_infra::telegraf::dir_data %>
 
 # User=telegraf
 # Group=telegraf
 
-Environment=PID="<%= $storyline_infra::telegraf::pid_file -%>" OPTS="--config /etc/telegraf/telegraf.conf"
-ExecStart=telegraf ${OPTS}
+ExecStart=/bin/bash <%= $storyline_infra::telegraf::dir_data -%>/telegraf.sh
 TimeoutSec=30
 
 [Install]

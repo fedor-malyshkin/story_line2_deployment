@@ -5,13 +5,13 @@ After=network.target
 
 [Service]
 Type=forking
-PIDFile=<%= $storyline_infra::crawler::pid_file -%>
-WorkingDirectory=<%= $storyline_infra::crawler::dir_data -%>
+PIDFile=<%= $storyline_components::crawler::pid_file %>
+WorkingDirectory=<%= $storyline_components::crawler::dir_data %>
 
 User=crawler
 Group=crawler
 
-ExecStart=<%= $storyline_components::crawler::dir_bin -%>/crawler.sh start
+ExecStart=/bin/bash <%= $storyline_components::crawler::dir_bin -%>/crawler.sh start
 TimeoutSec=30
 
 [Install]

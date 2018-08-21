@@ -1,0 +1,5 @@
+PID="<%= $storyline_infra::telegraf::pid_file -%>"
+OPTS="--config /etc/telegraf/telegraf.conf"
+
+/usr/bin/telegraf  ${OPTS} >> <%= $storyline_infra::telegraf::dir_logs -%>/telegraf.log 2>&1 &
+echo $! > ${PID}

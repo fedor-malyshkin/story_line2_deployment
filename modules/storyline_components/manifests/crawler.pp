@@ -192,10 +192,7 @@ class storyline_components::crawler () {
 	service { 'crawler':
   		ensure => $enabled_running,
 		enable    => $enabled_startup,
-		start 		=> "systemctl start crawler",
-		stop 		=> "systemctl stop crawler",
-		status 		=> "systemctl status crawler",
-		restart 	=> "systemctl restart crawler",
+		provider => 'systemd',
 		hasrestart => true,
 		hasstatus => true,
 	}

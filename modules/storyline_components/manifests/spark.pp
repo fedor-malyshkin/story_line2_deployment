@@ -73,10 +73,7 @@ class storyline_components::spark () {
 		service { "spark_${service}":
 			ensure => $enabled_running,
 			enable    => $enabled_startup,
-			start 		=> "systemctl start spark_${service}",
-			stop 		=> "systemctl stop spark_${service}",
-			status 		=> "systemctl status spark_${service}",
-			restart 	=> "systemctl restart spark_${service}",
+			provider => 'systemd',
 			hasrestart => true,
 			hasstatus => true,
 		} ->

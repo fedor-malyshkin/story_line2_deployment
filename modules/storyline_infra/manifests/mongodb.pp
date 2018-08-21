@@ -70,10 +70,7 @@ class storyline_infra::mongodb () {
 	service { 'mongodb':
   		ensure => $enabled_running,
 		enable    => $enabled_startup,
-		start 		=> "systemctl start mongodb",
-		stop 		=> "systemctl stop mongodb",
-		status 		=> "systemctl status mongodb",
-		restart 	=> "systemctl restart mongodb",
+		provider => 'systemd',
 		hasrestart => true,
 		hasstatus => true,
 	}

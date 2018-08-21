@@ -6,7 +6,7 @@
 
 # OUTPUTS
 [[outputs.influxdb]]
-  url = "<%= $storyline_infra::collectd::server_address -%>":"<%= $storyline_infra::collectd::server_port -%>" # required.
+  url = "http://<%= $storyline_infra::telegraf::server_address -%>:<%= $storyline_infra::telegraf::server_port -%>" # required.
   database = "telegraf" # required.
 
 # INPUTS

@@ -5,18 +5,19 @@ After=network.target
 
 [Service]
 Type=forking
-PIDFile=<%= $storyline_infra::mongodb::pid_file -%>
-WorkingDirectory=<%= $storyline_infra::mongodb::dir_data -%>
+PIDFile=<%= $storyline_infra::mongodb::pid_file %>
+WorkingDirectory=<%= $storyline_infra::mongodb::dir_data %>
 
 User=mongodb
 Group=mongodb
 
-<% if $storyline_infra::mongodb::enabled_auth { -%>
-Environment=OPTS="--auth --config /etc/mongodb.conf" PID="<%= $storyline_infra::mongodb::pid_file -%>"
+<% if $storyline_infra::mongodb::enabled_auth { %>
+Environment=OPTS="--auth --config /etc/mongodb.conf" PID="<%= $storyline_infra::mongodb::pid_file %>"
 <% } else { -%>
-Environment=OPTS="--config /etc/mongodb.conf" PID="<%= $storyline_infra::mongodb::pid_file -%>"
-<% } -%>
-ExecStart=/usr/bin/mongod ${OPTS}
+Environment=OPTS="--config /etc/mongodb.conf" PID="<%= $storyline_infra::mongodb::pid_file %>"
+<% } %>
+
+ExecStart=/usr/bin/mongod $OPTS
 TimeoutSec=30
 
 [Install]

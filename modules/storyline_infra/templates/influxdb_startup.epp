@@ -5,14 +5,14 @@ After=network.target
 
 [Service]
 Type=forking
-PIDFile=<%= $storyline_infra::influxdb::pid_file -%>
-WorkingDirectory=<%= $storyline_infra::influxdb::dir_data -%>
+PIDFile=<%= $storyline_infra::influxdb::pid_file %>
+WorkingDirectory=<%= $storyline_infra::influxdb::dir_data %>
 
 User=influxdb
 Group=influxdb
 
-Environment=PID="<%= $storyline_infra::influxdb::pid_file -%>"
-ExecStart=/usr/bin/influxd -config /etc/influxdb/influxdb.conf -pidfile $PID  >> <%= $storyline_infra::influxdb::dir_logs -%>/influxdb.log  2>&1
+Environment=PID="<%= $storyline_infra::influxdb::pid_file %>"
+ExecStart=/bin/bash <%= $storyline_infra::influxdb::dir_data -%>/influxdb.sh
 TimeoutSec=30
 
 [Install]

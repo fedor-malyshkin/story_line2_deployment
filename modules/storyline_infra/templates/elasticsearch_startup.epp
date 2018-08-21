@@ -5,13 +5,13 @@ After=network.target
 
 [Service]
 Type=forking
-PIDFile=<%= $storyline_infra::elasticsearch::pid_file -%>
-WorkingDirectory=<%= $storyline_infra::elasticsearch::dir_data -%>
+PIDFile=<%= $storyline_infra::elasticsearch::pid_file %>
+WorkingDirectory=<%= $storyline_infra::elasticsearch::dir_data %>
 
 User=elasticsearch
 Group=elasticsearch
 
-ExecStart=<%= $storyline_infra::elasticsearch::dir_bin -%>/bin/elasticsearch -d -p <%= $storyline_infra::elasticsearch::pid_file -%>
+ExecStart=<%= $storyline_infra::elasticsearch::dir_bin -%>/bin/elasticsearch -d -p <%= $storyline_infra::elasticsearch::pid_file %>
 TimeoutSec=30
 
 [Install]

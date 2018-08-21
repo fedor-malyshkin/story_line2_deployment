@@ -1,5 +1,3 @@
-# Основноей файл настройки для службы 'monit'
-
 <%# Accept 2 parameters with similar structure: 'params_infra' and 'params_comp' %>
 
 #  Run Monit as a daemon once per n seconds
@@ -14,44 +12,50 @@ set httpd port <%= $params_infra['monit']['port'] %>
 # check elasticsearch
 CHECK PROCESS elasticsearch  with pidfile <%= $params_infra['elasticsearch']['pid_file'] %>
 	EVERY 2 CYCLES
-	start program = "systemctl start elasticsearch"
+	start program = "/bin/systemctl start elasticsearch"
 	TIMEOUT 60 SECOND
 <% } %>
 
 <% if $params_infra['monit']['enabled_zookeeper'] == true { %>
 # check zookeeper
 CHECK PROCESS zookeeper  with pidfile <%= $params_infra['zookeeper']['pid_file'] %>
-	start program = "systemctl start zookeeper"
+	start program = "/bin/systemctl start zookeeper"
 <% } %>
 
 <% if $params_infra['monit']['enabled_influxdb'] == true { %>
 # check influxdb
 CHECK PROCESS influxdb  with pidfile <%= $params_infra['influxdb']['pid_file'] %>
-	start program = "systemctl start influxdb"
+	start program = "/bin/systemctl start influxdb"
 <% } %>
 
 <% if $params_infra['monit']['enabled_mongodb'] == true { %>
 # check mongodb
 CHECK PROCESS mongodb  with pidfile <%= $params_infra['mongodb']['pid_file'] %>
-	start program = "systemctl start mongodb"
+	start program = "/bin/systemctl start mongodb"
 <% } %>
 
 <% if $params_infra['monit']['enabled_grafana'] == true { %>
 # check grafana
 CHECK PROCESS grafana  with pidfile <%= $params_infra['grafana']['pid_file'] %>
-	start program = "systemctl start grafana"
+	start program = "/bin/systemctl start grafana"
 <% } %>
 
 <% if $params_infra['monit']['enabled_collectd'] == true { %>
 # check collectd
 CHECK PROCESS collectd  with pidfile <%= $params_infra['collectd']['pid_file'] %>
-	start program = "systemctl start collectd"
+	start program = "/bin/systemctl start collectd"
 <% } %>
 
 <% if $params_infra['monit']['enabled_nginx'] == true { %>
 # check nginx
 CHECK PROCESS nginx with pidfile <%= $params_infra['nginx']['pid_file'] %>
-	start program = "systemctl start nginx"
+	start program = "/bin/systemctl start nginx"
+<% } %>
+
+<% if $params_infra['monit']['enabled_telegraf'] == true { %>
+# check telegraf
+CHECK PROCESS telegraf with pidfile <%= $params_infra['telegraf']['pid_file'] %>
+	start program = "/bin/systemctl start telegraf"
 <% } %>
 
 
@@ -59,23 +63,23 @@ CHECK PROCESS nginx with pidfile <%= $params_infra['nginx']['pid_file'] %>
 <% if $params_infra['monit']['enabled_crawler'] == true { %>
 # check crawler
 CHECK PROCESS crawler  with pidfile <%= $params_comp['crawler']['pid_file'] %>
-	start program = "systemctl start crawler"
+	start program = "/bin/systemctl start crawler"
 <% } %>
 
 <% if $params_infra['monit']['enabled_server_web'] == true { %>
 # check server_web
 CHECK PROCESS server_web  with pidfile <%= $params_comp['server_web']['pid_file'] %>
-	start program = "systemctl start server_web"
+	start program = "/bin/systemctl start server_web"
 <% } %>
 
 <% if $params_infra['monit']['enabled_spark_master'] == true { %>
 # check spart_master
 CHECK PROCESS spart_master with pidfile <%= $params_comp['spark']['dir_logs'] -%>/spark_master.pid
-	start program = "systemctl start spark_master"
+	start program = "/bin/systemctl start spark_master"
 <% } %>
 
 <% if $params_infra['monit']['enabled_spark_worker'] == true { %>
 # check spark_worker
 CHECK PROCESS spark_worker with pidfile <%= $params_comp['spark']['dir_logs'] -%>/spark_worker.pid
-	start program = "systemctl start spark_worker"
+	start program = "/bin/systemctl start spark_worker"
 <% } %>

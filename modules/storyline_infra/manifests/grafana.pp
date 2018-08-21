@@ -1,5 +1,6 @@
 class storyline_infra::grafana () {
 	include stdlib
+	include apt
 
 	$params = lookup({"name" => "storyline_infra.grafana",
 	    "merge" => {"strategy" => "deep"}})
@@ -76,10 +77,7 @@ class storyline_infra::grafana () {
 	service { 'grafana':
   		ensure => $enabled_running,
 		enable    => $enabled_startup,
-		start 		=> "systemctl start grafana",
-		stop 		=> "systemctl stop grafana",
-		status 		=> "systemctl status grafana",
-		restart 	=> "systemctl restart grafana",
+		provider => 'systemd',
 		hasrestart => true,
 		hasstatus => true,
 	}

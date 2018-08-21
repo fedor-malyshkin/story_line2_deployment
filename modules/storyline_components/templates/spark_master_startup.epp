@@ -6,12 +6,12 @@ After=network.target
 [Service]
 Type=forking
 PIDFile=<%= $storyline_components::spark::dir_logs -%>/spark_master.pid
-WorkingDirectory=<%= $storyline_infra::spark::dir_data -%>
+WorkingDirectory=<%= $storyline_components::spark::dir_data %>
 
 User=spark
 Group=spark
 
-ExecStart=<%= $storyline_components::spark::dir_bin -%>/spark_master.sh start
+ExecStart=/bin/bash <%= $storyline_components::spark::dir_bin -%>/spark_master.sh start
 TimeoutSec=30
 
 [Install]

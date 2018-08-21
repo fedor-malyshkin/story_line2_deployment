@@ -5,8 +5,8 @@ After=network.target
 
 [Service]
 Type=forking
-PIDFile=<%= $storyline_infra::zookeeper::pid_file -%>
-WorkingDirectory=<%= $storyline_infra::zookeeper::dir_data -%>
+PIDFile=<%= $storyline_infra::zookeeper::pid_file %>
+WorkingDirectory=<%= $storyline_infra::zookeeper::dir_data %>
 
 User=zookeeper
 Group=zookeeper

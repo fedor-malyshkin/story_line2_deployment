@@ -114,10 +114,7 @@ class storyline_components::server_web () {
 	service { 'server_web':
   		ensure => $enabled_running,
 		enable    => $enabled_startup,
-		start 		=> "systemctl start server_web",
-		stop 		=> "systemctl stop server_web",
-		status 		=> "systemctl status server_web",
-		restart 	=> "systemctl restart server_web",
+		provider => 'systemd',
 		hasrestart => true,
 		hasstatus => true,
 	}

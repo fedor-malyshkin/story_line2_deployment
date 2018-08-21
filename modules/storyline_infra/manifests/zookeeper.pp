@@ -74,10 +74,7 @@ class storyline_infra::zookeeper () {
 	service { 'zookeeper':
   		ensure => $enabled_running,
 		enable    => $enabled_startup,
-		start 		=> "systemctl start zookeeper",
-		stop 		=> "systemctl stop zookeeper",
-		status 		=> "systemctl status zookeeper",
-		restart 	=> "systemctl restart zookeeper",
+		provider => 'systemd',
 		hasrestart => true,
 		hasstatus => true,
 	}

@@ -33,6 +33,7 @@ class storyline_infra::monit () {
 	service { 'monit':
   		ensure => $enabled_running,
 		enable    => $enabled_startup,
+		provider => 'systemd',		
 		hasrestart => true,
 		hasstatus => true,
 	}

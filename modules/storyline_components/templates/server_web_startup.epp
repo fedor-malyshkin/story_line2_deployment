@@ -5,13 +5,13 @@ After=network.target
 
 [Service]
 Type=forking
-PIDFile=<%= $storyline_infra::server_web::pid_file -%>
-WorkingDirectory=<%= $storyline_infra::server_web::dir_data -%>
+PIDFile=<%= $storyline_components::server_web::pid_file %>
+WorkingDirectory=<%= $storyline_components::server_web::dir_data %>
 
 User=server_web
 Group=server_web
 
-ExecStart=<%= $storyline_components::server_web::dir_bin -%>/server_web.sh start
+ExecStart=/bin/bash <%= $storyline_components::server_web::dir_bin -%>/server_web.sh start
 TimeoutSec=30
 
 [Install]

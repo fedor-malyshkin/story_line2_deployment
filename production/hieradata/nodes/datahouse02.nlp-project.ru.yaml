@@ -14,10 +14,11 @@ storyline_infra:
       enabled_nginx: true
       enabled_spark_master: false
       enabled_spark_worker: true
+      enabled_telegraf: true
       enabled_startup: true
       enabled_running: true
   telegraf:
-    server_port: "25826"
+    server_port: "8086"
     server_address: "ci.nlp-project.ru"
     enabled_mongodb: true
     mongodb_user: "telegraf"

@@ -5,8 +5,8 @@ After=network.target
 
 [Service]
 Type=forking
-PIDFile=<%= $storyline_infra::grafana::pid_file -%>
-WorkingDirectory=<%= $storyline_infra::grafana::dir_data -%>
+PIDFile=<%= $storyline_infra::grafana::pid_file %>
+WorkingDirectory=<%= $storyline_infra::grafana::dir_data %>
 
 User=grafana
 Group=grafana

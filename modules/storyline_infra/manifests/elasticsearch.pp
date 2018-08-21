@@ -76,10 +76,7 @@ class storyline_infra::elasticsearch () {
 	service { 'elasticsearch':
   		ensure => $enabled_running,
 		enable    => $enabled_startup,
-		start 		=> "systemctl start elasticsearch",
-		stop 		=> "systemctl stop elasticsearch",
-		status 		=> "systemctl status elasticsearch",
-		restart 	=> "systemctl restart elasticsearch",
+		provider => 'systemd',
 		hasrestart => true,
 		hasstatus => true,
 	}

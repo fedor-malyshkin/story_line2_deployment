@@ -31,9 +31,9 @@ storyline_base:
     version: "present"
 storyline_infra:
   telegraf:
-    server_port: "25826"
+    server_port: "8086"
     server_address: "ci.nlp-project.ru"
-    pid_file: '/data/logs/collectd/telegraf.pid'
+    pid_file: '/data/logs/telegraf/telegraf.pid'
     init_script: '/etc/systemd/system/telegraf.service'
     dir_data:  '/data/db/telegraf'
     dir_logs:  '/data/logs/telegraf'
@@ -103,7 +103,7 @@ storyline_infra:
     pid_file: '/data/logs/nginx/nginx.pid'
     init_script: '/etc/systemd/system/nginx.service'
     dir_data:  '/data/db/nginx'
-    dir_cache:  '/data/db/nginx_cache'
+    dir_cache:  '/data/db/nginx/cache'
     dir_logs:  '/data/logs/nginx'
     version: "present"
     enabled_startup: false
@@ -188,7 +188,7 @@ storyline_components:
       dir_bin:  '/spark'
       dir_logs:  '/data/logs/spark'
       # executors
-      executor_data_dir: '/data/db/spark-executors'
+      executor_data_dir: '/data/db/spark/executors'
       # master
       master_port: 7077
       master_webui_port: 8090
@@ -198,7 +198,7 @@ storyline_components:
       worker_memory: "1g"
       worker_port: 7078
       worker_webui_port: 8091
-      worker_dir: '/data/db/spark-workers'
+      worker_dir: '/data/db/spark/workers'
       # daemon
       daemon_memory: "256m"
       # spark it self

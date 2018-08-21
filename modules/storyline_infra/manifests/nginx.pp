@@ -1,4 +1,5 @@
 class storyline_infra::nginx () {
+	include apt
 
 	$params = lookup({"name" => "storyline_infra.nginx",
 	    "merge" => {"strategy" => "deep"}})
@@ -42,11 +43,11 @@ class storyline_infra::nginx () {
 	apt::source { 'nginx-repo':
 		comment  => 'nginx repo',
 		location => "http://nginx.org/packages/ubuntu/",
+		# release => "${facts['os']['distro']['codename']}", // not supported at the moment
 		release => "xenial",
 		repos    => "nginx",
 		include  => {
 	   		'deb' => true,
-			'deb-src' => true,
 		},
 	} ->
 	package {  'nginx':
@@ -72,16 +73,13 @@ class storyline_infra::nginx () {
 	file { $init_script:
 		replace => true,
 		content => epp('storyline_infra/nginx_startup.epp'),
-		mode=>"ug=rwx,o=r",
+		mode=>"ug=rw,o=r",
 		notify => Service['nginx'],
 	}->
 	service { 'nginx':
   		ensure => $enabled_running,
 		enable    => $enabled_startup,
-		start 		=> "${init_script} start",
-		stop 		=> "${init_script} stop",
-		status 		=> "${init_script} status",
-		restart 	=> "${init_script} restart",
+		provider => 'systemd',
 		hasrestart => true,
 		hasstatus => true,
 	}

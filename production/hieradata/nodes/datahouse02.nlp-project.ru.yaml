@@ -1,20 +1,30 @@
 ---
 storyline_base:
   firewall:
-    incommming_port_all: [222, 3000]
-    incommming_port_project: [2181, 2888, 3888]
-    # 3772 	drpc.port (External DRPC Clients)
-    # 3773 - drpc.invocations.port  (Worker Processes)
-    # 3774 - drpc.http.port (External HTTP DRPC Clients)
-
-    # 7077 - Spark Master port
-    # 7078 - Spark Worker port
-    # 8090 - Spark Master UI port
-    # 8091 - Spark Worker UI port
-    incommming_port_project2: [22]
+    incommming_port_all: [222, 3000, 8000]
+    incommming_port_project: [27017, 2181, 2888, 3888, 60000, 50000, 8080, 8081, 8088, 8089]
+    incommming_port_project2: [7078, 8091]
 storyline_infra:
   monit:
       port: "3000"
+      enabled_telegraf: true
+      enabled_mongodb: true
       enabled_zookeeper: true
+      enabled_crawler: true
+      enabled_nginx: true
+      enabled_spark_master: false
+      enabled_spark_worker: true
+      enabled_telegraf: true
       enabled_startup: true
       enabled_running: true
+  telegraf:
+    server_port: "8086"
+    server_address: "ci.nlp-project.ru"
+    enabled_mongodb: true
+    mongodb_user: "telegraf"
+    mongodb_password: "telegraf"
+    enabled_startup: false
+    enabled_running: true
+storyline_components:
+  spark:
+      worker_memory: "4g"

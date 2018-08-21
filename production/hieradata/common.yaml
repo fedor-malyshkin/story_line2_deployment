@@ -26,34 +26,49 @@ storyline_base:
     incommming_port_project: [25826, 8086,  27017, 2181, 9200, 6627, 8082, 8083, 3772]
     # iptables' limit 15 positions in list!!!
     incommming_port_project2: []
-    host_project: ['datahouse02.nlp-project.ru', 'datahouse01.nlp-project.ru', 'ci.nlp-project.ru', 'repo.nlp-project.ru']
+    host_project: ['datahouse02.nlp-project.ru', 'ci.nlp-project.ru', 'repo.nlp-project.ru']
   java:
     version: "present"
 storyline_infra:
+  telegraf:
+    server_port: "8086"
+    server_address: "ci.nlp-project.ru"
+    pid_file: '/data/logs/telegraf/telegraf.pid'
+    init_script: '/etc/systemd/system/telegraf.service'
+    dir_data:  '/data/db/telegraf'
+    dir_logs:  '/data/logs/telegraf'
+    version: "present"
+    enabled_mongodb: false
+    mongodb_user: "collectd"
+    mongodb_password: "collectd"
+    enabled_elasticsearch: false
+    elasticsearch_host: "ci.nlp-project.ru"
+    elasticsearch_port: "9200"
+    elasticsearch_cluster: "elastic_story_line2"
+    enabled_startup: false
+    enabled_running: true
   collectd:
     server_port: "25826"
     server_address: "ci.nlp-project.ru"
     pid_file: '/data/logs/collectd/collectd.pid'
-    init_script: '/etc/init.d/collectd'
+    init_script: '/etc/systemd/system/collectd.service'
     dir_data:  '/data/db/collectd'
     dir_logs:  '/data/logs/collectd'
     version: "1.2.0-1"
     enabled_mongodb: false
     mongodb_user: "collectd"
     mongodb_password: "collectd"
-    enabled_storm: false
-    storm_ui_url: "http://datahouse01.nlp-project.ru:8082/"
     enabled_elasticsearch: false
     elasticsearch_host: "ci.nlp-project.ru"
     elasticsearch_port: "9200"
-    elasticsearch_cluster: "elastic_storyline"
+    elasticsearch_cluster: "elastic_story_line2"
     enabled_startup: false
     enabled_running: true
   influxdb:
     port_http: "8086"
     port_rpc: "8088"
     pid_file: '/data/logs/influxdb/influxdb.pid'
-    init_script: '/etc/init.d/influxdb'
+    init_script: '/etc/systemd/system/influxdb.service'
     dir_data:  '/data/db/influxdb'
     dir_logs:  '/data/logs/influxdb'
     version: "present"
@@ -63,16 +78,16 @@ storyline_infra:
   grafana:
     port: "8081"
     pid_file: '/data/logs/grafana/grafana.pid'
-    init_script: '/etc/init.d/grafana'
+    init_script: '/etc/systemd/system/grafana.service'
     dir_data:  '/data/db/grafana'
     dir_logs:  '/data/logs/grafana'
-    version: "4.1.2"
+    version: "present"
     enabled_startup: false
     enabled_running: true
   mongodb:
       port: "27017"
       pid_file: '/data/logs/mongodb/mongodb.pid'
-      init_script: '/etc/init.d/mongodb'
+      init_script: '/etc/systemd/system/mongodb.service'
       dir_data:  '/data/db/mongodb'
       dir_logs:  '/data/logs/mongodb'
       cache_size_gb: '1'
@@ -86,9 +101,9 @@ storyline_infra:
     enabled_topology_configuration: true
     topology_configuration_port: 9000
     pid_file: '/data/logs/nginx/nginx.pid'
-    init_script: '/etc/init.d/nginx'
+    init_script: '/etc/systemd/system/nginx.service'
     dir_data:  '/data/db/nginx'
-    dir_cache:  '/data/db/nginx_cache'
+    dir_cache:  '/data/db/nginx/cache'
     dir_logs:  '/data/logs/nginx'
     version: "present"
     enabled_startup: false
@@ -97,12 +112,11 @@ storyline_infra:
       port: "2181"
       version: "3.4.13"
       pid_file: '/data/db/zookeeper/zookeeper_server.pid'
-      init_script: '/etc/init.d/zookeeper'
+      init_script: '/etc/systemd/system/zookeeper.service'
       dir_bin:  '/zookeeper'
       dir_data:  '/data/db/zookeeper'
       dir_logs:  '/data/logs/zookeeper'
       ensemble:
-        datahouse01.nlp-project.ru: '1'
         ci.nlp-project.ru: '2'
         datahouse02.nlp-project.ru: '3'
       leader_port: "2888"
@@ -112,13 +126,13 @@ storyline_infra:
   elasticsearch:
       port: "9200"
       bind_scope: "global"
-      version: "5.1.1"
+      version: "6.3.2"
       pid_file: '/data/logs/elasticsearch/elasticsearch.pid'
-      init_script: '/etc/init.d/elasticsearch'
+      init_script: '/etc/systemd/system/elasticsearch.service'
       dir_bin:  '/elasticsearch'
       dir_data:  '/data/db/elasticsearch'
       dir_logs:  '/data/logs/elasticsearch'
-      cluster_name: 'elastic_storyline'
+      cluster_name: 'elastic_story_line2'
       jvm_max_memory_mb: 896
       enabled_startup: false
       enabled_running: true
@@ -129,43 +143,17 @@ storyline_infra:
       enabled_running: true
 storyline_components:
   nexus_repo_url: "http://repo.nlp-project.ru:8082/nexus"
-  storm:
-      version: "1.1.1"
-      storm_ui_port: "8082"
-      storm_nimbus_port: "6627"
-      storm_logviewer_port: "8083"
-      storm_drpc_port: "3772"
-      dir_data:  '/data/db/storm'
-      dir_bin:  '/storm'
-      dir_logs:  '/data/logs/storm'
-    #   storm_supervisor_slot_ports: [6700, 6701, 6702, 6703]
-      storm_supervisor_slot_ports: [6700, 6701]
-      zookeeper_hosts:  ["datahouse01.nlp-project.ru", "ci.nlp-project.ru"]
-      zookeeper_port: "2181"
-      storm_nimbus_seeds:  ["datahouse01.nlp-project.ru"]
-      storm_drpc_servers:  ["datahouse01.nlp-project.ru", "ci.nlp-project.ru"]
-      influxdb_host:  "ci.nlp-project.ru"
-      influxdb_port: "8086"
-      influxdb_db: "server_storm"
-      influxdb_user: "server_storm"
-      influxdb_password: "server_storm"
-      configuration_url_prefix: "http://datahouse01.nlp-project.ru:9000/"
-      mongodb_connection_url: "mongodb://server_storm:server_storm@datahouse01.nlp-project.ru:27017/?authSource=storyline"
-      elasticsearch_host:  "ci.nlp-project.ru"
-      elasticsearch_port: "9200"
-      enabled_startup: false
-      enabled_running: false
   crawler:
-      app_port: "8080"
-      admin_port: "8081"
+      app_port: "8088"
+      admin_port: "8089"
       pid_file: '/data/logs/crawler/crawler.pid'
-      init_script: '/etc/init.d/crawler'
+      init_script: '/etc/systemd/system/crawler.service'
       dir_data:  '/data/db/crawler'
       dir_bin:  '/crawler'
       dir_logs:  '/data/logs/crawler'
       dir_scripts: "/data/db/crawler/scripts"
       dir_sites_db: "/data/db/crawler/sites_db"
-      mongodb_connection_url: "mongodb://crawler:crawler@datahouse01.nlp-project.ru:27017/?authSource=crawler"
+      mongodb_connection_url: "mongodb://crawler:crawler@datahouse02.nlp-project.ru:27017/?authSource=crawler"
       influxdb_host:  "ci.nlp-project.ru"
       influxdb_port: "8086"
       influxdb_db: "crawler"
@@ -179,7 +167,7 @@ storyline_components:
       app_port: "8001"
       admin_port: "8002"
       pid_file: '/data/logs/server_web/server_web.pid'
-      init_script: '/etc/init.d/server_web'
+      init_script: '/etc/systemd/system/server_web.service'
       dir_data:  '/data/db/server_web'
       dir_bin:  '/server_web'
       dir_logs:  '/data/logs/server_web'
@@ -195,12 +183,12 @@ storyline_components:
       enabled_startup: false
       enabled_running: true
   spark:
-      version: "2.2.1"
+      version: "2.3.1"
       dir_data:  '/data/db/spark'
       dir_bin:  '/spark'
       dir_logs:  '/data/logs/spark'
       # executors
-      executor_data_dir: '/data/db/spark-executors'
+      executor_data_dir: '/data/db/spark/executors'
       # master
       master_port: 7077
       master_webui_port: 8090
@@ -210,7 +198,7 @@ storyline_components:
       worker_memory: "1g"
       worker_port: 7078
       worker_webui_port: 8091
-      worker_dir: '/data/db/spark-workers'
+      worker_dir: '/data/db/spark/workers'
       # daemon
       daemon_memory: "256m"
       # spark it self

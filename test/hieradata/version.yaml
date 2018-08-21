@@ -3,7 +3,5 @@
 storyline_components:
   crawler:
     version: "presented"
-  server_storm:
-    version: "presented"
   server_web:
     version: "presented"

@@ -1,0 +1,29 @@
+[global_tags]
+#  dc = "denver-1"
+
+[agent]
+  interval = "10s"
+
+# OUTPUTS
+[[outputs.influxdb]]
+  url = "http://<%= $storyline_infra::telegraf::server_address -%>:<%= $storyline_infra::telegraf::server_port -%>" # required.
+  database = "telegraf" # required.
+
+# INPUTS
+[[inputs.cpu]]
+  percpu = true
+  totalcpu = true
+
+
+# Read metrics about disk usage by mount point
+[[inputs.disk]]
+## By default stats will be gathered for all mount points.
+## Set mount_points will restrict the stats to only the specified mount points.
+# mount_points = ["/"]
+
+## Ignore mount points by filesystem type.
+ignore_fs = ["tmpfs", "devtmpfs", "devfs", "overlay", "aufs", "squashfs"]
+
+# Read metrics about memory usage
+[[inputs.mem]]
+# no configuration

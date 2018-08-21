@@ -68,16 +68,13 @@ class storyline_infra::zookeeper () {
 	file { $init_script:
 		replace => true,
 		content => epp('storyline_infra/zookeeper_startup.epp'),
-		mode=>"u=rwx,og=r",
+		mode=>"u=rw,og=r",
 		notify => Service['zookeeper'],
 	}->
 	service { 'zookeeper':
   		ensure => $enabled_running,
 		enable    => $enabled_startup,
-		start 		=> "${init_script} start",
-		stop 		=> "${init_script} stop",
-		status 		=> "${init_script} status",
-		restart 	=> "${init_script} restart",
+		provider => 'systemd',
 		hasrestart => true,
 		hasstatus => true,
 	}

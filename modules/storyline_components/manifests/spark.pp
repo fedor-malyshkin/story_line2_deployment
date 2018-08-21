@@ -73,19 +73,16 @@ class storyline_components::spark () {
 		service { "spark_${service}":
 			ensure => $enabled_running,
 			enable    => $enabled_startup,
-			start 		=> "/etc/init.d/spark_${service} start",
-			stop 		=> "/etc/init.d/spark_${service} stop",
-			status 		=> "/etc/init.d/spark_${service} status",
-			restart 	=> "/etc/init.d/spark_${service} restart",
+			provider => 'systemd',
 			hasrestart => true,
 			hasstatus => true,
 		} ->
-		file { "/etc/init.d/spark_${service}":
+		file { "/etc/systemd/system/spark_${service}.service":
 			replace => true,
 			owner => "spark",
 			group => "spark",
 			content => epp("storyline_components/spark_${service}_startup.epp"),
-			mode=>"ug=rwx,o=r",
+			mode=>"ug=rw,o=r",
  		} ->
 		file { "${dir_bin}/spark_${service}.sh":
 			replace => true,

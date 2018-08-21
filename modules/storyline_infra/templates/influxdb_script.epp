@@ -1,0 +1,3 @@
+PID="<%= $storyline_infra::influxdb::pid_file -%>"
+/usr/bin/influxd -config /etc/influxdb/influxdb.conf -pidfile $PID >> <%= $storyline_infra::influxdb::dir_logs -%>/influxdb.log 2>&1 &
+# echo $! > <%= $storyline_components::crawler::pid_file %>

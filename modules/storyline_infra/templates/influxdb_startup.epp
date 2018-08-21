@@ -1,85 +1,19 @@
-#!/bin/sh
+[Unit]
+Description=time series database
+After=syslog.target
+After=network.target
 
-### BEGIN INIT INFO
-# Provides:          influxdb
-# Required-Start:    $remote_fs
-# Required-Stop:     $remote_fs
-# Should-Start:      $all
-# Should-Stop:       $all
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
-# Short-Description: time series database
-# Description:
-### END INIT INFO
+[Service]
+Type=forking
+PIDFile=<%= $storyline_infra::influxdb::pid_file %>
+WorkingDirectory=<%= $storyline_infra::influxdb::dir_data %>
 
-set -e
+User=influxdb
+Group=influxdb
 
-. /lib/lsb/init-functions
+Environment=PID="<%= $storyline_infra::influxdb::pid_file %>"
+ExecStart=/bin/bash <%= $storyline_infra::influxdb::dir_data -%>/influxdb.sh
+TimeoutSec=30
 
-DAEMON="/usr/bin/influxd"
-#CONFIG=/etc/monit/monitrc
-DIR="<%= $storyline_infra::influxdb::dir_logs -%>"
-NAME="influxdb"
-DESC="time series database"
-#PID="/run/$NAME.pid"
-PID="<%= $storyline_infra::influxdb::pid_file -%>"
-OPTS="-config /etc/influxdb/influxdb.conf -pidfile $PID"
-USER="influxdb"
-
-# Check if DAEMON binary exist
-[ -f $DAEMON ] || exit 0
-
-[ -f "/etc/default/$NAME" ] && . /etc/default/$NAME
-
-#MONIT_OPTS="-c $CONFIG $MONIT_OPTS"
-
-case "$1" in
-  start)
-    log_daemon_msg "Starting $DESC" "$NAME"
-    if start-stop-daemon -b  --no-close -u $USER -c $USER --start  --quiet --oknodo --pidfile $PID --exec $DAEMON -- $OPTS  >> <%= $storyline_infra::influxdb::dir_logs -%>/influxdb.log  2>&1
-    then
-      log_end_msg 0
-    else
-      log_end_msg 1
-    fi
-    ;;
-  stop)
-    log_daemon_msg "Stopping $DESC" "$NAME"
-    if start-stop-daemon  -u $USER -c $USER  --retry TERM/5/KILL/5 --oknodo --stop --quiet --pidfile $PID
-    then
-      log_end_msg 0
-    else
-      log_end_msg 1
-    fi
-    ;;
-  reload)
-    log_daemon_msg "Reloading $DESC configuration" "$NAME"
-    if start-stop-daemon  -u $USER -c $USER  --stop --signal HUP --quiet --oknodo --pidfile $PID --exec $DAEMON -- $OPTS
-    then
-      log_end_msg 0
-    else
-      log_end_msg 1
-	fi
-    ;;
-  restart|force-reload)
-    log_daemon_msg "Restarting $DESC" "$NAME"
-    start-stop-daemon -u $USER -c $USER  --retry TERM/5/KILL/5 --oknodo  --stop --quiet --pidfile $PID
-    if start-stop-daemon  -b --no-close  -u $USER -c $USER  --start --quiet --oknodo  --pidfile $PID --exec $DAEMON -- $OPTS   >> <%= $storyline_infra::influxdb::dir_logs -%>/influxdb.log  2>&1
-    then
-      log_end_msg 0
-    else
-      log_end_msg 1
-    fi
-    ;;
-  syntax)
-    $DAEMON $OPTS -t
-    ;;
-  status)
-    status_of_proc -p $PID $DAEMON $NAME
-    ;;
-  *)
-    log_action_msg "Usage: /etc/init.d/$NAME {start|stop|reload|restart|force-reload|syntax|status}"
-    ;;
-esac
-
-exit 0
+[Install]
+WantedBy=multi-user.target

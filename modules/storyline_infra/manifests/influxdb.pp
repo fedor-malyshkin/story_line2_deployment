@@ -1,5 +1,6 @@
 class storyline_infra::influxdb () {
 	include stdlib
+	include apt
 
 	$params = lookup({"name" => "storyline_infra.influxdb",
 	    "merge" => {"strategy" => "deep"}})
@@ -68,24 +69,26 @@ class storyline_infra::influxdb () {
 	file { $init_script:
 		replace => true,
 		content => epp('storyline_infra/influxdb_startup.epp'),
-		mode=>"ug=rwx,o=r",
+		mode=>"ug=rw,o=r",
 		notify => Service['influxdb'],
+	}->
+	file { "${dir_data}/influxdb.sh":
+		replace => true,
+		content => epp('storyline_infra/influxdb_script.epp'),
+		notify => Service['influxdb'],
+		owner => "influxdb",
+		group=> "influxdb",
+		mode=>"u=rwx,og=rx",
 	}->
 	service { 'influxdb':
   		ensure => $enabled_running,
 		enable    => $enabled_startup,
-		start 		=> "${init_script} start",
-		stop 		=> "${init_script} stop",
-		status 		=> "${init_script} status",
-		restart 	=> "${init_script} restart",
+		start 		=> "systemctl start influxdb",
+		stop 		=> "systemctl stop influxdb",
+		status 		=> "systemctl status influxdb",
+		restart 	=> "systemctl restart influxdb",
 		hasrestart => true,
 		hasstatus => true,
-	}
-	if $enabled_startup != true {
-		exec { "disable_influxdb":
-			command => "/bin/systemctl disable influxdb",
-			cwd => "/",
-		}
 	}
 	logrotate::rule { 'influxdb':
   		path			=> "${dir_logs}/*.log",

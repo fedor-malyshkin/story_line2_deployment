@@ -8,6 +8,7 @@ WORKDIR /provision
 # Installation:
 COPY *.sh ./
 ADD ${type} ${type}/
+ADD artifacts artifacts/
 ADD puppet_config puppet_config/
 ADD modules modules/
 
@@ -15,11 +16,13 @@ RUN mkdir /data && mkdir /data/db && mkdir /data/logs
 VOLUME ['/data/db']
 VOLUME ['/data/logs']
 
-# Expose port  from the container to the host
-EXPOSE ${elasticsearch_host_port}
+# Expose ports
+EXPOSE ${spark_master_port}
+EXPOSE ${spark_master_webui_port}
+EXPOSE ${spark_worker_port}
+EXPOSE ${spark_worker_webui_port}
 # monit
 EXPOSE 3000
-
 
 # make provision and start ....
 ENTRYPOINT ["/provision/start.sh", "${type}"]

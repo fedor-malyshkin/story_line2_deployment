@@ -107,7 +107,7 @@ storyline_infra:
     dir_logs:  '/data/logs/nginx'
     version: "present"
     enabled_startup: false
-    enabled_running: false
+    enabled_running: true
   zookeeper:
       port: "2181"
       version: "3.4.13"
@@ -136,6 +136,17 @@ storyline_infra:
       jvm_max_memory_mb: 896
       enabled_startup: false
       enabled_running: true
+  kafka:
+      version: "2.0.0"
+      plaintext_port: 9092
+      dir_data:  '/data/db/kafka'
+      dir_bin:  '/kafka'
+      dir_logs:  '/data/logs/kafka'
+      pid_file: '/data/logs/kafka/kafka.pid'
+      init_script: '/etc/systemd/system/kafka.service'
+      zookeeper: 'localhost:2181'
+      enabled_startup: false
+      enabled_running: false
   monit:
       port: "3000" # maybe overwritten
       version: "present"

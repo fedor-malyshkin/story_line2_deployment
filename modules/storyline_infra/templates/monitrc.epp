@@ -58,6 +58,12 @@ CHECK PROCESS telegraf with pidfile <%= $params_infra['telegraf']['pid_file'] %>
 	start program = "/bin/systemctl start telegraf"
 <% } %>
 
+<% if $params_infra['monit']['enabled_kafka'] == true { %>
+# check kafka
+CHECK PROCESS kafka with pidfile <%= $params_infra['kafka']['pid_file'] %>
+	start program = "/bin/systemctl start kafka"
+<% } %>
+
 
 # Project component
 <% if $params_infra['monit']['enabled_crawler'] == true { %>

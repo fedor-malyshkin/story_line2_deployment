@@ -1,0 +1,5 @@
+tickTime=2000
+dataDir=<%= $storyline_infra::kafka::dir_data %>
+clientPort=<%= $storyline_infra::kafka::port %>
+autopurge.purgeInterval=1
+autopurge.snapRetainCount=5

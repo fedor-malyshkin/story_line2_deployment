@@ -3,117 +3,134 @@ storyline_base:
   java:
     version: "present"
 storyline_infra:
-  collectd:
-    server_port: "25826"
-    server_address: "localhost"
-    pid_file: '/data/logs/collectd/collectd.pid'
-    init_script: '/etc/init.d/collectd'
-    dir_data:  '/data/db/collectd'
-    dir_logs:  '/data/logs/collectd'
-    version: "1.2.0-1"
-    enabled_startup: false
-    enabled_running: false
-  influxdb:
-    port_http: "8086"
-    port_rpc: "8088"
-    pid_file: '/data/logs/influxdb/influxdb.pid'
-    init_script: '/etc/init.d/influxdb'
-    dir_data:  '/data/db/influxdb'
-    dir_logs:  '/data/logs/influxdb'
-    version: "1.2.0-1"
-    enabled_startup: false
-    enabled_running: false
-  grafana:
-    port: "8080"
-    pid_file: '/data/logs/grafana/grafana.pid'
-    init_script: '/etc/init.d/grafana'
-    dir_data:  '/data/db/grafana'
-    dir_logs:  '/data/logs/grafana'
-    version: "present"
-    enabled_startup: false
-    enabled_running: false
   mongodb:
-    port: "27017"
-    pid_file: '/data/logs/mongodb/mongodb.pid'
-    init_script: '/etc/init.d/mongodb'
-    dir_data:  '/data/db/mongodb'
-    dir_logs:  '/data/logs/mongodb'
-    version: "present"
-    enabled_auth: false
-    enabled_startup: false
-    enabled_running: false
+      port: "27017"
+      pid_file: '/data/logs/mongodb/mongodb.pid'
+      init_script: '/etc/systemd/system/mongodb.service'
+      dir_data:  '/data/db/mongodb'
+      dir_logs:  '/data/logs/mongodb'
+      cache_size_gb: '1'
+      version: "present"
+      enabled_auth: false
+      enabled_startup: false
+      enabled_running: true
   nginx:
     reverse_port: "8000"
     reverse_url: "http://localhost:8001"
     enabled_topology_configuration: true
     topology_configuration_port: 9000
-    pid_file: '/data/logs/ngnix/ngnix.pid'
-    init_script: '/etc/init.d/ngnix'
-    dir_data:  '/data/db/ngnix'
-    dir_logs:  '/data/logs/ngnix'
+    pid_file: '/data/logs/nginx/nginx.pid'
+    init_script: '/etc/systemd/system/nginx.service'
+    dir_data:  '/data/db/nginx'
+    dir_cache:  '/data/db/nginx/cache'
+    dir_logs:  '/data/logs/nginx'
     version: "present"
     enabled_startup: false
     enabled_running: false
   zookeeper:
       port: "2181"
-      version: "3.4.9"
+      version: "3.4.13"
       pid_file: '/data/db/zookeeper/zookeeper_server.pid'
-      init_script: '/etc/init.d/zookeeper'
+      init_script: '/etc/systemd/system/zookeeper.service'
       dir_bin:  '/zookeeper'
       dir_data:  '/data/db/zookeeper'
       dir_logs:  '/data/logs/zookeeper'
+      ensemble:
+        zookeeper: '1'
+      leader_port: "2888"
+      election_port: "3888"
       enabled_startup: false
-      enabled_running: false
+      enabled_running: true
   elasticsearch:
       port: "9200"
-      bind_scope: "site"
-      # version: "5.2.2"
-      version: "5.1.1"
+      bind_scope: "global"
+      version: "6.3.2"
       pid_file: '/data/logs/elasticsearch/elasticsearch.pid'
-      init_script: '/etc/init.d/elasticsearch'
+      init_script: '/etc/systemd/system/elasticsearch.service'
       dir_bin:  '/elasticsearch'
       dir_data:  '/data/db/elasticsearch'
       dir_logs:  '/data/logs/elasticsearch'
-      cluster_name: 'elastic_storyline'
+      cluster_name: 'elastic_story_line2'
+      jvm_max_memory_mb: 896
       enabled_startup: false
-      enabled_running: false
+      enabled_running: true
+  kafka:
+      version: "2.0.0"
+      plaintext_port: 9092
+      dir_data:  '/data/db/kafka'
+      dir_bin:  '/kafka'
+      dir_logs:  '/data/logs/kafka'
+      pid_file: '/data/logs/server_web/kafka.pid'
+      init_script: '/etc/systemd/system/kafka.service'
+      zookeeper: 'zookeeper:2181'
+      enabled_startup: false
+      enabled_running: false      
   monit:
-      port: "8080" # maybe overwritten
-      version: "1:5.16-2"
-      enabled_startup: false
-      enabled_running: false
+      port: "3000" # maybe overwritten
+      version: "present"
+      enabled_startup: true
+      enabled_running: true
 storyline_components:
-  nexus_repo_url: "http://192.168.1.99:8082/nexus"
+  nexus_repo_url: "http://repo.nlp-project.ru:8082/nexus"
   crawler:
-      app_port: "8080"
-      admin_port: "8081"
+      app_port: "8088"
+      admin_port: "8089"
       pid_file: '/data/logs/crawler/crawler.pid'
-      init_script: '/etc/init.d/crawler'
+      init_script: '/etc/systemd/system/crawler.service'
       dir_data:  '/data/db/crawler'
       dir_bin:  '/crawler'
       dir_logs:  '/data/logs/crawler'
       dir_scripts: "/data/db/crawler/scripts"
       dir_sites_db: "/data/db/crawler/sites_db"
-      mongodb_connection_url: "mongodb://mongodb:%{lookup('storyline_infra.mongodb.port')}/"
+      mongodb_connection_url: "mongodb://crawler:crawler@datahouse02.nlp-project.ru:27017/?authSource=crawler"
       influxdb_host:  "ci.nlp-project.ru"
       influxdb_port: "8086"
-      influxdb_db: "storyline"
+      influxdb_db: "crawler"
       influxdb_user: "crawler"
       influxdb_password: "crawler"
+      jvm_start_memory_mb: 128
+      jvm_max_memory_mb: 512
       enabled_startup: false
-      enabled_running: false
+      enabled_running: true
   server_web:
       app_port: "8001"
       admin_port: "8002"
       pid_file: '/data/logs/server_web/server_web.pid'
-      init_script: '/etc/init.d/server_web'
+      init_script: '/etc/systemd/system/server_web.service'
       dir_data:  '/data/db/server_web'
       dir_bin:  '/server_web'
       dir_logs:  '/data/logs/server_web'
+      drpc_port: "3772"
+      drpc_host: "datahouse01.nlp-project.ru"
       influxdb_host:  "ci.nlp-project.ru"
       influxdb_port: "8086"
-      influxdb_db: "storyline"
+      influxdb_db: "server_web"
       influxdb_user: "server_web"
       influxdb_password: "server_web"
+      jvm_start_memory_mb: 128
+      jvm_max_memory_mb: 512
+      enabled_startup: false
+      enabled_running: true
+  spark:
+      version: "2.3.1"
+      dir_data:  '/data/db/spark'
+      dir_bin:  '/spark'
+      dir_logs:  '/data/logs/spark'
+      # executors
+      executor_data_dir: '/data/db/spark/executors'
+      # master
+      master_port: 7077
+      master_webui_port: 8090
+      # worker
+      worker_master_url: "spark://localhost:7077"
+      worker_cores: 2
+      worker_memory: "1g"
+      worker_port: 7078
+      worker_webui_port: 8091
+      worker_dir: '/data/db/spark/workers'
+      # daemon
+      daemon_memory: "256m"
+      # spark it self
+      spark_pid_dir: '/data/logs/spark'
       enabled_startup: false
       enabled_running: false

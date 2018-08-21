@@ -17,12 +17,8 @@ VOLUME ['/data/db']
 VOLUME ['/data/logs']
 
 # Expose ports
-# server_web_app
-EXPOSE 8001
-# server_web_admin
-EXPOSE 8002
-# ngnix 8000
-EXPOSE 8000
+EXPOSE ${server_web_host_port}
+EXPOSE ${server_web_ngnix_host_port}
 # monit
 EXPOSE 3000
 

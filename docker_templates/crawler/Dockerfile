@@ -1,5 +1,5 @@
 # Format: FROM    repository[:version]
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 # Format: MAINTAINER Name <email@addr.ess>
 MAINTAINER Fedor Malyshkin <fedor.malyshkin@yandex.ru>
 
@@ -18,13 +18,13 @@ VOLUME ['/data/db']
 VOLUME ['/data/logs']
 
 # Expose port  from the container to the host
-EXPOSE 8080
+EXPOSE ${crawler_host_port}
 # monit
 EXPOSE 3000
 # java debug port
-EXPOSE 60000
+EXPOSE ${crawler_java_debug_host_port}
 # java jmx port
-EXPOSE 50000
+EXPOSE ${crawler_java_jmx_host_port}
 
 # make provision and start ....
 ENTRYPOINT ["/provision/start.sh", "${type}"]

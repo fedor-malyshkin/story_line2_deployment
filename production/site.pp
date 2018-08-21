@@ -26,14 +26,14 @@ node "datahouse02.nlp-project.ru"  {
 	include storyline_base::java
 
 	include storyline_base::firewall
-	include storyline_infra::telegraf	
+	include storyline_infra::telegraf
 
 	include storyline_infra::mongodb
 	include storyline_components::crawler
 
 	include storyline_infra::zookeeper
 	include storyline_infra::nginx
-
+	include storyline_infra::kafka
 	include storyline_components::spark
 	include storyline_infra::monit
 }

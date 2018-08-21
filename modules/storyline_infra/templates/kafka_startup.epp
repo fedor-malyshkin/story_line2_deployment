@@ -1,0 +1,19 @@
+[Unit]
+Description=message broker
+After=syslog.target
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=<%= $storyline_infra::kafka::pid_file %>
+WorkingDirectory=<%= $storyline_infra::kafka::dir_data %>
+
+User=kafka
+Group=kafka
+
+ExecStart=/bin/sh <%= $storyline_infra::kafka::dir_bin -%>/bin/kafka-server-start.sh -daemon <%= $storyline_infra::kafka::dir_bin -%>/config/server.properties
+ExecStop=/bin/sh <%= $storyline_infra::kafka::dir_bin -%>/bin/kafka-server-stop.sh
+TimeoutSec=30
+
+[Install]
+WantedBy=multi-user.target

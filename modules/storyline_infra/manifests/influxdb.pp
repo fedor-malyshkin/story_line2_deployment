@@ -81,12 +81,9 @@ class storyline_infra::influxdb () {
 		mode=>"u=rwx,og=rx",
 	}->
 	service { 'influxdb':
-  		ensure => $enabled_running,
+		ensure => $enabled_running,
 		enable    => $enabled_startup,
-		start 		=> "systemctl start influxdb",
-		stop 		=> "systemctl stop influxdb",
-		status 		=> "systemctl status influxdb",
-		restart 	=> "systemctl restart influxdb",
+		provider => 'systemd',
 		hasrestart => true,
 		hasstatus => true,
 	}

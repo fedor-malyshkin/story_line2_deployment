@@ -1,5 +1,5 @@
 # Format: FROM    repository[:version]
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 # Format: MAINTAINER Name <email@addr.ess>
 MAINTAINER Fedor Malyshkin <fedor.malyshkin@yandex.ru>
 
@@ -16,11 +16,9 @@ VOLUME ['/data/db']
 VOLUME ['/data/logs']
 
 # Expose port  from the container to the host
-EXPOSE 9200
+EXPOSE ${mongodb_host_port}
 # monit
 EXPOSE 3000
-
-
 
 # make provision and start ....
 ENTRYPOINT ["/provision/start.sh", "${type}"]

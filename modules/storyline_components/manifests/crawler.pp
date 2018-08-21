@@ -196,10 +196,4 @@ class storyline_components::crawler () {
 		hasrestart => true,
 		hasstatus => true,
 	}
-	if $enabled_startup != true {
-		exec { "disable_crawler":
-			command => "/bin/systemctl disable crawler",
-			cwd => "/",
-		}
-	}
 }

@@ -81,11 +81,5 @@ class storyline_infra::grafana () {
 		hasrestart => true,
 		hasstatus => true,
 	}
-	if $enabled_startup != true {
-		exec { "disable_grafana":
-			command => "/bin/systemctl disable grafana",
-			cwd => "/",
-		}
-	}
 
 }

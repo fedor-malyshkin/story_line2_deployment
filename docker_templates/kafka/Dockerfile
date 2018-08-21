@@ -15,11 +15,10 @@ RUN mkdir /data && mkdir /data/db && mkdir /data/logs
 VOLUME ['/data/db']
 VOLUME ['/data/logs']
 
-# Expose port  from the container to the host
-EXPOSE ${elasticsearch_host_port}
+# Expose ports
+EXPOSE ${kafka_plaintext_port}
 # monit
 EXPOSE 3000
-
 
 # make provision and start ....
 ENTRYPOINT ["/provision/start.sh", "${type}"]

@@ -87,6 +87,10 @@ class storyline_infra::influxdb () {
 		hasrestart => true,
 		hasstatus => true,
 	}
+	exec { "disable_influxd":
+		command => "/bin/systemctl disable influxd",
+		cwd => "/",
+	}
 	logrotate::rule { 'influxdb':
   		path			=> "${dir_logs}/*.log",
   		rotate      	=> 10,

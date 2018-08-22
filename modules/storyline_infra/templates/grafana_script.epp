@@ -1,0 +1,5 @@
+DATA_DIR="<%= $storyline_infra::grafana::dir_data -%>"
+LOG_DIR="<%= $storyline_infra::grafana::dir_logs -%>"
+PID="<%= $storyline_infra::grafana::pid_file -%>"
+PLUGINS_DIR="/var/lib/grafana/plugins"
+/usr/sbin/grafana-server -homepath=/usr/share/grafana -pidfile=${PID} -config=/etc/grafana/grafana.ini cfg:default.paths.data=${DATA_DIR} cfg:default.paths.logs=${LOG_DIR} cfg:default.paths.plugins=${PLUGINS_DIR}   2>&1 &

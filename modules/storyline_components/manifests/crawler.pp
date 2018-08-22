@@ -120,7 +120,7 @@ class storyline_components::crawler () {
 			replace => true,
 			content => "${script_version}",
 			notify 		  => Exec['empty_crawler_dir_scripts'],
-		}
+		} ->
 		exec { "empty_crawler_dir_scripts":
 			command => "/bin/rm -r -f ${dir_scripts}/*",
 			cwd => "/",
@@ -148,7 +148,7 @@ class storyline_components::crawler () {
 				replace => true,
 				content => "${script_version}",
 				notify 		  => Exec['empty_crawler_dir_scripts'],
-			}
+			} 
 			exec { "empty_crawler_dir_scripts":
 				require => File["${dir_scripts}"],
 				command => "/bin/rm -f -r ${dir_scripts}/*",

@@ -1,16 +1,19 @@
 ---
 storyline_base:
   firewall:
-    incommming_port_all: [222, 3000]
+    incommming_port_all: [222, 3000, 8090, 8091]
     incommming_port_project: [2181, 2888, 3888]
-    incommming_port_project2: [7077, 8090, 7078, 8091, 9092]
+    incommming_port_project2: [7078, 9092]
 storyline_infra:
   monit:
       port: "3000"
       enabled_telegraf: true
       enabled_zookeeper: true
+      enabled_kafka: true
       enabled_spark_master: false
       enabled_spark_worker: true
-      enabled_kafka: true
       enabled_startup: true
       enabled_running: true
+storyline_components:
+  spark:
+      worker_memory: "4g"

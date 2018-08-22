@@ -1,38 +1,22 @@
 ---
 storyline_base:
   firewall:
-    incommming_port_all: [222, 3000, 8080, 8081]
-    incommming_port_project: [25826,  8086, 8088, 9200, 2181, 2888, 3888]
-    incommming_port_project2: [7077, 7078, 8090, 8091]
+    incommming_port_all: [222, 3000, 8080, 8081, 8090, 8091 ]
+    incommming_port_project: [8086, 8088, 9200, 2181, 2888, 3888]
+    incommming_port_project2: [7077, 7078, 9092]
 storyline_infra:
   monit:
       port: "3000"
-      enabled_collectd: true
+      enabled_telegraf: true
+      enabled_zookeeper: true
+      enabled_kafka: true
       enabled_elasticsearch: true
       enabled_influxdb: true
       enabled_grafana: true
-      enabled_zookeeper: true
       enabled_spark_master: true
       enabled_spark_worker: true
       enabled_startup: true
       enabled_running: true
-  collectd:
-    server_port: "25826"
-    server_address: "ci.nlp-project.ru"
-    pid_file: '/data/logs/collectd/collectd.pid'
-    init_script: '/etc/init.d/collectd'
-    dir_data:  '/data/db/collectd'
-    dir_logs:  '/data/logs/collectd'
-    version: "1.2.0-1"
-    enabled_mongodb: false
-    mongodb_user: "collectd"
-    mongodb_password: "collectd"
-    enabled_elasticsearch: true
-    elasticsearch_host: "ci.nlp-project.ru"
-    elasticsearch_port: "9200"
-    elasticsearch_cluster: "elastic_storyline"
-    enabled_startup: false
-    enabled_running: true
 storyline_components:
   spark:
       worker_memory: "1g"

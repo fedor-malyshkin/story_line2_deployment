@@ -2,19 +2,19 @@ class storyline_infra::kafka () {
 
 	$params = lookup({"name" => "storyline_infra.kafka",
 	    "merge" => {"strategy" => "deep"}})
-	$port = $params['port']
+	$plaintext_port = $params['plaintext_port']
 	$pid_file = $params['pid_file']
 	$init_script = $params['init_script']
 	$dir_bin = $params['dir_bin']
 	$dir_data = $params['dir_data']
 	$dir_logs = $params['dir_logs']
-	$ensemble = $params['ensemble']
-	$leader_port = $params['leader_port']
-	$election_port = $params['election_port']
+	$cluster = $params['cluster']
+	$zookeeper_urls = $params['zookeeper_urls']
 	$enabled_startup = $params['enabled_startup']
 	$enabled_running = $params['enabled_running']
 	$version = $params['version']
 	$certname = $trusted['certname']
+	$broker_id = $cluster[$certname]
 
 	user { 'kafka':
 		ensure => "present",
@@ -33,15 +33,15 @@ class storyline_infra::kafka () {
 		owner => "kafka",
 		group=> "kafka",
 		require => Exec['kafka-mkdir'],
-	}
+	} ->
 	archive { "kafka-archive":
-		path=> "/provision/kafka-${version}.tar.gz",
+		path=> "/provision/kafka_2.11-${version}.tar.gz",
   		source=> "http://apache-mirror.rbc.ru/pub/apache/kafka/2.0.0/kafka_2.11-${version}.tgz",
   		extract       => true,
   		extract_path  => "/provision",
   		cleanup       => false,
 		notify 		  => Exec['kafka_move_to_no_version_dir'],
-	}
+	} ->
 	exec { "kafka_move_to_no_version_dir":
 		#command => "/bin/mv /provision/kafka-${version} ${dir_bin}",
 		command => "/bin/mv -f -t ${dir_bin} /provision/kafka_2.11-${version}/*  && chown -R kafka:kafka ${dir_bin}",
@@ -59,6 +59,14 @@ class storyline_infra::kafka () {
 		content => epp('storyline_infra/kafka_startup.epp'),
 		mode=>"u=rw,og=r",
 		notify => Service['kafka'],
+	}->
+	file { "${dir_data}/kafka.sh":
+		replace => true,
+		content => epp('storyline_infra/kafka_script.epp'),
+		notify => Service['kafka'],
+		owner => "kafka",
+		group=> "kafka",
+		mode=>"u=rwx,og=rx",
 	}->
 	service { 'kafka':
   		ensure => $enabled_running,

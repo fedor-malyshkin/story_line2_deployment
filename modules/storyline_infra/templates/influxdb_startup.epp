@@ -11,7 +11,6 @@ WorkingDirectory=<%= $storyline_infra::influxdb::dir_data %>
 User=influxdb
 Group=influxdb
 
-Environment=PID="<%= $storyline_infra::influxdb::pid_file %>"
 ExecStart=/bin/bash <%= $storyline_infra::influxdb::dir_data -%>/influxdb.sh
 TimeoutSec=30
 

@@ -11,8 +11,7 @@ WorkingDirectory=<%= $storyline_infra::kafka::dir_data %>
 User=kafka
 Group=kafka
 
-ExecStart=/bin/sh <%= $storyline_infra::kafka::dir_bin -%>/bin/kafka-server-start.sh -daemon <%= $storyline_infra::kafka::dir_bin -%>/config/server.properties
-ExecStop=/bin/sh <%= $storyline_infra::kafka::dir_bin -%>/bin/kafka-server-stop.sh
+ExecStart=/bin/bash <%= $storyline_infra::kafka::dir_data -%>/kafka.sh
 TimeoutSec=30
 
 [Install]

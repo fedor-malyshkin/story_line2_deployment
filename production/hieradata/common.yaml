@@ -126,6 +126,7 @@ storyline_infra:
       enabled_running: true
   elasticsearch:
       port: "9200"
+      # local/global - dev/prod
       bind_scope: "global"
       version: "6.3.2"
       pid_file: '/data/logs/elasticsearch/elasticsearch.pid'

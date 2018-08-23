@@ -43,7 +43,8 @@ storyline_infra:
       enabled_running: true
   elasticsearch:
       port: "9200"
-      bind_scope: "global"
+      # local/global - dev/prod
+      bind_scope: "local"
       version: "6.3.2"
       pid_file: '/data/logs/elasticsearch/elasticsearch.pid'
       init_script: '/etc/systemd/system/elasticsearch.service'
@@ -60,11 +61,13 @@ storyline_infra:
       dir_data:  '/data/db/kafka'
       dir_bin:  '/kafka'
       dir_logs:  '/data/logs/kafka'
-      pid_file: '/data/logs/server_web/kafka.pid'
+      pid_file: '/data/logs/kafka/kafka.pid'
       init_script: '/etc/systemd/system/kafka.service'
-      zookeeper: 'zookeeper:2181'
+      zookeeper_urls: 'zookeeper:2181'
+      cluster:
+        kafka   .story-line.ru: '1'
       enabled_startup: false
-      enabled_running: false      
+      enabled_running: false
   monit:
       port: "3000" # maybe overwritten
       version: "present"

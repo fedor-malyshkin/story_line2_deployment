@@ -10,6 +10,7 @@ services:
     volumes:
      - ${data_dir}:/data/db
      - ${logs_dir}:/data/logs
+    stop_grace_period: 1m
   zookeeper:
     domainname: story-line.ru
     hostname: zookeeper
@@ -20,6 +21,7 @@ services:
     volumes:
      - ${data_dir}:/data/db
      - ${logs_dir}:/data/logs
+    stop_grace_period: 1m
   elasticsearch:
     domainname: story-line.ru
     hostname: elasticsearch
@@ -30,6 +32,7 @@ services:
     volumes:
      - ${logs_dir}:/data/logs
      - ${data_dir}:/data/db
+    stop_grace_period: 1m
   crawler:
     domainname: story-line.ru
     hostname: crawler
@@ -47,6 +50,7 @@ services:
     volumes:
      - ${logs_dir}:/data/logs
      - ${data_dir}:/data/db
+    stop_grace_period: 1m
   server_web:
     domainname: story-line.ru
     hostname: server_web
@@ -65,6 +69,7 @@ services:
     volumes:
      - ${logs_dir}:/data/logs
      - ${data_dir}:/data/db
+    stop_grace_period: 1m
   spark:
     domainname: story-line.ru
     hostname: spark
@@ -78,6 +83,7 @@ services:
     volumes:
      - ${logs_dir}:/data/logs
      - ${data_dir}:/data/db
+    stop_grace_period: 1m
   kafka:
     domainname: story-line.ru
     hostname: kafka
@@ -92,3 +98,5 @@ services:
     volumes:
      - ${logs_dir}:/data/logs
      - ${data_dir}:/data/db
+    stop_grace_period: 1m
+    

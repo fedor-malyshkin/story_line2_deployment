@@ -70,13 +70,6 @@ class storyline_components::spark () {
 		notify => Service['spark_worker'],
 	}
 	['master','worker'].each |String $service| {
-		service { "spark_${service}":
-			ensure => $enabled_running,
-			enable    => $enabled_startup,
-			provider => 'systemd',
-			hasrestart => true,
-			hasstatus => true,
-		} ->
 		file { "/etc/systemd/system/spark_${service}.service":
 			replace => true,
 			owner => "spark",
@@ -90,6 +83,13 @@ class storyline_components::spark () {
 			group => "spark",
 			content => epp("storyline_components/spark_${service}_script.epp"),
 			mode=>"u=rwx,og=rx",
+		}->
+		service { "spark_${service}":
+			ensure => $enabled_running,
+			enable    => $enabled_startup,
+			provider => 'systemd',
+			hasrestart => true,
+			hasstatus => true,
 		}
 	}
 }

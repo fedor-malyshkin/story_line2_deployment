@@ -1,7 +1,7 @@
 ---
 storyline_base:
   firewall:
-    incommming_port_all: [222, 3000, 8080, 8081, 8090, 8091 ]
+    incommming_port_all: [222, 3000, 8080, 8081, 8090, 8091, 443 ]
     incommming_port_project: [8086, 8088, 9200, 2181, 2888, 3888]
     incommming_port_project2: [7077, 7078, 9092]
 storyline_infra:

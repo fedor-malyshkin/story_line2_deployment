@@ -82,7 +82,7 @@ ignore_fs = ["tmpfs", "devtmpfs", "devfs", "overlay", "aufs", "squashfs"]
 # Read metrics about network interface usage
 [[inputs.net]]
   # collect data only about specific interfaces
-  # interfaces = ["eth0"]
+  # interfaces = ["eth0", "enp0s*", "ens*"]
 
 
 [[inputs.netstat]]

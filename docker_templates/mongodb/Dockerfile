@@ -7,6 +7,10 @@ MAINTAINER Fedor Malyshkin <fedor.malyshkin@yandex.ru>
 WORKDIR /provision
 # Installation:
 COPY *.sh ./
+# see https://github.com/gdraheim/docker-systemctl-replacement
+COPY systemctl.py /bin/systemctl
+RUN chmod 777 /bin/systemctl
+
 ADD ${type} ${type}/
 ADD puppet_config puppet_config/
 ADD modules modules/

@@ -1,0 +1,20 @@
+[Unit]
+Description=HDSF DataNode
+After=syslog.target
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=<%= $storyline_infra::hadoop::pid_dirs -%>/hdfs.pid
+WorkingDirectory=<%= $storyline_infra::hadoop::dir_data %>
+
+User=hdfs
+Group=hadoop
+
+Environment=HADOOP_PREFIX="<%= $storyline_infra::hadoop::dir_bin -%>" HADOOP_CONF_DIR="<%= $storyline_infra::hadoop::dir_bin -%>/etc/hadoop"  HADOOP_PID_DIR="<%= $storyline_infra::hadoop::dir_pids -%>" HADOOP_LOG_DIR="<%= $storyline_infra::hadoop::dir_logs -%>" HADOOP_HEAPSIZE="<%= $storyline_infra::hadoop::hdfs_heapsize_mb -%>" JAVA_HOME="<%= $storyline_infra::hadoop::java_home -%>"
+ExecStart=/bin/sh $HADOOP_PREFIX/sbin/hadoop-daemons.sh --config $HADOOP_CONF_DIR --script hdfs start datanode
+ExecStop=/bin/sh $HADOOP_PREFIX/sbin/hadoop-daemons.sh --config $HADOOP_CONF_DIR --script hdfs stop datanode
+TimeoutSec=30
+
+[Install]
+WantedBy=multi-user.target

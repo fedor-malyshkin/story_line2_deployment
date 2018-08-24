@@ -153,6 +153,30 @@ storyline_infra:
         datahouse02.nlp-project.ru: '3'
       enabled_startup: false
       enabled_running: false
+  hadoop:
+      version: "2.9.1"
+      dir_data:  '/data/db/hadoop'
+      dir_bin:  '/hadoop'
+      dir_logs:  '/data/logs/hadoop'
+      dir_pids:  '/data/logs/hadoop'
+      java_home:  '/usr/lib/jvm/java-8-openjdk-amd64'
+
+      hdfs_heapsize_mb: 512
+      hdfs_namenode_uri: hdfs://datahouse01.nlp-project.ru:9000/
+      hdfs_namenode_data_dir: '/data/db/hadoop/hdfs_namenode'
+      # block size - 256 Kb
+      hdfs_namenode_blocksize_b: 262144
+      hdfs_namenode_threads: 50
+      hdfs_datanode_data_dir: '/data/db/hadoop/hdfs_datanode'
+
+      yarn_heapsize_mb: 512
+      yarn_resourcemanager_hostname: 'datahouse01.nlp-project.ru'
+      yarn_nodemanager_memory_mb: 1024
+      yarn_nodemanager_local_dirs: '/data/db/hadoop/yarn_nodemanager_local'
+      yarn_nodemanager_log_dirs: '/data/db/hadoop/yarn_nodemanager_logs'
+
+      enabled_startup: false
+      enabled_running: false
   monit:
       port: "3000" # maybe overwritten
       version: "present"

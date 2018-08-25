@@ -15,6 +15,7 @@ node "datahouse01.nlp-project.ru"  {
 
 	include storyline_infra::zookeeper
 	include storyline_infra::kafka
+	include storyline_infra::hadoop
 	include storyline_components::spark
 	include storyline_infra::monit
 }

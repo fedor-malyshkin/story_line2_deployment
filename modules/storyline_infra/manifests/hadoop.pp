@@ -54,7 +54,7 @@ class storyline_infra::hadoop () {
 		recurse => "true",
 		owner => "hdfs",
 		group => "hadoop",
-		mode=>"u=rwx,g=rwx,o=rx",
+		mode=>"o-w,ug+w",
 		require => Exec['hadoop-mkdir'],
 	} ->
 	# hdfs
@@ -63,7 +63,7 @@ class storyline_infra::hadoop () {
 		recurse => "true",
 		owner => "hdfs",
 		group => "hadoop",
-		mode=>"u=rwx,g=rx,o=rx",
+		mode=>"o-w,ug+w",
 		require => Exec['hadoop-mkdir'],
 	} ->
 	# yarn
@@ -72,7 +72,7 @@ class storyline_infra::hadoop () {
 		recurse => "true",
 		owner => "yarn",
 		group => "hadoop",
-		mode=>"u=rwx,g=rx,o=rx",
+		mode=>"o-w,ug+w",
 		require => Exec['hadoop-mkdir'],
 	} ->
 	archive { "hadoop-archive":
@@ -92,41 +92,41 @@ class storyline_infra::hadoop () {
 		replace => true,
 		owner => "hdfs",
 		group => "hadoop",
-		mode=>"ug=rwx,og=rx",
-		content => epp('storyline_components/hadoop_core.epp'),
+		mode=>"ug=rw,o=r",
+		content => epp('storyline_infra/hadoop_core.epp'),
 		notify => Service['hadoop_namenode', 'hadoop_datanode', 'hadoop_resourcemanager', 'hadoop_nodemanager'],
 	} ->
 	file { "${dir_bin}/etc/hadoop/hdfs-site.xml":
 		replace => true,
 		owner => "hdfs",
 		group => "hadoop",
-		mode=>"ug=rwx,og=rx",
-		content => epp('storyline_components/hadoop_hdfs.epp'),
+		mode=>"ug=rw,o=r",
+		content => epp('storyline_infra/hadoop_hdfs.epp'),
 		notify => Service['hadoop_namenode', 'hadoop_datanode'],
 	} ->
 	file { "${dir_bin}/etc/hadoop/yarn-site.xml":
 		replace => true,
 		owner => "hdfs",
 		group => "hadoop",
-		mode=>"ug=rwx,og=rx",
-		content => epp('storyline_components/hadoop_yarn.epp'),
+		mode=>"ug=rw,o=r",
+		content => epp('storyline_infra/hadoop_yarn.epp'),
 		notify => Service['hadoop_resourcemanager', 'hadoop_nodemanager'],
-	} ->
+	}
 	['namenode','datanode','resourcemanager', 'nodemanager'].each |String $service| {
 		file { "/etc/systemd/system/hadoop_${service}.service":
 			replace => true,
 			owner => "hdfs",
 			group => "hadoop",
-			content => epp("storyline_components/hadoop_${service}_startup.epp"),
-			mode=>"ug=rwx,o=rx",
+			content => epp("storyline_infra/hadoop_${service}_startup.epp"),
+			mode=>"ug=rw,o=r",
  		} ->
-#		file { "${dir_bin}/hadoop_${service}.sh":
-#			replace => true,
-#			owner => "hdfs",
-#			group => "hadoop",
-#			content => epp("storyline_components/hadoop_${service}_script.epp"),
-#			mode=>"ug=rwx,o=rx",
-#		}->
+		file { "${dir_bin}/hadoop_${service}.sh":
+			replace => true,
+			owner => "hdfs",
+			group => "hadoop",
+			content => epp("storyline_infra/hadoop_${service}_script.epp"),
+			mode=>"ug=rwx,o=r",
+		} ->
 		service { "hadoop_${service}":
 			ensure => $enabled_running,
 			enable    => $enabled_startup,

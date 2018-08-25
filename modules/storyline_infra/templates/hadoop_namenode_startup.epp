@@ -5,15 +5,16 @@ After=network.target
 
 [Service]
 Type=forking
-PIDFile=<%= $storyline_infra::hadoop::pid_dirs -%>/hdfs.pid
+PIDFile=<%= $storyline_infra::hadoop::dir_pids -%>/hadoop-hdfs-namenode.pid
 WorkingDirectory=<%= $storyline_infra::hadoop::dir_data %>
 
 User=hdfs
 Group=hadoop
 
 Environment=HADOOP_PREFIX="<%= $storyline_infra::hadoop::dir_bin -%>" HADOOP_CONF_DIR="<%= $storyline_infra::hadoop::dir_bin -%>/etc/hadoop"  HADOOP_PID_DIR="<%= $storyline_infra::hadoop::dir_pids -%>" HADOOP_LOG_DIR="<%= $storyline_infra::hadoop::dir_logs -%>" HADOOP_HEAPSIZE="<%= $storyline_infra::hadoop::hdfs_heapsize_mb -%>" JAVA_HOME="<%= $storyline_infra::hadoop::java_home -%>"
-ExecStart=/bin/sh $HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs start namenode
-ExecStop=/bin/sh  $HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs stop namenode
+
+ExecStart=/bin/sh <%= $storyline_infra::hadoop::dir_bin -%>/hadoop_namenode.sh start
+ExecStop=/bin/sh <%= $storyline_infra::hadoop::dir_bin -%>/hadoop_namenode.sh stop
 TimeoutSec=30
 
 [Install]

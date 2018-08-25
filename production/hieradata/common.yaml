@@ -158,7 +158,7 @@ storyline_infra:
       dir_data:  '/data/db/hadoop'
       dir_bin:  '/hadoop'
       dir_logs:  '/data/logs/hadoop'
-      dir_pids:  '/data/logs/hadoop'
+      dir_pids:  '/data/logs/hadoop/pids'
       java_home:  '/usr/lib/jvm/java-8-openjdk-amd64'
 
       hdfs_heapsize_mb: 512

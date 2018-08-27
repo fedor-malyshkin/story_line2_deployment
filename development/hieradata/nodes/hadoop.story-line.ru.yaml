@@ -1,0 +1,6 @@
+---
+storyline_infra:
+  monit:
+      port: "3000"
+      enabled_hadoop_namenode: true
+      enabled_hadoop_datanode: true

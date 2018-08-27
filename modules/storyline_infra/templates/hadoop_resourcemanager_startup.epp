@@ -5,7 +5,7 @@ After=network.target
 
 [Service]
 Type=forking
-PIDFile=<%= $storyline_infra::hadoop::dir_pids -%>/hadoop-yarn-resourcemanager.pid
+PIDFile=<%= $storyline_infra::hadoop::dir_pids -%>/yarn-yarn-resourcemanager.pid
 WorkingDirectory=<%= $storyline_infra::hadoop::dir_data %>
 
 User=yarn

@@ -21,7 +21,7 @@ storyline_infra:
     enabled_startup: false
   influxdb:
     port_http: "8086"
-    port_rpc: "8088"
+    port_rpc: "9086"
     pid_file: '/data/logs/influxdb/influxdb.pid'
     init_script: '/etc/init.d/influxdb'
     dir_data:  '/data/db/influxdb'

@@ -1,9 +1,9 @@
 ---
 storyline_base:
   firewall:
-    incommming_port_all: [222, 3000, 8080, 8081, 8090, 8091, 443 ]
-    incommming_port_project: [8086, 8088, 9200, 2181, 2888, 3888]
-    incommming_port_project2: [7077, 7078, 9092]
+    incommming_port_all: [222, 3000, 8080, 8081, 8090, 8091, 443, 8042 ]
+    incommming_port_project: [8086, 9086, 9200, 2181, 2888, 3888, 7077, 7078, 9092]
+    incommming_port_project2: [8032, 8030, 8031, 8033, 8040, 8048, 13562, 8088]
 storyline_infra:
   monit:
       port: "3000"
@@ -15,6 +15,8 @@ storyline_infra:
       enabled_grafana: true
       enabled_spark_master: true
       enabled_spark_worker: true
+      enabled_hadoop_resourcemanager: true
+      enabled_hadoop_nodemanager: true
       enabled_startup: true
       enabled_running: true
 storyline_components:

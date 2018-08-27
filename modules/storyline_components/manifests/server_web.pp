@@ -118,10 +118,4 @@ class storyline_components::server_web () {
 		hasrestart => true,
 		hasstatus => true,
 	}
-	if $enabled_startup != true {
-		exec { "disable_server_web":
-			command => "/bin/systemctl disable server_web",
-			cwd => "/",
-		}
-	}
 }

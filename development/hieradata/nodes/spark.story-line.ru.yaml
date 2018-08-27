@@ -1,0 +1,6 @@
+---
+storyline_infra:
+  monit:
+      port: "3000"
+      enabled_spark_master: true
+      enabled_spark_worker: true

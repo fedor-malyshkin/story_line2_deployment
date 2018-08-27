@@ -1,4 +1,5 @@
 class storyline_infra::mongodb () {
+	include apt		
 
 	$params = lookup({"name" => "storyline_infra.mongodb",
 	    "merge" => {"strategy" => "deep"}})

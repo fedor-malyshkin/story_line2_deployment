@@ -26,7 +26,7 @@ storyline_base:
     incommming_port_project: [25826, 8086,  27017, 2181, 9200, 6627, 8082, 8083, 3772]
     # iptables' limit 15 positions in list!!!
     incommming_port_project2: []
-    host_project: ['datahouse02.nlp-project.ru', 'ci.nlp-project.ru', 'repo.nlp-project.ru']
+    host_project: ['datahouse02.nlp-project.ru', 'datahouse01.nlp-project.ru', 'ci.nlp-project.ru',  'repo.nlp-project.ru']
   java:
     version: "present"
 storyline_infra:
@@ -39,8 +39,8 @@ storyline_infra:
     dir_logs:  '/data/logs/telegraf'
     version: "present"
     enabled_mongodb: false
-    mongodb_user: "collectd"
-    mongodb_password: "collectd"
+    mongodb_user: "telegraf"
+    mongodb_password: "telegraf"
     enabled_elasticsearch: false
     elasticsearch_host: "ci.nlp-project.ru"
     elasticsearch_port: "9200"
@@ -66,7 +66,7 @@ storyline_infra:
     enabled_running: true
   influxdb:
     port_http: "8086"
-    port_rpc: "8088"
+    port_rpc: "9086"
     pid_file: '/data/logs/influxdb/influxdb.pid'
     init_script: '/etc/systemd/system/influxdb.service'
     dir_data:  '/data/db/influxdb'
@@ -107,7 +107,7 @@ storyline_infra:
     dir_logs:  '/data/logs/nginx'
     version: "present"
     enabled_startup: false
-    enabled_running: false
+    enabled_running: true
   zookeeper:
       port: "2181"
       version: "3.4.13"
@@ -117,7 +117,8 @@ storyline_infra:
       dir_data:  '/data/db/zookeeper'
       dir_logs:  '/data/logs/zookeeper'
       ensemble:
-        ci.nlp-project.ru: '2'
+        ci.nlp-project.ru: '1'
+        datahouse01.nlp-project.ru: '2'
         datahouse02.nlp-project.ru: '3'
       leader_port: "2888"
       election_port: "3888"
@@ -125,6 +126,7 @@ storyline_infra:
       enabled_running: true
   elasticsearch:
       port: "9200"
+      # local/global - dev/prod
       bind_scope: "global"
       version: "6.3.2"
       pid_file: '/data/logs/elasticsearch/elasticsearch.pid'
@@ -136,6 +138,45 @@ storyline_infra:
       jvm_max_memory_mb: 896
       enabled_startup: false
       enabled_running: true
+  kafka:
+      version: "2.0.0"
+      plaintext_port: 9092
+      dir_data:  '/data/db/kafka'
+      dir_bin:  '/kafka'
+      dir_logs:  '/data/logs/kafka'
+      pid_file: '/data/logs/kafka/kafka.pid'
+      init_script: '/etc/systemd/system/kafka.service'
+      zookeeper_urls: 'localhost:2181'
+      cluster:
+        ci.nlp-project.ru: '1'
+        datahouse01.nlp-project.ru: '2'
+        datahouse02.nlp-project.ru: '3'
+      enabled_startup: false
+      enabled_running: false
+  hadoop:
+      version: "2.9.1"
+      dir_data:  '/data/db/hadoop'
+      dir_bin:  '/hadoop'
+      dir_logs:  '/data/logs/hadoop'
+      dir_pids:  '/data/logs/hadoop/pids'
+      java_home:  '/usr/lib/jvm/java-8-openjdk-amd64'
+
+      hdfs_heapsize_mb: 512
+      hdfs_namenode_uri: hdfs://datahouse01.nlp-project.ru:9000/
+      hdfs_namenode_data_dir: '/data/db/hadoop/hdfs_namenode'
+      # block size - 256 Kb
+      hdfs_namenode_blocksize_b: 262144
+      hdfs_namenode_threads: 50
+      hdfs_datanode_data_dir: '/data/db/hadoop/hdfs_datanode'
+
+      yarn_heapsize_mb: 512
+      yarn_resourcemanager_hostname: 'ci.nlp-project.ru'
+      yarn_nodemanager_memory_mb: 1024
+      yarn_nodemanager_local_dirs: '/data/db/hadoop/yarn_nodemanager_local'
+      yarn_nodemanager_log_dirs: '/data/db/hadoop/yarn_nodemanager_logs'
+
+      enabled_startup: false
+      enabled_running: false
   monit:
       port: "3000" # maybe overwritten
       version: "present"

@@ -74,18 +74,20 @@ class storyline_infra::grafana () {
 		mode=>"ug=rw,o=r",
 		notify => Service['grafana'],
 	}->
+	file { "${dir_data}/grafana.sh":
+		replace => true,
+		content => epp('storyline_infra/grafana_script.epp'),
+		notify => Service['grafana'],
+		owner => "grafana",
+		group=> "grafana",
+		mode=>"u=rwx,og=rx",
+	}->
 	service { 'grafana':
   		ensure => $enabled_running,
 		enable    => $enabled_startup,
 		provider => 'systemd',
 		hasrestart => true,
 		hasstatus => true,
-	}
-	if $enabled_startup != true {
-		exec { "disable_grafana":
-			command => "/bin/systemctl disable grafana",
-			cwd => "/",
-		}
 	}
 
 }

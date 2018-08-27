@@ -12,9 +12,9 @@ User=mongodb
 Group=mongodb
 
 <% if $storyline_infra::mongodb::enabled_auth { %>
-Environment=OPTS="--auth --config /etc/mongodb.conf" PID="<%= $storyline_infra::mongodb::pid_file %>"
+Environment=OPTS="--auth --config /etc/mongodb.conf"
 <% } else { -%>
-Environment=OPTS="--config /etc/mongodb.conf" PID="<%= $storyline_infra::mongodb::pid_file %>"
+Environment=OPTS="--config /etc/mongodb.conf"
 <% } %>
 
 ExecStart=/usr/bin/mongod $OPTS

@@ -326,9 +326,9 @@ https-enabled = false
 ###
 
 [[collectd]]
-  enabled = true
-  bind-address = ":25826"
-  database = "collectd"
+  # enabled = true
+  # bind-address = ":25826"
+  # database = "collectd"
   # retention-policy = ""
   #
   # The collectd service supports either scanning a directory for multiple types

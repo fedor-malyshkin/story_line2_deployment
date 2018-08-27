@@ -1,0 +1,21 @@
+[Unit]
+Description=YARN NodeManager
+After=syslog.target
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=<%= $storyline_infra::hadoop::dir_pids -%>/yarn-yarn-nodemanager.pid
+WorkingDirectory=<%= $storyline_infra::hadoop::dir_data %>
+
+User=yarn
+Group=hadoop
+
+Environment=HADOOP_YARN_HOME="<%= $storyline_infra::hadoop::dir_bin -%>" HADOOP_PREFIX="<%= $storyline_infra::hadoop::dir_bin -%>" HADOOP_CONF_DIR="<%= $storyline_infra::hadoop::dir_bin -%>/etc/hadoop"  HADOOP_PID_DIR="<%= $storyline_infra::hadoop::dir_pids -%>" HADOOP_LOG_DIR="<%= $storyline_infra::hadoop::dir_logs -%>" YARN_HEAPSIZE="<%= $storyline_infra::hadoop::yarn_heapsize_mb -%>" JAVA_HOME="<%= $storyline_infra::hadoop::java_home -%>"
+
+ExecStart=/bin/sh <%= $storyline_infra::hadoop::dir_bin -%>/hadoop_nodemanager.sh start
+ExecStop=/bin/sh <%= $storyline_infra::hadoop::dir_bin -%>/hadoop_nodemanager.sh stop
+TimeoutSec=30
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,28 @@
+#!/bin/sh
+
+export HADOOP_YARN_HOME="<%= $storyline_infra::hadoop::dir_bin -%>"
+export HADOOP_PREFIX="<%= $storyline_infra::hadoop::dir_bin -%>"
+export HADOOP_CONF_DIR="<%= $storyline_infra::hadoop::dir_bin -%>/etc/hadoop"
+export YARN_CONF_DIR="<%= $storyline_infra::hadoop::dir_bin -%>/etc/hadoop"
+export HADOOP_PID_DIR="<%= $storyline_infra::hadoop::dir_pids -%>"
+export YARN_PID_DIR="<%= $storyline_infra::hadoop::dir_pids -%>"
+export HADOOP_LOG_DIR="<%= $storyline_infra::hadoop::dir_logs -%>"
+export YARN_LOG_DIR="<%= $storyline_infra::hadoop::dir_logs -%>"
+export YARN_HEAPSIZE="<%= $storyline_infra::hadoop::yarn_heapsize_mb -%>"
+export JAVA_HOME="<%= $storyline_infra::hadoop::java_home -%>"
+
+PID=${HADOOP_PID_DIR}/yarn-yarn-resourcemanager.pid
+
+case "$1" in
+	start)
+	$HADOOP_YARN_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR start resourcemanager >> <%= $storyline_infra::hadoop::dir_logs -%>/hadoop_resourcemanager.log 2>&1
+	;;
+	stop)
+	$HADOOP_YARN_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR stop resourcemanager >> <%= $storyline_infra::hadoop::dir_logs -%>/hadoop_resourcemanager.log 2>&1
+	;;
+	*)
+	echo "Usage: XXX {start|stop}"
+	;;
+esac
+
+#echo $! > ${PID}

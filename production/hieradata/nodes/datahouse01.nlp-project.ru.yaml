@@ -1,40 +1,22 @@
 ---
 storyline_base:
   firewall:
-    incommming_port_all: [222, 3000, 8000]
-    incommming_port_project: [25826, 8086,  27017, 2181, 2888, 3888, 6627, 8082, 8083, 8001, 8002, 9000, 60000]
-    # 3772 	drpc.port (External DRPC Clients)
-    # 3773 - drpc.invocations.port  (Worker Processes)
-    # 3774 - drpc.http.port (External HTTP DRPC Clients)
-
-    # 7077 - Spark Master port
-    # 7078 - Spark Worker port
-    # 8090 - Spark Master UI port
-    # 8091 - Spark Worker UI port
-    incommming_port_project2: [3772, 3773, 3774, 6700, 6701, 6702, 6703, 7078, 8091]
+    incommming_port_all: [222, 3000, 8090, 8091,  50070, 50075, 8042]
+    incommming_port_project: [2181, 2888, 3888, 7078, 9092]
+    incommming_port_project2: [50010,  50020, 9000, 8040, 8048, 13562]
 storyline_infra:
   monit:
       port: "3000"
-      enabled_collectd: true
-      enabled_mongodb: true
+      enabled_telegraf: true
       enabled_zookeeper: true
-      enabled_crawler: true
-      enabled_server_web: true
-      enabled_nginx: true
+      enabled_kafka: true
       enabled_spark_master: false
       enabled_spark_worker: true
+      enabled_hadoop_namenode: true
+      enabled_hadoop_datanode: true
+      enabled_hadoop_nodemanager: true
       enabled_startup: true
       enabled_running: true
-  collectd:
-    server_port: "25826"
-    server_address: "ci.nlp-project.ru"
-    pid_file: '/data/logs/collectd/collectd.pid'
-    init_script: '/etc/init.d/collectd'
-    dir_data:  '/data/db/collectd'
-    dir_logs:  '/data/logs/collectd'
-    version: "1.2.0-1"
-    enabled_mongodb: true
-    mongodb_user: "collectd"
-    mongodb_password: "collectd"
-    enabled_startup: false
-    enabled_running: true
+storyline_components:
+  spark:
+      worker_memory: "4g"

@@ -5,43 +5,52 @@ services:
     hostname: mongodb
     build: ./mongodb
     ports:
-     - "${mongodb_host_port ?: 27017}:27017"
+     - "${mongodb_host_port ?: 27017}:${mongodb_host_port ?: 27017}"
      - "${mongodb_monit_host_port}:3000"
     volumes:
      - ${data_dir}:/data/db
      - ${logs_dir}:/data/logs
+    stop_grace_period: 1m
   zookeeper:
     domainname: story-line.ru
     hostname: zookeeper
     build: ./zookeeper
     ports:
-     - "${zookeeper_host_port ?: 2181}:2181"
+     - "${zookeeper_host_port ?: 2181}:${zookeeper_host_port ?: 2181}"
      - "${zookeeper_monit_host_port}:3000"
     volumes:
      - ${data_dir}:/data/db
      - ${logs_dir}:/data/logs
+    stop_grace_period: 1m
   elasticsearch:
     domainname: story-line.ru
     hostname: elasticsearch
     build: ./elasticsearch
     ports:
-     - "${elasticsearch_host_port ?: 9200}:9200"
+     - "${elasticsearch_host_port ?: 9200}:${elasticsearch_host_port ?: 9200}"
      - "${elasticsearch_monit_host_port}:3000"
     volumes:
      - ${logs_dir}:/data/logs
      - ${data_dir}:/data/db
+    stop_grace_period: 1m
   crawler:
     domainname: story-line.ru
     hostname: crawler
     build: ./crawler
+    depends_on:
+        - zookeeper
+        - kafka
+    links:
+        - kafka
     ports:
-     - "${crawler_host_port}:8080"
+     - "${crawler_host_port}:${crawler_host_port}"
+     - "${crawler_java_debug_host_port}:${crawler_java_debug_host_port}"
+     - "${crawler_java_jmx_host_port}:${crawler_java_jmx_host_port}"
      - "${crawler_monit_host_port}:3000"
-     - "${crawler_java_debug_host_port}:60000"
-     - "${crawler_java_jmx_host_port}:50000"
     volumes:
      - ${logs_dir}:/data/logs
      - ${data_dir}:/data/db
+    stop_grace_period: 1m
   server_web:
     domainname: story-line.ru
     hostname: server_web
@@ -51,13 +60,43 @@ services:
         - elasticsearch
         - mongodb
     links:
-        - zookeeper
         - elasticsearch
         - mongodb
     ports:
-     - "${server_web_host_port}:8001"
+     - "${server_web_host_port}:${server_web_host_port}"
+     - "${server_web_ngnix_host_port}:${server_web_ngnix_host_port}"
      - "${server_web_monit_host_port}:3000"
-     - "${server_web_ngnix_host_port}:8000"
     volumes:
      - ${logs_dir}:/data/logs
      - ${data_dir}:/data/db
+    stop_grace_period: 1m
+  spark:
+    domainname: story-line.ru
+    hostname: spark
+    build: ./spark
+    ports:
+     - "${spark_master_port}:${spark_master_port}"
+     - "${spark_master_webui_port}:${spark_master_webui_port}"
+     - "${spark_worker_port}:${spark_worker_port}"
+     - "${spark_worker_webui_port}:${spark_worker_webui_port}"
+     - "${spark_monit_host_port}:3000"
+    volumes:
+     - ${logs_dir}:/data/logs
+     - ${data_dir}:/data/db
+    stop_grace_period: 1m
+  kafka:
+    domainname: story-line.ru
+    hostname: kafka
+    build: ./kafka
+    depends_on:
+        - zookeeper
+    links:
+        - zookeeper
+    ports:
+     - "${kafka_plaintext_port}:${kafka_plaintext_port}"
+     - "${kafka_monit_host_port}:3000"
+    volumes:
+     - ${logs_dir}:/data/logs
+     - ${data_dir}:/data/db
+    stop_grace_period: 1m
+    

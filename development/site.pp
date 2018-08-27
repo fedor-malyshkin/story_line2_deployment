@@ -33,6 +33,21 @@ node "server_web"  {
 	include storyline_infra::monit
 }
 
+node "spark"  {
+	include storyline_base::ntp
+	include storyline_base::java
+	include storyline_components::spark
+	include storyline_infra::monit
+}
+
+node "kafka"  {
+	include storyline_base::ntp
+	include storyline_base::java
+	include storyline_infra::kafka
+	include storyline_infra::monit
+}
+
+
 node default  {
 	include storyline_base::ntp
 	include storyline_base::java

@@ -11,8 +11,7 @@ WorkingDirectory=<%= $storyline_infra::nginx::dir_data %>
 #User=nginx
 #Group=nginx
 
-Environment=PID="<%= $storyline_infra::nginx::pid_file -%>" OPTS="-c /etc/nginx/nginx.conf"
-ExecStart=/usr/sbin/nginx $OPTS
+ExecStart=/usr/sbin/nginx -c /etc/nginx/nginx.conf
 TimeoutSec=30
 
 [Install]

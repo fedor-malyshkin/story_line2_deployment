@@ -64,6 +64,13 @@ CHECK PROCESS kafka with pidfile <%= $params_infra['kafka']['pid_file'] %>
 	start program = "/bin/systemctl start kafka"
 <% } %>
 
+<% if $params_infra['monit']['enabled_jmxtrans'] == true { %>
+# check jmxtrans
+CHECK PROCESS jmxtrans with pidfile <%= $params_infra['jmxtrans']['pid_file'] %>
+	start program = "/bin/systemctl start jmxtrans"
+<% } %>
+
+
 <% if $params_infra['monit']['enabled_hadoop_namenode'] == true { %>
 # check hadoop_namenode
 CHECK PROCESS hadoop_namenode with pidfile <%= $storyline_infra::hadoop::dir_pids -%>/hadoop-hdfs-namenode.pid
@@ -79,6 +86,7 @@ CHECK PROCESS hadoop_datanode with pidfile <%= $storyline_infra::hadoop::dir_pid
 CHECK PROCESS hadoop_resourcemanager with pidfile <%= $storyline_infra::hadoop::dir_pids -%>/yarn-yarn-resourcemanager.pid
 	start program = "/bin/systemctl start hadoop_resourcemanager"
 <% } %>
+
 <% if $params_infra['monit']['enabled_hadoop_nodemanager'] == true { %>
 # check hadoop_nodemanager
 CHECK PROCESS hadoop_nodemanager with pidfile <%= $storyline_infra::hadoop::dir_pids -%>/yarn-yarn-nodemanager.pid

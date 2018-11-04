@@ -41,6 +41,15 @@ storyline_infra:
       election_port: "3888"
       enabled_startup: false
       enabled_running: true
+  jmxtrans:
+      version: "270"
+      pid_file: '/data/db/jmxtrans/jmxtrans.pid'
+      init_script: '/etc/systemd/system/jmxtrans.service'
+      dir_bin:  '/jmxtrans'
+      dir_data:  '/data/db/jmxtrans'
+      dir_logs:  '/data/logs/jmxtrans'
+      enabled_startup: false
+      enabled_running: true
   elasticsearch:
       port: "9200"
       # local/global - dev/prod
@@ -64,6 +73,8 @@ storyline_infra:
       pid_file: '/data/logs/kafka/kafka.pid'
       init_script: '/etc/systemd/system/kafka.service'
       zookeeper_urls: 'zookeeper:2181'
+      jmx_port: 40001
+      jmx_only_local: true
       cluster:
         kafka: '1'
       enabled_startup: false

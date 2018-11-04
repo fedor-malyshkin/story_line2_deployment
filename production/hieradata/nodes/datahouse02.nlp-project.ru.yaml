@@ -10,6 +10,7 @@ storyline_infra:
       enabled_telegraf: true
       enabled_zookeeper: true
       enabled_kafka: true
+      enabled_jmxtrans: true
       enabled_mongodb: true
       enabled_crawler: true
       enabled_nginx: true

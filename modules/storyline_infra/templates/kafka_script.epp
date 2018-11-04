@@ -1,3 +1,5 @@
 PID="<%= $storyline_infra::kafka::pid_file -%>"
+JMX_PORT="<%= $storyline_infra::kafka::jmx_port -%>"
+export JMX_PORT
 <%= $storyline_infra::kafka::dir_bin -%>/bin/kafka-server-start.sh <%= $storyline_infra::kafka::dir_bin -%>/config/server.properties >> <%= $storyline_infra::kafka::dir_logs -%>/kafka.log 2>&1 &
 echo $! > ${PID}

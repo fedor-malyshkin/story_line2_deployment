@@ -1,7 +1,7 @@
 ---
 storyline_base:
   firewall:
-    incommming_port_all: [222, 3000, 8080, 8081, 8090, 8091, 443, 8042 ]
+    incommming_port_all: [222, 3000, 8080, 8081, 8090, 8091, 1194, 8042 ]
     incommming_port_project: [8086, 9086, 9200, 2181, 2888, 3888, 7077, 7078, 9092]
     incommming_port_project2: [8032, 8030, 8031, 8033, 8040, 8048, 13562, 8088]
 storyline_infra:
@@ -10,6 +10,7 @@ storyline_infra:
       enabled_telegraf: true
       enabled_zookeeper: true
       enabled_kafka: true
+      enabled_jmxtrans: true
       enabled_elasticsearch: true
       enabled_influxdb: true
       enabled_grafana: true

@@ -10,6 +10,7 @@ storyline_infra:
       enabled_telegraf: true
       enabled_zookeeper: true
       enabled_kafka: true
+      enabled_jmxtrans: true
       enabled_spark_master: false
       enabled_spark_worker: true
       enabled_hadoop_namenode: true

@@ -151,6 +151,17 @@ storyline_infra:
         ci.nlp-project.ru: '1'
         datahouse01.nlp-project.ru: '2'
         datahouse02.nlp-project.ru: '3'
+      jmx_port: 40001
+      jmx_only_local: true
+      enabled_startup: false
+      enabled_running: false
+  jmxtrans:
+      version: "270"
+      pid_file: '/data/logs/jmxtrans/jmxtrans.pid'
+      init_script: '/etc/systemd/system/jmxtrans.service'
+      dir_bin:  '/jmxtrans'
+      dir_data:  '/data/db/jmxtrans'
+      dir_logs:  '/data/logs/jmxtrans'
       enabled_startup: false
       enabled_running: false
   hadoop:

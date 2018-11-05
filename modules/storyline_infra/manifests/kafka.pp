@@ -61,7 +61,7 @@ class storyline_infra::kafka () {
 		notify => Service['jmxtrans'],
 		owner => "jmxtrans",
 		group=> "jmxtrans",
-		mode=>"u=rwx,og=rx",
+		mode=>"u=rw,og=r",
 	}->
 	file { $init_script:
 		replace => true,

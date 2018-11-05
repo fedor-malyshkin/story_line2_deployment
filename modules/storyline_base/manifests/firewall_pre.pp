@@ -49,13 +49,15 @@ class storyline_base::firewall_pre {
  	chain   => 'INPUT',
 	ctstate  => ['NEW', 'ESTABLISHED'],
     action      => 'accept',
-  }->
+  }
   # iptables -I INPUT -p tcp --dport 80 -j ACCEPT -m comment --comment "Allow HTTP",
-  firewall { '006 all incomming to specific ports':
-    proto       => 'tcp',
-	dport => $incommming_port_all,
- 	chain   => 'INPUT',
-    action      => 'accept',
+  ['tcp', 'udp'].each |String $proto| {
+  	firewall { "006 all incomming to specific ports (${proto})":
+    	proto       => $proto,
+		dport => $incommming_port_all,
+ 		chain   => 'INPUT',
+    	action      => 'accept',
+  	}
   }
   $host_project.each |String $host| {
 	  ['tcp', 'udp'].each |String $proto| {

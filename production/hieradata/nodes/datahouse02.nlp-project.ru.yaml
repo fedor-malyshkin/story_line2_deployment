@@ -11,7 +11,7 @@ storyline_infra:
       enabled_zookeeper: true
       enabled_kafka: true
       enabled_jmxtrans: true
-      enabled_mongodb: true
+      enabled_mongodb: false
       enabled_crawler: true
       enabled_nginx: true
       enabled_spark_master: false

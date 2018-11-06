@@ -34,7 +34,6 @@ node "datahouse02.nlp-project.ru"  {
 	include storyline_base::firewall
 	include storyline_infra::telegraf
 
-	include storyline_infra::mongodb
 	include storyline_components::crawler
 
 	include storyline_infra::nginx

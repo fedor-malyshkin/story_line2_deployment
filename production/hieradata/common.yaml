@@ -47,23 +47,6 @@ storyline_infra:
     elasticsearch_cluster: "elastic_story_line2"
     enabled_startup: false
     enabled_running: true
-  collectd:
-    server_port: "25826"
-    server_address: "ci.nlp-project.ru"
-    pid_file: '/data/logs/collectd/collectd.pid'
-    init_script: '/etc/systemd/system/collectd.service'
-    dir_data:  '/data/db/collectd'
-    dir_logs:  '/data/logs/collectd'
-    version: "1.2.0-1"
-    enabled_mongodb: false
-    mongodb_user: "collectd"
-    mongodb_password: "collectd"
-    enabled_elasticsearch: false
-    elasticsearch_host: "ci.nlp-project.ru"
-    elasticsearch_port: "9200"
-    elasticsearch_cluster: "elastic_story_line2"
-    enabled_startup: false
-    enabled_running: true
   influxdb:
     port_http: "8086"
     port_rpc: "9086"
@@ -205,7 +188,7 @@ storyline_components:
       dir_logs:  '/data/logs/crawler'
       dir_scripts: "/data/db/crawler/scripts"
       dir_sites_db: "/data/db/crawler/sites_db"
-      mongodb_connection_url: "mongodb://crawler:crawler@datahouse02.nlp-project.ru:27017/?authSource=crawler"
+      kafka_connection_url: "localhost:9092"
       influxdb_host:  "ci.nlp-project.ru"
       influxdb_port: "8086"
       influxdb_db: "crawler"

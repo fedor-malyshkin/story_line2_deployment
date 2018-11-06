@@ -15,7 +15,7 @@ class storyline_components::crawler () {
 	$dir_data = $params['dir_data']
 	$dir_scripts = $params['dir_scripts'] # groovy scripts
 	$dir_sites_db = $params['dir_sites_db'] # temporal db with crawling status
-	$mongodb_connection_url = $params['mongodb_connection_url'] # temporal db with crawling status
+	$kafka_connection_url = $params['kafka_connection_url'] # temporal db with crawling status
 	$dir_logs = $params['dir_logs']
 	$enabled_startup = $params['enabled_startup']
 	$enabled_running = $params['enabled_running']
@@ -148,7 +148,7 @@ class storyline_components::crawler () {
 				replace => true,
 				content => "${script_version}",
 				notify 		  => Exec['empty_crawler_dir_scripts'],
-			} 
+			}
 			exec { "empty_crawler_dir_scripts":
 				require => File["${dir_scripts}"],
 				command => "/bin/rm -f -r ${dir_scripts}/*",

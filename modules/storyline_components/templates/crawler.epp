@@ -2,15 +2,10 @@ server:
   port: <%= $storyline_components::crawler::app_port %>
 
 config:
-  # Количество потоков на сайт (лучше не более 4)
   crawler_per_site: 1
-  # Папка со скриптами для парсинга контента сайтов
   crawler_script_dir: "<%= $storyline_components::crawler::dir_scripts -%>"
-  # Каталог для сохранения данных о результатах парсинга сайта (для каждого сайта
-  # создается подпапка с именем домена для хранения соотвествующих данных)
   crawler_storage_dir: "<%= $storyline_components::crawler::dir_sites_db -%>"
-  # строка подключения к MongoDB для сохранения результатаов анализа
-  mongodb_connection_url: "<%= $storyline_components::crawler::mongodb_connection_url -%>"
+  kafka_connection_url: "<%= $storyline_components::crawler::kafka_connection_url -%>"
 
 
   # Блок с настройками для анализируемых сайтов

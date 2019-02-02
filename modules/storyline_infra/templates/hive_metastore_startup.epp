@@ -1,0 +1,21 @@
+[Unit]
+Description=Hive Metastore
+After=syslog.target
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=<%= $storyline_infra::hive::dir_pids -%>/hive-metastore.pid
+WorkingDirectory=<%= $storyline_infra::hive::dir_data %>
+
+User=hive
+Group=hive
+
+Environment=HADOOP_HOME="<%= $storyline_infra::hive::hadoop_dir_bin -%>" JAVA_HOME="<%= $storyline_infra::hive::hadoop_java_home -%>"
+
+ExecStart=/bin/sh <%= $storyline_infra::hive::dir_bin -%>/hive_metastore.sh start
+
+TimeoutSec=30
+
+[Install]
+WantedBy=multi-user.target

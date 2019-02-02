@@ -65,12 +65,15 @@ node "ci.nlp-project.ru"  {
 
 	include storyline_infra::elasticsearch
 
+	include storyline_infra::mysql
+
 	include storyline_infra::zookeeper
 	include storyline_infra::kafka
 	include storyline_infra::jmxtrans
 	include storyline_infra::hadoop
 	include storyline_components::spark
 
+	include storyline_infra::hive
 	include storyline_infra::jenkins
 
 	include storyline_infra::monit

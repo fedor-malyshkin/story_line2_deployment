@@ -40,12 +40,6 @@ CHECK PROCESS grafana  with pidfile <%= $params_infra['grafana']['pid_file'] %>
 	start program = "/bin/systemctl start grafana"
 <% } %>
 
-<% if $params_infra['monit']['enabled_collectd'] == true { %>
-# check collectd
-CHECK PROCESS collectd  with pidfile <%= $params_infra['collectd']['pid_file'] %>
-	start program = "/bin/systemctl start collectd"
-<% } %>
-
 <% if $params_infra['monit']['enabled_nginx'] == true { %>
 # check nginx
 CHECK PROCESS nginx with pidfile <%= $params_infra['nginx']['pid_file'] %>
@@ -91,6 +85,15 @@ CHECK PROCESS hadoop_resourcemanager with pidfile <%= $storyline_infra::hadoop::
 # check hadoop_nodemanager
 CHECK PROCESS hadoop_nodemanager with pidfile <%= $storyline_infra::hadoop::dir_pids -%>/yarn-yarn-nodemanager.pid
 	start program = "/bin/systemctl start hadoop_nodemanager"
+<% } %>
+
+<% if $params_infra['monit']['enabled_hive'] == true { %>
+# check hive
+CHECK PROCESS hive_metastore with pidfile <%= $storyline_infra::hive::dir_pids -%>/hive-metastore.pid
+	start program = "/bin/systemctl start hive_metastore"
+CHECK PROCESS hive_server2 with pidfile <%= $storyline_infra::hive::dir_pids -%>/hive-server2.pid
+	start program = "/bin/systemctl start hive_server2"
+
 <% } %>
 
 # Project component

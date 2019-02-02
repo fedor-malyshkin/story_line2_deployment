@@ -171,6 +171,24 @@ storyline_infra:
 
       enabled_startup: false
       enabled_running: false
+  hive:
+      version: "2.3.4"
+      dir_data:  '/data/db/hive'
+      dir_bin:  '/hive'
+      dir_logs:  '/data/logs/hive'
+      dir_pids:  '/data/logs/hive'
+
+      metastore_hostname: 'ci.nlp-project.ru'
+      metastore_jdbc_driver: 'ci.nlp-project.ru'
+      metastore_jdbc_url: 'ci.nlp-project.ru'
+      metastore_user: 'hive'
+      metastore_password: 'hive'
+
+      hive_warehouse: '/user/hive/warehouse'
+      hive_scratchdir: '/tmp/hive'
+
+      enabled_startup: false
+      enabled_running: false
   monit:
       port: "3000" # maybe overwritten
       version: "present"

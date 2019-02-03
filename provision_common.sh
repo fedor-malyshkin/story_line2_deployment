@@ -29,6 +29,7 @@ $PUPPET_BIN module install thias-sysctl
 $PUPPET_BIN module install yo61-logrotate
 $PUPPET_BIN module install puppetlabs-apt
 $PUPPET_BIN module install puppet-archive
+$PUPPET_BIN module install puppetlabs-mysql
 
 # git pull "deployment" project and go in it only if POVISION_NO_GIT_CLONE set to "true"
 if [ ${POVISION_NO_GIT_CLONE:-"false"} = "true" ];

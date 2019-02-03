@@ -10,15 +10,6 @@ storyline_base:
   java:
     version: "present"
 storyline_infra:
-  collectd:
-    server_port: "25826"
-    server_address: "ci.nlp-project.ru"
-    pid_file: '/data/logs/collectd/collectd.pid'
-    init_script: '/etc/init.d/collectd'
-    dir_data:  '/data/db/collectd'
-    dir_logs:  '/data/logs/collectd'
-    version: "1.2.0-1"
-    enabled_startup: false
   influxdb:
     port_http: "8086"
     port_rpc: "9086"

@@ -47,10 +47,16 @@ node "kafka"  {
 	include storyline_infra::monit
 }
 
+node "hadoop"  {
+	include storyline_base::ntp
+	include storyline_base::java
+	include storyline_infra::hadoop
+	include storyline_infra::monit
+}
+
 
 node default  {
 	include storyline_base::ntp
 	include storyline_base::java
-	include storyline_components::server_web
 	include storyline_infra::nginx
 }

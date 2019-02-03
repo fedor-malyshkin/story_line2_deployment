@@ -13,4 +13,5 @@ __Все операции проводим под `root`__
 	1. mkswap /swapfile
 	1. swapon /swapfile
 	1. echo "/swapfile none swap sw 0 0" >> /etc/fstab
-1. make initial provisioning
+1. make HDFS formatting
+1. import schema in mysql'DB for Hive, restart Hive services

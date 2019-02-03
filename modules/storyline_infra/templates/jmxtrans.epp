@@ -1,0 +1,1 @@
+JMXTRANS_OPTS="-Dinfluxdb_host=<%= $storyline_infra::telegraf::server_address %> -Dinfluxdb_port=<%= $storyline_infra::telegraf::server_port %>"

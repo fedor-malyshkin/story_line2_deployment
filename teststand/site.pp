@@ -4,7 +4,6 @@ node default {
 	include storyline_base::ssh
 	include storyline_infra::jenkins
 	include storyline_base::java
-	include storyline_infra::collectd
 	include storyline_infra::influxdb
 	include storyline_infra::grafana
 	include storyline_infra::monit

@@ -13,6 +13,7 @@ class storyline_infra::kafka () {
 	$enabled_startup = $params['enabled_startup']
 	$enabled_running = $params['enabled_running']
 	$version = $params['version']
+	$jmx_port = $params['jmx_port']
 	$certname = $trusted['certname']
 	$broker_id = $cluster[$certname]
 
@@ -53,6 +54,14 @@ class storyline_infra::kafka () {
 		content => epp('storyline_infra/kafka.epp'),
 		owner => "kafka",
 		group=> "kafka",
+	}->
+	file { "/data/db/jmxtrans/conf/kafka.json":
+		replace => true,
+		content => epp('storyline_infra/kafka_jmx.epp'),
+		notify => Service['jmxtrans'],
+		owner => "jmxtrans",
+		group=> "jmxtrans",
+		mode=>"u=rw,og=r",
 	}->
 	file { $init_script:
 		replace => true,

@@ -1,0 +1,20 @@
+[Unit]
+Description=jmx transmitter
+After=syslog.target
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=<%= $storyline_infra::jmxtrans::pid_file %>
+WorkingDirectory=<%= $storyline_infra::jmxtrans::dir_bin %>
+
+User=jmxtrans
+Group=jmxtrans
+
+Environment=JSON_DIR="<%= $storyline_infra::jmxtrans::dir_data -%>/conf" LOG_DIR="<%= $storyline_infra::jmxtrans::dir_logs -%>" CONF_FILE="<%= $storyline_infra::jmxtrans::dir_bin -%>/jmxtrans.conf"  PIDFILE="<%= $storyline_infra::jmxtrans::pid_file -%>"
+ExecStart=/bin/bash <%= $storyline_infra::jmxtrans::dir_bin -%>/bin/jmxtrans.sh start
+ExecStop=/bin/bash <%= $storyline_infra::jmxtrans::dir_bin -%>/bin/jmxtrans.sh stop
+TimeoutSec=30
+
+[Install]
+WantedBy=multi-user.target

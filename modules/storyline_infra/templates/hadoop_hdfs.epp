@@ -17,4 +17,8 @@
         <name>dfs.datanode.data.dir</name>
         <value><%= $storyline_infra::hadoop::hdfs_datanode_data_dir -%></value>
     </property>
+	<property>
+		<name>dfs.permissions.enabled</name>
+		<value>false</value>
+	</property>
 </configuration>

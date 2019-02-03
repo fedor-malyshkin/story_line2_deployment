@@ -1,102 +1,116 @@
-version: '3'
+version: "3"
 services:
-  mongodb:
-    domainname: story-line.ru
-    hostname: mongodb
-    build: ./mongodb
-    ports:
-     - "${mongodb_host_port ?: 27017}:${mongodb_host_port ?: 27017}"
-     - "${mongodb_monit_host_port}:3000"
-    volumes:
-     - ${data_dir}:/data/db
-     - ${logs_dir}:/data/logs
-    stop_grace_period: 1m
-  zookeeper:
-    domainname: story-line.ru
-    hostname: zookeeper
-    build: ./zookeeper
-    ports:
-     - "${zookeeper_host_port ?: 2181}:${zookeeper_host_port ?: 2181}"
-     - "${zookeeper_monit_host_port}:3000"
-    volumes:
-     - ${data_dir}:/data/db
-     - ${logs_dir}:/data/logs
-    stop_grace_period: 1m
-  elasticsearch:
-    domainname: story-line.ru
-    hostname: elasticsearch
-    build: ./elasticsearch
-    ports:
-     - "${elasticsearch_host_port ?: 9200}:${elasticsearch_host_port ?: 9200}"
-     - "${elasticsearch_monit_host_port}:3000"
-    volumes:
-     - ${logs_dir}:/data/logs
-     - ${data_dir}:/data/db
-    stop_grace_period: 1m
-  crawler:
-    domainname: story-line.ru
-    hostname: crawler
-    build: ./crawler
-    depends_on:
-        - zookeeper
-        - kafka
-    links:
-        - kafka
-    ports:
-     - "${crawler_host_port}:${crawler_host_port}"
-     - "${crawler_java_debug_host_port}:${crawler_java_debug_host_port}"
-     - "${crawler_java_jmx_host_port}:${crawler_java_jmx_host_port}"
-     - "${crawler_monit_host_port}:3000"
-    volumes:
-     - ${logs_dir}:/data/logs
-     - ${data_dir}:/data/db
-    stop_grace_period: 1m
-  server_web:
-    domainname: story-line.ru
-    hostname: server_web
-    build: ./server_web
-    depends_on:
-        - zookeeper
-        - elasticsearch
-        - mongodb
-    links:
-        - elasticsearch
-        - mongodb
-    ports:
-     - "${server_web_host_port}:${server_web_host_port}"
-     - "${server_web_ngnix_host_port}:${server_web_ngnix_host_port}"
-     - "${server_web_monit_host_port}:3000"
-    volumes:
-     - ${logs_dir}:/data/logs
-     - ${data_dir}:/data/db
-    stop_grace_period: 1m
-  spark:
-    domainname: story-line.ru
-    hostname: spark
-    build: ./spark
-    ports:
-     - "${spark_master_port}:${spark_master_port}"
-     - "${spark_master_webui_port}:${spark_master_webui_port}"
-     - "${spark_worker_port}:${spark_worker_port}"
-     - "${spark_worker_webui_port}:${spark_worker_webui_port}"
-     - "${spark_monit_host_port}:3000"
-    volumes:
-     - ${logs_dir}:/data/logs
-     - ${data_dir}:/data/db
-    stop_grace_period: 1m
-  kafka:
-    domainname: story-line.ru
-    hostname: kafka
-    build: ./kafka
-    depends_on:
-        - zookeeper
-    links:
-        - zookeeper
-    ports:
-     - "${kafka_plaintext_port}:${kafka_plaintext_port}"
-     - "${kafka_monit_host_port}:3000"
-    volumes:
-     - ${logs_dir}:/data/logs
-     - ${data_dir}:/data/db
-    stop_grace_period: 1m
-    
+    mongodb:
+        domainname: story-line.ru
+        hostname: mongodb
+        build: ./mongodb
+        ports:
+            - "${mongodb_host_port ?: 27017}:${mongodb_host_port ?: 27017}"
+            - "${mongodb_monit_host_port}:3000"
+        volumes:
+            - "${data_dir}:/data/db"
+            - "${logs_dir}:/data/logs"
+        stop_grace_period: 1m
+    zookeeper:
+        domainname: story-line.ru
+        hostname: zookeeper
+        build: ./zookeeper
+        ports:
+            - "${zookeeper_host_port ?: 2181}:${zookeeper_host_port ?: 2181}"
+            - "${zookeeper_monit_host_port}:3000"
+        volumes:
+            - "${data_dir}:/data/db"
+            - "${logs_dir}:/data/logs"
+        stop_grace_period: 1m
+    elasticsearch:
+        domainname: story-line.ru
+        hostname: elasticsearch
+        build: ./elasticsearch
+        ports:
+            - "${elasticsearch_host_port ?: 9200}:${elasticsearch_host_port ?: 9200}"
+            - "${elasticsearch_monit_host_port}:3000"
+        volumes:
+            - "${logs_dir}:/data/logs"
+            - "${data_dir}:/data/db"
+        stop_grace_period: 1m
+    crawler:
+        domainname: story-line.ru
+        hostname: crawler
+        build: ./crawler
+        depends_on:
+            - zookeeper
+            - kafka
+        links:
+            - kafka
+        ports:
+            - "${crawler_host_port}:${crawler_host_port}"
+            - "${crawler_java_debug_host_port}:${crawler_java_debug_host_port}"
+            - "${crawler_java_jmx_host_port}:${crawler_java_jmx_host_port}"
+            - "${crawler_monit_host_port}:3000"
+        volumes:
+            - "${logs_dir}:/data/logs"
+            - "${data_dir}:/data/db"
+        stop_grace_period: 1m
+    server_web:
+        domainname: story-line.ru
+        hostname: server_web
+        build: ./server_web
+        depends_on:
+            - zookeeper
+            - elasticsearch
+            - mongodb
+        links:
+            - elasticsearch
+            - mongodb
+        ports:
+            - "${server_web_host_port}:${server_web_host_port}"
+            - "${server_web_ngnix_host_port}:${server_web_ngnix_host_port}"
+            - "${server_web_monit_host_port}:3000"
+        volumes:
+            - "${logs_dir}:/data/logs"
+            - "${data_dir}:/data/db"
+        stop_grace_period: 1m
+    spark:
+        domainname: story-line.ru
+        hostname: spark
+        build: ./spark
+        ports:
+            - "${spark_master_port}:${spark_master_port}"
+            - "${spark_master_webui_port}:${spark_master_webui_port}"
+            - "${spark_worker_port}:${spark_worker_port}"
+            - "${spark_worker_webui_port}:${spark_worker_webui_port}"
+            - "${spark_monit_host_port}:3000"
+        volumes:
+            - "${logs_dir}:/data/logs"
+            - "${data_dir}:/data/db"
+        stop_grace_period: 1m
+    kafka:
+        domainname: story-line.ru
+        hostname: kafka
+        build: ./kafka
+        depends_on:
+            - zookeeper
+        links:
+            - zookeeper
+        ports:
+            - "${kafka_plaintext_port}:${kafka_plaintext_port}"
+            - "${kafka_monit_host_port}:3000"
+        volumes:
+            - "${logs_dir}:/data/logs"
+            - "${data_dir}:/data/db"
+        stop_grace_period: 1m
+    hadoop:
+        domainname: story-line.ru
+        hostname: hadoop
+        build: ./hadoop
+        ports:
+            - "${hadoop_namenode_web_port}:${hadoop_namenode_web_port}"
+            - "${hadoop_namenode_meta_port}:${hadoop_namenode_meta_port}"
+            - "${hadoop_datanode_web_port}:${hadoop_datanode_web_port}"
+            - "${hadoop_datanode_data_port}:${hadoop_datanode_data_port}"
+            - "${hadoop_datanode_meta_port}:${hadoop_datanode_meta_port}"
+            - "${hadoop_monit_host_port}:3000"
+        volumes:
+            - "${logs_dir}:/data/logs"
+            - "${data_dir}:/data/db"
+        stop_grace_period: 1m

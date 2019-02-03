@@ -1,0 +1,20 @@
+#!/bin/sh
+
+export JAVA_HOME="<%= $storyline_infra::hive::hadoop_java_home -%>"
+export HADOOP_HOME="<%= $storyline_infra::hive::hadoop_dir_bin -%>"
+export HIVE_HOME="<%= $storyline_infra::hive::dir_bin -%>"
+export HIVE_PID_DIR="<%= $storyline_infra::hive::dir_pids -%>"
+export HIVE_LOG_DIR="<%= $storyline_infra::hive::dir_logs -%>"
+
+PID=${HIVE_PID_DIR}/hive-metastore.pid
+
+case "$1" in
+	start)
+	$HIVE_HOME/bin/hive --service metastore  >> $HIVE_LOG_DIR/hive-metastore.log 2>&1 &
+	;;
+	*)
+	echo "Usage: XXX {start}"
+	;;
+esac
+
+echo $! > ${PID}

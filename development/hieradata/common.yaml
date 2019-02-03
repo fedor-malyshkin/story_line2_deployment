@@ -41,6 +41,15 @@ storyline_infra:
       election_port: "3888"
       enabled_startup: false
       enabled_running: true
+  jmxtrans:
+      version: "270"
+      pid_file: '/data/db/jmxtrans/jmxtrans.pid'
+      init_script: '/etc/systemd/system/jmxtrans.service'
+      dir_bin:  '/jmxtrans'
+      dir_data:  '/data/db/jmxtrans'
+      dir_logs:  '/data/logs/jmxtrans'
+      enabled_startup: false
+      enabled_running: true
   elasticsearch:
       port: "9200"
       # local/global - dev/prod
@@ -64,8 +73,34 @@ storyline_infra:
       pid_file: '/data/logs/kafka/kafka.pid'
       init_script: '/etc/systemd/system/kafka.service'
       zookeeper_urls: 'zookeeper:2181'
+      jmx_port: 40001
+      jmx_only_local: true
       cluster:
-        kafka   .story-line.ru: '1'
+        kafka: '1'
+      enabled_startup: false
+      enabled_running: false
+  hadoop:
+      version: "2.9.1"
+      dir_data:  '/data/db/hadoop'
+      dir_bin:  '/hadoop'
+      dir_logs:  '/data/logs/hadoop'
+      dir_pids:  '/data/logs/hadoop/pids'
+      java_home:  '/usr/lib/jvm/java-8-openjdk-amd64'
+
+      hdfs_heapsize_mb: 512
+      hdfs_namenode_uri: hdfs://hadoop:9000/
+      hdfs_namenode_data_dir: '/data/db/hadoop/hdfs_namenode'
+      # block size - 256 Kb
+      hdfs_namenode_blocksize_b: 262144
+      hdfs_namenode_threads: 50
+      hdfs_datanode_data_dir: '/data/db/hadoop/hdfs_datanode'
+
+      yarn_heapsize_mb: 512
+      yarn_resourcemanager_hostname: 'hadoop'
+      yarn_nodemanager_memory_mb: 1024
+      yarn_nodemanager_local_dirs: '/data/db/hadoop/yarn_nodemanager_local'
+      yarn_nodemanager_log_dirs: '/data/db/hadoop/yarn_nodemanager_logs'
+
       enabled_startup: false
       enabled_running: false
   monit:
@@ -85,7 +120,7 @@ storyline_components:
       dir_logs:  '/data/logs/crawler'
       dir_scripts: "/data/db/crawler/scripts"
       dir_sites_db: "/data/db/crawler/sites_db"
-      mongodb_connection_url: "mongodb://crawler:crawler@datahouse02.nlp-project.ru:27017/?authSource=crawler"
+      kafka_connection_url: "localhost:9092"
       influxdb_host:  "ci.nlp-project.ru"
       influxdb_port: "8086"
       influxdb_db: "crawler"

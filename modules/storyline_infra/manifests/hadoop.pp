@@ -54,7 +54,6 @@ class storyline_infra::hadoop () {
 		recurse => "true",
 		owner => "hdfs",
 		group => "hadoop",
-		mode=>"o-w,ug+w",
 		require => Exec['hadoop-mkdir'],
 	} ->
 	# hdfs
@@ -63,7 +62,6 @@ class storyline_infra::hadoop () {
 		recurse => "true",
 		owner => "hdfs",
 		group => "hadoop",
-		mode=>"o-w,ug+w",
 		require => Exec['hadoop-mkdir'],
 	} ->
 	# yarn
@@ -72,7 +70,6 @@ class storyline_infra::hadoop () {
 		recurse => "true",
 		owner => "yarn",
 		group => "hadoop",
-		mode=>"o-w,ug+w",
 		require => Exec['hadoop-mkdir'],
 	} ->
 	archive { "hadoop-archive":

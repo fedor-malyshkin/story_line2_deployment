@@ -6,7 +6,6 @@ storyline_base:
 storyline_infra:
   monit:
       port: "3000"
-      enabled_collectd: true
       enabled_influxdb: true
       enabled_grafana: true
       enabled_startup: true

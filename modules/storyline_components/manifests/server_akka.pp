@@ -1,4 +1,4 @@
-class storyline_components::crawler () {
+class storyline_components::server_akka () {
 
 	$a_lot_of_params = lookup({"name" => "storyline_components",
 	    "merge" => {"strategy" => "deep"}})
@@ -6,15 +6,16 @@ class storyline_components::crawler () {
 	$script_params = $a_lot_of_params['crawler_scripts']
 	$script_version = $script_params['version']
 
-	$params = $a_lot_of_params['crawler']
+	$params = $a_lot_of_params['server_akka']
 	$app_port = $params['app_port']
-	$admin_port = $params['admin_port']
 	$pid_file = $params['pid_file']
 	$init_script = $params['init_script']
 	$dir_bin = $params['dir_bin']
 	$dir_data = $params['dir_data']
 	$dir_scripts = $params['dir_scripts'] # groovy scripts
-	$dir_sites_db = $params['dir_sites_db'] # temporal db with crawling status
+	$elasticsearch_host = $params['elasticsearch_host']
+	$elasticsearch_port = $params['elasticsearch_port']
+	$hive_connection_url = $params['hive_connection_url'] # temporal db with crawling status
 	$kafka_connection_url = $params['kafka_connection_url'] # temporal db with crawling status
 	$dir_logs = $params['dir_logs']
 	$enabled_startup = $params['enabled_startup']
@@ -39,38 +40,38 @@ class storyline_components::crawler () {
 
 	include storyline_components
 
-	user { 'crawler':
+	user { 'server_akka':
 		ensure => "present",
 		managehome => true,
 	}
-	exec { "crawler-mkdir":
+	exec { "server_akka-mkdir":
 		command => "/bin/mkdir -p /data/db && /bin/mkdir -p /data/logs",
 		cwd => "/",
 		# exec will run unless the command has an exit code of 0
 		unless => '/usr/bin/test -d /data/db -a -d /data/logs',
 	}
 	# working dirы
-	file { [$dir_bin, $dir_logs, $dir_data, $dir_scripts, $dir_sites_db] :
+	file { [$dir_bin, $dir_logs, $dir_data,  $dir_scripts ] :
 		ensure => "directory",
 		recurse => "true",
-		owner => "crawler",
-		group=> "crawler",
-		require => Exec['crawler-mkdir'],
+		owner => "server_akka",
+		group=> "server_akka",
+		require => Exec['server_akka-mkdir'],
 	}->
-	file { "${dir_bin}/crawler.yaml":
+	file { "${dir_bin}/server_akka.conf":
 		replace => true,
-		content => epp('storyline_components/crawler.epp'),
-		notify => Service['crawler'],
+		content => epp('storyline_components/server_akka.epp'),
+		notify => Service['server_akka'],
 	}->
 	file { $init_script:
 		replace => true,
-		content => epp('storyline_components/crawler_startup.epp'),
+		content => epp('storyline_components/server_akka_startup.epp'),
 		mode=>"u=rw,og=r",
 	}
 
 	# update version
 	if $version == "presented" {
-		$jar_file = "crawler-PRESENTED.jar"
+		$jar_file = "server_akka-PRESENTED.jar"
 		# copy in any case
 		#if $current_version != $version {
 			# get artifact "/provision/artifacts" dir
@@ -79,10 +80,10 @@ class storyline_components::crawler () {
 			file { "${dir_bin}/${jar_file}":
 				replace => true,
 				ensure => file,
-				owner => "crawler",
-				group=> "crawler",
+				owner => "server_akka",
+				group=> "server_akka",
 				source => "file://${file_name_presented}",
-				notify => File["${dir_bin}/crawler.sh"],
+				notify => File["${dir_bin}/server_akka.sh"],
 			} ->
 			file { "${dir_bin}/version":
 				replace => true,
@@ -90,17 +91,17 @@ class storyline_components::crawler () {
 			}
 		#} # if $current_version != $version {
 	} else {
-		$jar_file = "crawler-${version}.jar"
+		$jar_file = "server_akka-${version}.jar"
 		if $current_version != $version {
 			# get artifact from nexus
 			nexus::artifact {"${dir_bin}/${jar_file}":
-				gav => "ru.nlp_project.story_line2:crawler:${version}",
+				gav => "ru.nlp_project.story_line2:server_akka:${version}",
 				repository => "releases",
-				# classifier => 'all',
+				classifier => 'all',
 				output => "${dir_bin}/${jar_file}",
 				timeout => 0,
 				packaging  => 'jar',
-				notify => File["${dir_bin}/crawler.sh"],
+				notify => File["${dir_bin}/server_akka.sh"],
 			} ->
 			file { "${dir_bin}/version":
 				replace => true,
@@ -109,19 +110,20 @@ class storyline_components::crawler () {
 		} # if $current_version != $version {
 	}
 
+
 	# update script version
 	if $script_version == "presented" {
 		# get artifact from "/provision/crawler_scripts" dir
 		# returns file names with full path
-		$script_file_name_presented = get_first_jar_file_name('/provision/crawler_scripts')
+		$script_file_name_presented = get_first_jar_file_name('/provision/server_akka_scripts')
 		# copy in any case
 		#if $current_version != $version {
 		file { "${dir_bin}/script_version":
 			replace => true,
 			content => "${script_version}",
-			notify 		  => Exec['empty_crawler_dir_scripts'],
+			notify 		  => Exec['empty_server_akka_dir_scripts'],
 		} ->
-		exec { "empty_crawler_dir_scripts":
+		exec { "empty_server_akka_dir_scripts":
 			command => "/bin/rm -r -f ${dir_scripts}/*",
 			cwd => "/",
 			refreshonly => true,
@@ -131,7 +133,7 @@ class storyline_components::crawler () {
 			extract_path  	=> "${dir_scripts}",
 			creates			=> "${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
 			cleanup       	=> false,
-			notify 			=> [Service['crawler']],
+			notify 			=> [Service['server_akka']],
 		}
 		#} # if $current_version != $version {
 	} else {
@@ -139,9 +141,9 @@ class storyline_components::crawler () {
 			file { "${dir_bin}/script_version":
 				replace => true,
 				content => "${script_version}",
-				notify 		  => Exec['empty_crawler_dir_scripts'],
+				notify 		  => Exec['empty_server_akka_dir_scripts'],
 			}
-			exec { "empty_crawler_dir_scripts":
+			exec { "empty_server_akka_dir_scripts":
 				require => File["${dir_scripts}"],
 				command => "/bin/rm -f -r ${dir_scripts}/*",
 				cwd => "/",
@@ -156,32 +158,23 @@ class storyline_components::crawler () {
 				packaging  => 'jar',
 			}->
 			archive { "${dir_scripts}/crawler_scripts_${script_version}.jar":
-				# require			=> Exec['empty_crawler_scripts_archive'],
-				# path			=> "${dir_scripts}/crawler_scripts_${script_version}.jar",
-				# source 			=> "$script_file_name_presented",
 				extract       	=> true,
 				extract_path  	=> "${dir_scripts}",
 				creates			=> "${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts",
 				cleanup       	=> false,
-				notify 			=> [Service['crawler']],
+				notify 			=> [Service['server_akka']],
 			}
-			# exec { "tune_crawler_dir_scripts":
-			# 	command => "/bin/mv -f  ${dir_scripts}/ru/nlp_project/story_line2/crawler_scripts/* ${dir_scripts} && chown -R crawler:crawler ${dir_scripts}",
-			# 	cwd => "/",
-			# 	refreshonly => true,
-			# }
 		} # if $current_version != $version {
 	}
-
-	file { "${dir_bin}/crawler.sh":
+	file { "${dir_bin}/server_akka.sh":
 		replace => true,
-		content => epp('storyline_components/crawler_script.epp'),
-		notify => Service['crawler'],
-		owner => "crawler",
-		group=> "crawler",
+		content => epp('storyline_components/server_akka_script.epp'),
+		notify => Service['server_akka'],
+		owner => "server_akka",
+		group=> "server_akka",
 		mode=>"u=rwx,og=rx",
 	}->
-	service { 'crawler':
+	service { 'server_akka':
   		ensure => $enabled_running,
 		enable    => $enabled_startup,
 		provider => 'systemd',

@@ -103,6 +103,12 @@ CHECK PROCESS crawler  with pidfile <%= $params_comp['crawler']['pid_file'] %>
 	start program = "/bin/systemctl start crawler"
 <% } %>
 
+<% if $params_infra['monit']['enabled_server_akka'] == true { %>
+# check server_akka
+CHECK PROCESS server_akka  with pidfile <%= $params_comp['server_akka']['pid_file'] %>
+	start program = "/bin/systemctl start server_akka"
+<% } %>
+
 <% if $params_infra['monit']['enabled_server_web'] == true { %>
 # check server_web
 CHECK PROCESS server_web  with pidfile <%= $params_comp['server_web']['pid_file'] %>

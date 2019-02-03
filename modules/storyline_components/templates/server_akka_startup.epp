@@ -1,0 +1,18 @@
+[Unit]
+Description=Processing server based on Akka framework
+After=syslog.target
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=<%= $storyline_components::server_akka::pid_file %>
+WorkingDirectory=<%= $storyline_components::server_akka::dir_data %>
+
+User=server_akka
+Group=server_akka
+
+ExecStart=/bin/bash <%= $storyline_components::server_akka::dir_bin -%>/server_akka.sh start
+TimeoutSec=30
+
+[Install]
+WantedBy=multi-user.target

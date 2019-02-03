@@ -18,6 +18,7 @@ node "datahouse01.nlp-project.ru"  {
 	include storyline_infra::jmxtrans
 	include storyline_infra::hadoop
 	include storyline_components::spark
+	include storyline_components::server_akka
 	include storyline_infra::monit
 }
 

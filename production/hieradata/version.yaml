@@ -7,3 +7,5 @@ storyline_components:
     version: "0.15"
   server_web:
     version: "0.8"
+  server_akka:
+    version: "0.1"

@@ -1,0 +1,39 @@
+akka {
+  loggers = ["akka.event.slf4j.Slf4jLogger"]
+  loglevel = "DEBUG"
+  logging-filter = "akka.event.slf4j.Slf4jLoggingFilter"
+
+  actor {
+    debug.receive = true
+  }
+  kafka.consumer {
+    poll-interval = 300ms
+  }
+}
+
+scripts {
+  script-dir = "<%= $storyline_components::server_akka::dir_scripts %>"
+}
+
+indexing {
+  elasticsearch-url = "<%= $storyline_components::server_akka::elasticsearch_host -%>:<%= $storyline_components::server_akka::elasticsearch_port %>"
+  elasticsearch-index-real-name: story_line2_v1
+  elasticsearch-index-read-alias: story_line2_read_index
+  elasticsearch-index-write-alias: story_line2_write_index
+}
+
+storage {
+  hive-connection-url = "<%= $storyline_components::server_akka::hive_connection_url %>"
+  hive-user = server_akka
+  hive-password = server_akka
+}
+
+kafka-source {
+  bootstrap-servers: "<%= $storyline_components::server_akka::kafka_connection_url %>"
+  topic = "crawler-events"
+  consumer-params {
+    enable.auto.commit = true
+    group.id = test-group1
+    auto.offset.reset = earliest
+  }
+}

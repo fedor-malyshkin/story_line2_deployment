@@ -196,6 +196,27 @@ storyline_infra:
       enabled_running: true
 storyline_components:
   nexus_repo_url: "http://repo.nlp-project.ru:8082/nexus"
+  server_akka:
+      app_port: "8011"
+      pid_file: '/data/logs/server_akka/server_akka.pid'
+      init_script: '/etc/systemd/system/server_akka.service'
+      dir_data:  '/data/db/server_akka'
+      dir_scripts: "/data/db/server_akka/scripts"
+      dir_bin:  '/server_akka'
+      dir_logs:  '/data/logs/server_akka'
+      elasticsearch_host: "ci.nlp-project.ru"
+      elasticsearch_port: "9200"
+      hive_connection_url: "jdbc:hive2://ci.nlp-project.ru:10001/;transportMode=http;httpPath=cliservice"
+      kafka_connection_url: "ci.nlp-project.ru:9092,datahouse01.nlp-project.ru:9092,datahouse02.nlp-project.ru:9092"
+      influxdb_host:  "ci.nlp-project.ru"
+      influxdb_port: "8086"
+      influxdb_db: "server_akka"
+      influxdb_user: "server_akka"
+      influxdb_password: "server_akka"
+      jvm_start_memory_mb: 128
+      jvm_max_memory_mb: 1024
+      enabled_startup: false
+      enabled_running: true
   crawler:
       app_port: "8088"
       admin_port: "8089"

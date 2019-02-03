@@ -1,0 +1,8 @@
+#!/bin/sh
+# -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false  \
+# -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=50000 \
+# -Djava.rmi.server.hostname=`hostname -i` \
+java -Xms<%= $storyline_components::server_akka::jvm_start_memory_mb -%>m  -Xmx<%= $storyline_components::server_akka::jvm_max_memory_mb -%>m \
+-jar <%= $storyline_components::server_akka::dir_bin -%>/<%= $storyline_components::server_akka::jar_file %> \
+-Dconfig.file=<%= $storyline_components::server_akka::dir_bin -%>/server_akka.conf  >> <%= $storyline_components::server_akka::dir_logs -%>/server_akka-out.log  2>&1 &
+echo $! > <%= $storyline_components::server_akka::pid_file %>
